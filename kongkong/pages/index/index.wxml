@@ -1,0 +1,19 @@
+<view class="containerView">
+<scroll-view class="channelView" scroll-x="true">
+  <block wx:for="{{categories}}">
+    <view id="{{index}}" class="channel-btn {{index==selectedctgindex ? 'channel-hoverd-btn' : ''}}" bindtap="taponcategorybutton">{{item}}</view>
+  </block>
+</scroll-view>
+<loading hidden="{{loadingviewhidden}}">
+    加载中...
+</loading>
+<scroll-view scroll-y="true" class="mainView">
+  <import src="../templates/adview.wxml"/>
+  <import src="../templates/bannerview.wxml"/>
+  <import src="../templates/lastestview.wxml"/>
+  <block wx:for="{{items}}">
+    <template is="{{item.type}}" data="{{...item, scrolltop}}"></template>
+  </block>
+</scroll-view>
+</view>
+

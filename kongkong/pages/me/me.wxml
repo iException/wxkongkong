@@ -1,0 +1,12 @@
+<scroll-view class="container">
+    <view class="headerview" bindtap="gotoUserCenterActon">
+        <image class="avatar" src="../../resource/images/avatar.png"></image>
+        <view class="infoview">
+            <text class="name">33445599</text>
+            <text class="joinin">加入乐空空135天</text>
+            <text class="description">送出100件物品 | 得到50个感谢</text>
+        </view>
+        <image class="arrow" src="../../resource/images/arrow.png"></image>
+    </view>
+    <view class="setting"></view>
+</scroll-view>

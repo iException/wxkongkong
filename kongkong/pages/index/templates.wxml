@@ -1,0 +1,17 @@
+<!--空空动态模板-->
+<template name="lastestview">
+<scroll-view scroll-y="true" style="width:100%; height:60px;" scroll-top="{{scrolltop}}">
+    <block wx:for="{{infos}}">
+        <view class="lastestview">
+            <image src="{{item.image}}" class="ad"></image>
+            <view>
+                <view class="infoview">
+                    <image class="avatar" src="{{item.avatar}}"></image>
+                    <text class="name">{{item.name + '  ' + item.extro}}</text>
+                </view>
+                <text class="content">{{item.content}}</text>
+            </view>
+        </view>
+    </block>
+</scroll-view>
+</template>
