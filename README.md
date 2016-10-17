@@ -1,7 +1,7 @@
 # wxkongkong（乐空空）
 乐空空微信小程序版本
 
-![App Icon](wxkongkong/kongkong/resource/images/Icon.png)
+![App Icon](kongkong/resource/images/Icon.png)
 
 **乐赠闲置，利他悦己**
 
