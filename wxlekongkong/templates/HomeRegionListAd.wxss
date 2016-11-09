@@ -1,0 +1,67 @@
+.adview {
+    padding: 20rpx;
+    margin-top: 20rpx; 
+    background-color: white;
+}
+
+.adview .userview {
+    display: flex;
+    flex-direction: row; 
+}
+
+.adview .userview .avatarview {
+    width: 80rpx; 
+    height: 80rpx;
+    border-radius: 40rpx;
+}
+
+.adview .userview .introview {
+    height: 80rpx;
+    display: flex;
+    margin-left: 20rpx;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.adview .userview .introview .namelabel {
+    color: #333333;
+    font-size: 14px;
+}
+
+.adview .userview .introview .introlabel {
+    color: #969696;
+    font-size: 12px;
+    margin-top: 10rpx;
+}
+
+.adview .contentview {
+    font-size: 14px;
+    padding-top: 20rpx;
+    width: 100%;    
+    word-break: break-all;    
+    text-overflow: ellipsis;    
+    display: -webkit-box;    
+    -webkit-box-orient: vertical;    
+    -webkit-line-clamp: 2;    
+    overflow: hidden; 
+}
+
+.adview .imagesview {
+    margin-top: 20rpx; 
+    white-space: nowrap;
+    height: 240rpx;
+}
+
+.adview .imagesview .imageview {
+    width: 240rpx;
+    height: 100%;
+    margin-right: 20rpx;
+}
+
+.adview .extroview {
+    margin-top: 20rpx;
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}

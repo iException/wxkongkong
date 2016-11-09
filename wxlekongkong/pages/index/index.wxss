@@ -1,0 +1,6 @@
+/* loadingmoreview template style */
+@import "../../templates/loadingmoreview.wxss";
+/* adview template style */
+@import "../../templates/HomeRegionListAd.wxss";
+/* errorView template style*/
+@import "../../templates/errorview.wxss";

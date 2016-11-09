@@ -1,0 +1,9 @@
+<template name="imagesview">
+    <view style="padding: 0 {{left}}px 0 {{left}}px; background-color: white;">
+        <block wx:for="{{images}}">
+            <image id="{{index}}" src="{{item.square}}" mode="scaleToFill" bindload="imageLoaded" 
+             style="width: {{item.width}}px; height:{{item.height}}px; margin-bottom: {{left}}px; margin-right:{{item.right}}px;"></image>
+        </block>
+        <view class="bottomview"></view>
+    </view>
+</template>

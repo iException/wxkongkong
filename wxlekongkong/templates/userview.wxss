@@ -1,0 +1,23 @@
+.userview .avatarview {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 40rpx;
+}
+
+.userview .introview {
+    margin-left: 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.userview .introview .nameview {
+    font-size: 14px;
+    color: black;
+}
+
+.userview .introview .descview {
+    margin-top: 5rpx;
+    font-size: 12px;
+    color: lightgray;
+}

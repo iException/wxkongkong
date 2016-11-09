@@ -1,0 +1,12 @@
+<!--通用头部模板,对于样式,可按照自己的需求定制.-->
+<!--{item : {avatar: "", name: "", intro: }}-->
+<template name="userview">
+    <view class="userview"
+    style="padding: {{top}}px {{left}}px {{top}}px {{left}}px;background-color: white;display: flex;flex-direction: row;align-items: center;">
+        <image class="avatarview" mode="aspectFill" bindload="avatarLoaded" src="{{avatar}}"></image>
+        <view class="introview">
+            <text class="nameview">{{name}}</text>
+            <text class="descview">{{intro}}</text>
+        </view>
+    </view>
+</template>

@@ -1,0 +1,18 @@
+<view class="container">
+  <block wx:if="{{loadingDataError}}" wx:key="*this">
+    <import src="../../templates/errorview.wxml"/>
+    <template is="errorview"></template>
+  </block>
+  <block wx:else wx:key="*this">
+    <scroll-view style="width:100%; height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
+      <import src="../../templates/HomeRegionListAd.wxml"/>
+      <block wx:for="{{items}}" wx:key="adview">
+        <template is="{{item.style}}" data="{{...item.content, index: index}}"></template>
+      </block>
+      <block wx:if="{{!firstloadingData}}" wx:key="*this">
+        <import src="../../templates/loadingmoreview.wxml"/>
+        <template is="loadingmoreview" data="{{hasMore}}"></template>
+      </block>
+    </scroll-view>
+  </block>
+</view>
