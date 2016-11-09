@@ -1,2 +1,0 @@
-<view>saveDatas</view>
-<view bindtap="saveDatas">click save datas</view>
