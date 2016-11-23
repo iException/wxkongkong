@@ -1,6 +1,5 @@
 .adview {
-    padding: 20rpx;
-    margin-top: 20rpx; 
+    padding: 28rpx 28rpx 36rpx 28rpx;
     background-color: white;
 }
 
@@ -36,7 +35,8 @@
 
 .adview .contentview {
     font-size: 14px;
-    padding-top: 20rpx;
+    margin-top: 20rpx;
+    font-weight: light;
     width: 100%;    
     word-break: break-all;    
     text-overflow: ellipsis;    
@@ -47,7 +47,7 @@
 }
 
 .adview .imagesview {
-    margin-top: 20rpx; 
+    margin-top: 28rpx; 
     white-space: nowrap;
     height: 240rpx;
 }
@@ -59,9 +59,28 @@
 }
 
 .adview .extroview {
-    margin-top: 20rpx;
+    margin-top: 37rpx;
     display: flex; 
     flex-direction: row;
     align-items: center;
     width: 100%;
+}
+
+.adview .extroview .leftview {
+    margin-right: auto;
+}
+
+.adview .extroview .rightview {
+    margin-right: 20rpx;
+}
+
+.adview .extroview view image {
+    width: 20rpx; 
+    height: 22rpx;
+}
+
+.adview .extroview view text {
+    font-size: 12px; 
+    margin-left: 14rpx;
+    color: #657B86;
 }

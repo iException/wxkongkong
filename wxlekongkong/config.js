@@ -1,5 +1,8 @@
 module.exports = {
     host: "https://api2.lekongkong.com",
+    getHomePageLayoutUrl: function() {
+        return this.host + "/api/PageLayout.homePage";
+    },
     getAdListUrl: function() {
         return this.host + "/api/Listing.listingByRegion";
     },
@@ -8,6 +11,18 @@ module.exports = {
     },
     getApplicantorListUrl: function() {
         return this.host + "/api/ListingNew.getGiftApplicationsReader";
+    },
+    getHingTagListUrl: function() {
+        return this.host + "/api/Search.hintTags";
+    },
+    getSeachListingUrl: function() {
+        return this.host + "/api/Listing.searchListing";
+    },
+    getTagListingUrl: function() {
+        return this.host + "/api/Listing.tagListing";
+    },
+    getLastestAdListingUrl: function() {
+        return this.host + "/api/News.getNewsList";
     },
     defaultHeader: {
         "Lkk-Dev-Name": "madong",

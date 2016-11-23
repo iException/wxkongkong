@@ -43,8 +43,9 @@ function errorWithCode(code) {
 
 }
 
-function request({url, data, method, success, fail, complete}) {;
+function request({url, data, method, success, fail, complete}) {
     var fullUrlString = fullUrl(url, data);
+    console.log("request url:" + fullUrlString);
     wx.request({
       url: fullUrlString,
       data: {},
@@ -52,14 +53,18 @@ function request({url, data, method, success, fail, complete}) {;
       header: header(fullUrlString), // 设置请求的 header
       success: function(res){
         // success
+        console.log("request url successed:" + fullUrlString);
+        console.log(res);
         (typeof success == 'function') && success(res);
       },
       fail: function() {
         // fail
+        console.log("request url faild" + fullUrlString);
         typeof fail == 'function' && fail('发生错误');
       },
       complete: function() {
         // complete
+        console.log("request url complete");
         typeof complete == 'function' && complete();
       }
     })

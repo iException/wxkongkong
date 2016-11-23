@@ -6,16 +6,11 @@ var apimanager = require("../../utils/apimanager.js");
 
 Page({
   data:{
-    windowHeight: 400,
-    images: [],
-    top: 12,
-    left: 12,
-    applicantors: [],
-    hasMore: false
+    left: 28,   //view 统一的左右边距.
+    hasMore: false    //是否有更多数据.
   },
   customerData: {
     isloadingMore: false,
-    adInfo: {},
     lastId: 0
   },
   onLoad:function(options){
@@ -53,16 +48,18 @@ Page({
     }
 
     this.setData({
-      avatar: info.user.avatar.square,
-      name: info.user.nick,
-      intro: this.getUserDescriptionWithUserInfo(info.user),
-      tags: info.tags,
-      description: info.description,
+      userInfo: {
+        avatar: info.user.avatar.square,
+        name: info.user.nick,
+        giveCount: info.user.giveCount,
+        appreciatedCount: info.user.appreciatedCount,
+      },
       images: images,
+      tags: info.tags,
       date: info.date,
       city: info.city,
       likers: info.likedUsers,
-      showLikers: info.likeCount > 0,
+      description: info.description,
       readTimes: (info.readTimes + "次浏览"),
       applicationCount: info.applicationCount,
       hasMore: true
@@ -93,9 +90,6 @@ Page({
   },
   onPullDownRefresh: function() {
     wx.stopPullDownRefresh();
-  },
-  getUserDescriptionWithUserInfo: function(user) {
-    return ("送出" + user.giveCount + "件物品    得到" + user.appreciatedCount + "个感谢");
   },
   imageLoaded: function(e) {
     var that = this;
@@ -222,5 +216,8 @@ Page({
     setTimeout(function() {
         that.customerData.isloadingMore = false;
     }, 1000);
+  },
+  appreciateimageloaded(e) {
+
   }
 })
