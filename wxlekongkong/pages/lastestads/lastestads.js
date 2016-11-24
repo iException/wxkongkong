@@ -51,7 +51,7 @@ Page({
         }});
   },
   loadLastestListingSuccess: function(ret) {
-    if (ret.type != "data") {
+    if (ret.data.type != "data") {
       this.loadLastestListingFail();
       return;
     }

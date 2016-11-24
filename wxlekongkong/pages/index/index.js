@@ -134,54 +134,54 @@ Page({
     this.loadAdDataWithType(true);
   },
   activityItems: function() {
-    return '../../resource/images/banner_intro.png';
+    return '../../resource/images/banner_intro.jpg';
   },
   categoryItems: function() {
     return [
       {
         imageurl: "../../resource/images/icon_fushi.png",
         title: "服装服饰",
-        bannerimage: "banner_fushi.png"
+        bannerimage: "banner_fushi.jpg"
       },
       {
         imageurl: "../../resource/images/icon_xiebao.png",
         title: "鞋帽箱包",
-        bannerimage: "banner_xiebao.png"
+        bannerimage: "banner_xiebao.jpg"
       },
       {
         imageurl: "../../resource/images/icon_peishi.png",
         title: "配件配饰",
-        bannerimage: "banner_peishi.png"
+        bannerimage: "banner_peishi.jpg"
       },
       {
         imageurl: "../../resource/images/icon_jiaju.png",
         title: "家居用品",
-        bannerimage: "banner_jiaju.png"
+        bannerimage: "banner_jiaju.jpg"
       },
       {
         imageurl: "../../resource/images/icon_shuma.png",
         title: "数码产品",
-        bannerimage: "banner_shuma.png"
+        bannerimage: "banner_shuma.jpg"
       },
       {
         imageurl: "../../resource/images/icon_tushu.png",
         title: "图书音像",
-        bannerimage: "banner_tushu.png"
+        bannerimage: "banner_tushu.jpg"
       },
       {
         imageurl: "../../resource/images/icon_muying.png",
         title: "母婴用品",
-        bannerimage: "banner_muying.png"
+        bannerimage: "banner_muying.jpg"
       },
       {
         imageurl: "../../resource/images/icon_gehu.png",
         title: "个护美妆",
-        bannerimage: "banner_gehu.png"
+        bannerimage: "banner_gehu.jpg"
       }
     ];
   },
   topicItems: function() { 
-    return "../../resource/images/shaidan.png";
+    return "../../resource/images/banner_shaidan.jpg";
   },
   loadAdDataWithType: function(isRefresh) {
     var opts = {
@@ -230,9 +230,8 @@ Page({
           firstloadingData: false
         });
       }
-    } else {
-      this.customerData.loadingIdx += 1;
     }
+    this.customerData.loadingIdx += 1;
 
     var results = res.result;
     var items = this.data.items;
@@ -284,7 +283,7 @@ Page({
   },
   clickOnCategoryView: function(e) {
     var tag = this.data.categoryItems[e.currentTarget.dataset.tag];
-    var url = "../zone/zone?keywork=" + tag.title + "&bannerimage=" + tag.bannerimage;
+    var url = "../zone/zone?keyword=" + tag.title + "&bannerimage=" + tag.bannerimage;
     wx.navigateTo({
       url: url
     });
