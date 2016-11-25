@@ -1,0 +1,46 @@
+.applicantorview {
+    background-color: white;
+}
+
+.applicantorview .userview {
+    padding: 26rpx 28rpx 0 28rpx;
+    display: flex;
+    flex-direction: row;
+}
+
+.applicantorview .userview .avatar {
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 30rpx;
+    background-color: blue;
+}
+
+.applicantorview .userview .descview {
+    display: flex;
+    flex-direction: column;
+    margin-left: 16rpx;
+    justify-content: space-between;
+}
+
+.applicantorview .userview .descview .namelbl {
+    font-size: 14px;
+    color: #333333;
+}
+
+.applicantorview .userview .descview .datelbl {
+    font-size: 12px;
+    color: #969696;
+}
+
+.applicantorview .reasonview {
+    margin: 16rpx 28rpx 0 104rpx;
+    font-size: 14px;
+    color: #333333;
+}
+
+.applicantorview .dottedline {
+    margin: 20rpx 28rpx 0 28rpx;
+    border-width: 0 0 1px 0;
+    border-style: dashed;
+    border-color: #cccccc;
+}

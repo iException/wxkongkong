@@ -1,19 +1,20 @@
 <template name="winnerview">
 <view class="winnerview">
-    <view class="titleview" style="padding: 30rpx {{left}}rpx 20rpx {{left}}rpx">获得赠送的朋友</view>
-    <view class="userview" style="padding: 28rpx {{left}}rpx 22rpx {{left}}rpx;">
-        <image class="avatar" src="{{avatar}}"></image>刷漆大叔
-        <!--{{name}}-->
+    <view class="titleview">获得赠送的朋友</view>
+    <view class="userview">
+        <image class="avatar" src="{{avatar}}"></image>
+        <text>{{name}}</text>
     </view>
-    <view style="padding: 0 {{left+82}}rpx 0 {{left}}rpx;">
+    <view class="infoview">
         <view class="reasonview">
             <text class="titlelbl">申请理由</text>
-            <text class="resonlbl">{{reason}}</text>
+            <text class="reasonlbl">{{reason}}</text>
         </view>
-        <view class="appreciateview" wx:if="{{}}">
-            <text class="titlelbl">申请理由</text>
-            <text>{{reason}}</text>
-            <image class="appreciateimage" src="{{}}" bindload="appreciateimageloaded"></image>
+        <view class="thanksview" wx:if="{{thanks&&thanks.length}}">
+            <text class="titlelbl">发表感谢</text>
+            <text class="reasonlbl">{{thanks}}</text>
+            <image wx:if="{{thanksImage&&thanksImage.length}}" class="thanksimage" src="{{thanksImage}}" 
+            bindload="thanksimageloaded" style="width:{{width}}rpx; height:{{height}}rpx;"></image>
         </view>
     </view>
 </view>

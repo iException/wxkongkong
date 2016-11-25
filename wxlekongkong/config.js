@@ -7,7 +7,7 @@ module.exports = {
         return this.host + "/api/Listing.listingByRegion";
     },
     getAdDetailUrl: function() {
-        return this.host + "";
+        return this.host + "/api/Gift.item";
     },
     getApplicantorListUrl: function() {
         return this.host + "/api/ListingNew.getGiftApplicationsReader";

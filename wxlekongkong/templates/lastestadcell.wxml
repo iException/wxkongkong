@@ -1,7 +1,7 @@
 <!--空空动态模板-->
 <!--adimage:物品图像地址，-->
 <template name="lastestadcell">
-<view class="lastestadcell">
+<view class="lastestadcell" bindtap="clickOnLastestadcell" data-tag="{{tag}}">
     <image class="adimage" src="{{image}}"></image>
     <view class="adinfoview">
         <view class="userinfoview">

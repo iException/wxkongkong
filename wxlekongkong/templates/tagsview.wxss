@@ -7,6 +7,7 @@
 }
 
 .tagsview .tagview {
+    margin: 14rpx;
     color: #969696;
     font-size: 12px;
     border-radius: 8rpx;

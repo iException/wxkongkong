@@ -131,6 +131,7 @@ Page({
         result.content.likeCount -= 0;
         result.content.applicationCount -= 0;
         result.content.commentNum -= 0;
+        result.content.user.avatarUrl = result.content.user.avatar;
         if(!result.content.commentNum) {
           result.content.commentNum = 0;
         }
@@ -182,7 +183,7 @@ Page({
   },
   gotoAdDetailView: function(adInfo) {
     app.globalData.adInfo = adInfo;
-    var url = '../addetail/addetail' + adInfo.id;
+    var url = '../addetail/addetail?id=' + adInfo.id;
     wx.navigateTo({
       url: url
     });

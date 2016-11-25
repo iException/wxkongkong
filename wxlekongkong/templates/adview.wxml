@@ -3,7 +3,7 @@
 <template name="adview">
 <view class="adview" bindtap="clickOnAdView" data-index="{{index}}" id="{{index}}" style="margin-top:{{vinteval}}rpx;">
     <view class="userview">
-        <image class="avatarview" src="{{user.avatar.square}}"></image>
+        <image class="avatarview" src="{{user.avatarUrl}}"></image>
         <view class="introview">
             <text class="namelabel">{{user.nick}}</text>
             <text class="introlabel">{{date}}</text>

@@ -1,19 +1,24 @@
 <view class="container">
-    <scroll-view style="height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
+<block wx:if="{{loadingDataError}}">
+    <import src="../../templates/errorview.wxml"/>
+    <template is="errorview"></template>
+</block>
+<block wx:else>
+    <scroll-view wx:if="{{userInfo}}" style="height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
         <!--发布者头像--> 
         <import src="../../templates/userview"/>
-        <template is="userview" data="{{...userInfo, left}}"></template>
+        <template is="userview" data="{{...userInfo}}"></template>
         <!--发布的内容-->
-        <view class="contentview" style="padding:0 {{left}}rpx;">
+        <view class="contentview">
             <view class="descriptionview">{{description}}</view>
         </view>
         <!--标签信息-->
         <block wx:if="{{tags.length!=0}}">
             <import src="../../templates/tagsview"/>
-            <template is="tagsview" data="{{tags, left}}"></template>
+            <template is="tagsview" data="{{tags}}"></template>
         </block>
         <!--地理位置，查看次数信息-->
-        <view class="otherinfoview"  style="padding: {{tags.length==0?37:0}}rpx {{left}}rpx 37rpx {{left}}rpx">
+        <view class="otherinfoview"  style="padding: {{tags.length==0?37:0}}rpx 28rpx 37rpx 28rpx">
             <view>
                 <image class="iconview" src="../../resource/images/location-icon-blue.png"></image>
                 <text class="otherlabel">{{city}}</text>
@@ -30,32 +35,35 @@
         <!--如果有图片-->
         <block wx:if="{{images.length > 0}}">
             <import src="../../templates/imagesview"/>
-            <template is="imagesview" data="{{images, left}}"></template>
+            <template is="imagesview" data="{{images}}"></template>
         </block>
         <!--点赞用户-->
-        <block wx:if="{{showLikers}}">
+        <block wx:if="{{likers.length}}">
             <import src="../../templates/likersview"/>
-            <template is="likersview" data="{{likers, top, left}}"></template>
+            <template is="likersview" data="{{likers}}"></template>
         </block>
         <!--如果有申请人-->
-        <!--wx:if="{{winnerInfo}}"-->
-        <block>
+        <block wx:if="{{winnerInfo}}">
             <import src="../../templates/winnerview"/>
-            <template is="winnerview" data="{{...winnerInfo, left}}"></template>
+            <template is="winnerview" data="{{...winnerInfo}}"></template>
         </block>
         <!--如果申请-->
-        <!--<block wx:if="{{applicationCount > 0}}" wx:key="*this">
-            <view style="padding: {{top}}rpx {{left}}rpx {{top}}rpx {{left}}rpx; background-color:white; font-size:14px; margin-top:{{top}}rpx;">
-            申请人({{applicationCount}})
-            </view>
-            <block wx:for="{{applicantors}}" wx:key="applicantor">
+        <block wx:if="{{applicationCount > 0}}">
+            <view class="applicantview">申请人({{applicationCount}})</view>
+            <block wx:if="{{topApplicantors.length}}">
+                <block wx:for="{{topApplicantors}}">
+                    <import src="../../templates/applicantorview"/>
+                    <template is="applicantorview" data="{{...item}}"></template>
+                </block>
+                <view class="hottitle">以上为热门申请</view>
+            </block>
+            <block wx:for="{{applicantors}}">
                 <import src="../../templates/applicantorview"/>
-                <template is="applicantorview" data="{{...item, top, left}}"></template>
+                <template is="applicantorview" data="{{...item}}"></template>
             </block>
         </block>
-        <block wx:if="{{applicationCount > 0}}" wx:key="*this">
         <import src="../../templates/loadingmoreview.wxml"/>
         <template is="loadingmoreview" data="{{hasMore}}"></template>
-      </block>-->
     </scroll-view>
+</block>
 </view>

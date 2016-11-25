@@ -82,5 +82,13 @@ Page({
     });
     this.showloadingView();
     this.loadLastestListing()
+  },
+  clickOnLastestadcell: function(e) {
+    let tag = e.currentTarget.dataset.tag;
+    let item = this.data.items[tag];
+    var url = '../addetail/addetail?id=' + item.display.content.adId; 
+    wx.navigateTo({
+      url: url
+    });
   }
 })

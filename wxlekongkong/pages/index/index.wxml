@@ -22,7 +22,7 @@
         <template is="lastestview" data="{{...lastestItems, vinteval}}"></template>
       </block>
       <!--晒单专区-->
-      <view wx:if="{{topicItems}}" class="topicbanner" style="margin-top:{{vinteval}}rpx;">
+      <view wx:if="{{topicItems}}" class="topicbanner" style="margin-top:{{vinteval}}rpx;" bindtap="clickOnTopicView">
         <image mode="aspectFill" src="{{topicItems}}"></image>
       </view>
       <!--小空送-->

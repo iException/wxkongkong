@@ -3,12 +3,17 @@
 @import "../../templates/imagesview.wxss";
 @import "../../templates/likersview.wxss";
 @import "../../templates/winnerview.wxss";
-/* loadingmoreview template style */
 @import "../../templates/loadingmoreview.wxss";
+@import "../../templates/errorview.wxss";
+@import "../../templates/applicantorview.wxss";
 
 .container .contentview
 {
     background-color: white;
+}
+
+.container .contentview {
+    padding:0 28rpx;
 }
 
 .container .contentview .descriptionview {
@@ -25,7 +30,7 @@
     align-items: center;
     flex-direction: row;
     background-color: white;
-    justify-content: space-between;
+    justify-content: space-between;   
 }
 
 .container .otherinfoview view {
@@ -44,3 +49,20 @@
     font-size: 12px;
     margin-left: 12rpx;
 }
+
+.container .applicantview {
+    font-size:14px;
+    margin-top:20rpx;
+    padding: 20rpx 28rpx;
+    background-color:white;
+    border-width: 0 0 1rpx 0;
+    border-style: solid;
+    border-color: #969696;
+}
+
+.container .hottitle {
+    color: #10b7f5;
+    font-size: 10px;
+    align-content: center;
+    justify-content: center;
+} 

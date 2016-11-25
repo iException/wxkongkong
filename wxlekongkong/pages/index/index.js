@@ -246,6 +246,7 @@ Page({
         result.content.applicationCount -= 0;
         result.content.commentNum -= 0;
         result.style = "adview";
+        result.content.user.avatarUrl = result.content.user.avatar.square;
         items.push(result);
         this.customerData.lastId = result.content.id;
       }
@@ -294,7 +295,10 @@ Page({
     })
   },
   clickOnTopicView: function(e) {
-
+    let url = '../topic/topic';
+    wx.navigateTo({
+      url: url
+    })
   },
   clickCheckMoreCelebritys: function(e) {
 
@@ -312,8 +316,9 @@ Page({
   },
   gotoAdDetailView: function(adInfo) {
     app.globalData.adInfo = adInfo;
+    var url = '../addetail/addetail?id=' + adInfo.id; 
     wx.navigateTo({
-      url: '../addetail/addetail'
+      url: url
     });
   }
 })
