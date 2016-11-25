@@ -12,7 +12,7 @@
     <view class="contentview">
         <text>{{description}}</text>
     </view>
-    <scroll-view wx:if="{{images.length>0}}" scroll-x="true" class="imagesview">
+    <scroll-view wx:if="{{images&&limages.length>0}}" scroll-x="true" class="imagesview">
         <block wx:for="{{images}}" wx:key="imageshey">
             <image class="imageview" src="{{item.square}}"></image>
         </block>
