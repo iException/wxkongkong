@@ -8,6 +8,6 @@
             </view>
         </view>
         <view class="reasonview">{{reason}}</view>
-        <view class="dottedline"></view>
+        <view wx:if="{{!isBottom}}" class="dottedline"></view>
     </view>
 </template>

@@ -1,5 +1,5 @@
 .loadingmoreview {
-    font-size: 12px;
+    font-size: 13px;
     color: #909090;
     height: 80rpx;
     display: flex;

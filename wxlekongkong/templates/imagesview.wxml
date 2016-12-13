@@ -1,8 +1,8 @@
 <template name="imagesview">
-    <view class="imagesview">
+    <view class="imagesview" style="background-color: white; padding-bottom: 28rpx">
         <block wx:for="{{images}}">
-            <image class="imageview" id="{{index}}" src="{{item.square}}" mode="scaleToFill" bindload="imageLoaded" 
-             style="width: {{item.width}}px; height:{{item.height}}px; margin-left:{{item.left}}px; margin-right:{{item.right}}px;"></image>
+            <image class="imageview" data-index="{{index}}" src="{{item.square}}" mode="scaleToFill" bindload="imageLoaded" 
+             style="width: {{item.width}}px; height:{{item.height}}px; margin-left:{{item.left}}px; margin-top: {{item.top}}px;"></image>
         </block>
         <view class="bottomview"></view>
     </view>

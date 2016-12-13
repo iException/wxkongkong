@@ -17,13 +17,12 @@ Page({
   },
   onLoad: function(options){
     // 页面初始化 options为页面跳转所带来的参数
-    this.customerData.tag = options['keyword'];
-    this.customerData.bannerImage = "../../resource/images/" + options['bannerimage'];
+    this.customerData.tag = options['keyword']
+    this.showLoadingView()
+    this.loadAdDatasWithType(true)
   },
   onReady: function(){
     // 页面渲染完成
-    this.showLoadingView();
-    this.loadAdDatasWithType(true);
     wx.setNavigationBarTitle({
       title: this.customerData.tag
     })
@@ -141,12 +140,9 @@ Page({
       }
     }
 
-    var hasMore = results.length >= kPageSize;
-    var bannerImage = this.customerData.bannerImage;
     this.setData({
       items: items,
-      hasMore: hasMore,
-      bannerImage: bannerImage
+      hasMore: (results.length >= kPageSize),
     });
     
   },

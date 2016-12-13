@@ -3,11 +3,7 @@
 
 <template name="loadingmoreview">
 <view class="loadingmoreview">
-    <block wx:if="{{hasMore}}">
-        <text style="font-size: 13px; margin-left: 10px;">加载更多...</text>
-    </block>
-    <block wx:else>
-        <text style="font-size: 13px;">没有更多数据了...</text>
-    </block>
+<text wx:if="{{hasMore}}">加载更多...</text>
+<text wx:else="{{hasMore}}">无更多数据...</text>
 </view>
 </template>

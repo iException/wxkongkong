@@ -13,12 +13,12 @@
             <view class="descriptionview">{{description}}</view>
         </view>
         <!--标签信息-->
-        <block wx:if="{{tags&&tags.length!=0}}">
+        <block wx:if="{{tags}}">
             <import src="../../templates/tagsview"/>
             <template is="tagsview" data="{{tags}}"></template>
         </block>
         <!--地理位置，查看次数信息-->
-        <view class="otherinfoview"  style="padding: {{tags&&tags.length==0?37:0}}rpx 28rpx 37rpx 28rpx">
+        <view class="otherinfoview"  style="padding: 0 28rpx 37rpx 28rpx">
             <view>
                 <image class="iconview" src="../../resource/images/location-icon-blue.png"></image>
                 <text class="otherlabel">{{city}}</text>
@@ -33,12 +33,12 @@
             </view>
         </view>
         <!--如果有图片-->
-        <block wx:if="{{images&&images.length > 0}}">
+        <block wx:if="{{images.length}}">
             <import src="../../templates/imagesview"/>
             <template is="imagesview" data="{{images}}"></template>
         </block>
         <!--点赞用户-->
-        <block wx:if="{{likers&&likers.length}}">
+        <block wx:if="{{likers.length}}">
             <import src="../../templates/likersview"/>
             <template is="likersview" data="{{likers}}"></template>
         </block>
@@ -50,12 +50,12 @@
         <!--如果申请-->
         <block wx:if="{{applicationCount > 0}}">
             <view class="applicantview">申请人({{applicationCount}})</view>
-            <block wx:if="{{topApplicantors&&topApplicantors.length}}">
+            <block wx:if="{{topApplicantors.length}}">
                 <block wx:for="{{topApplicantors}}">
                     <import src="../../templates/applicantorview"/>
                     <template is="applicantorview" data="{{...item}}"></template>
                 </block>
-                <view class="hottitle">以上为热门申请</view>
+                <view class="hottitle"><text>以上为热门申请</text></view>
             </block>
             <block wx:for="{{applicantors}}">
                 <import src="../../templates/applicantorview"/>

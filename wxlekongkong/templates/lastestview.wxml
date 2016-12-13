@@ -1,7 +1,7 @@
 <!--空空动态模板-->
 <!--adimage:物品图像地址，-->
 <template name="lastestview">
-<view class="lastestview" style="margin-top:{{vinteval}}rpx;" bindtap="clickOnLastestView">
+<view class="lastestview" bindtap="clickOnLastestView">
     <image class="adimage" src="{{display.content.image}}"></image>
     <view class="adinfoview">
         <view class="userinfoview">

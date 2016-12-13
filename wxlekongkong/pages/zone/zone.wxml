@@ -6,9 +6,9 @@
 </block>
 <block wx:else>
     <scroll-view style="width:100%; height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
-        <image class="bannerimage" mode="aspectFill" src="{{bannerImage}}"></image>
+        <!--<image class="bannerimage" mode="aspectFill" src="{{bannerImage}}"></image>-->
         <!--adview-->
-        <block wx:if="{{items&&items.length>0}}">
+        <block wx:if="{{items}}">
         <import src="../../templates/adview.wxml"/>
         <block wx:for="{{items}}" wx:key="adview">
             <template is="{{item.style}}" data="{{...item.content, index, vinteval:20}}"></template>

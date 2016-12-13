@@ -12,33 +12,33 @@
         </view>
       </block>
       <!--类别view-->
-      <block wx:if="{{categoryItems&&categoryItems.length>0}}">
+      <block wx:if="{{categoryItems.length}}">
         <import src="../../templates/categoryview.wxml"></import>
         <template is="categoryview" data="{{items: categoryItems}}"></template>
       </block>
       <!--最新交易-->
       <block wx:if="{{lastestItems}}">
         <import src="../../templates/lastestview.wxml"/>
-        <template is="lastestview" data="{{...lastestItems, vinteval}}"></template>
+        <template is="lastestview" data="{{...lastestItems}}"></template>
       </block>
       <!--晒单专区-->
-      <view wx:if="{{topicItems}}" class="topicbanner" style="margin-top:{{vinteval}}rpx;" bindtap="clickOnTopicView">
+      <view wx:if="{{topicItems}}" class="topicbanner" style="margin-top: 20rpx;" bindtap="clickOnTopicView">
         <image mode="aspectFill" src="{{topicItems}}"></image>
       </view>
       <!--小空送-->
-      <block wx:if="{{celebrityItems}}">
+      <block wx:if="{{celebrityItems.length}}">
         <import src="../../templates/celebritybanner.wxml"/>
-        <template is="celebritybanner" data="{{items: celebrityItems.children, vinteval}}"></template>
+        <template is="celebritybanner" data="{{items: celebrityItems.children}}"></template>
       </block>
       <!--adview-->
-      <block wx:if="{{items&&items.length>0}}">
+      <block wx:if="{{items.length}}">
         <import src="../../templates/adview.wxml"/>
         <block wx:for="{{items}}" wx:key="adview">
-          <template is="{{item.style}}" data="{{...item.content, index, vinteval}}"></template>
+          <template is="{{item.style}}" data="{{...item.content, index}}"></template>
         </block>
       </block>
       <!--首次加载转菊花-->
-      <block wx:if="{{!firstloadingData}}" wx:key="*this">
+      <block wx:if="{{!firstloadingData}}">
         <import src="../../templates/loadingmoreview.wxml"/>
         <template is="loadingmoreview" data="{{hasMore}}"></template>
       </block>

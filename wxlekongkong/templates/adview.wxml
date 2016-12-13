@@ -1,7 +1,7 @@
 <!--adview模板-->
 <!--data: infos[{avatar, name, time, content, adimages}]-->
 <template name="adview">
-<view class="adview" bindtap="clickOnAdView" data-index="{{index}}" id="{{index}}" style="margin-top:{{vinteval}}rpx;">
+<view class="adview" bindtap="clickOnAdView" data-index="{{index}}">
     <view class="userview">
         <image class="avatarview" src="{{user.avatarUrl}}"></image>
         <view class="introview">
@@ -12,7 +12,7 @@
     <view class="contentview">
         <text>{{description}}</text>
     </view>
-    <scroll-view wx:if="{{images&&limages.length>0}}" scroll-x="true" class="imagesview">
+    <scroll-view wx:if="{{images}}" scroll-x="true" class="imagesview">
         <block wx:for="{{images}}" wx:key="imageshey">
             <image class="imageview" src="{{item.square}}"></image>
         </block>

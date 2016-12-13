@@ -1,6 +1,6 @@
 <!--首页小空送-->
 <template name="celebritybanner">
-    <view class="celebrityview" style="margin-top: {{vinteval}}rpx">
+    <view class="celebrityview">
         <view class="titleview">
             <text class="titlelbl">小空送</text>
             <text class="alllbl" bindtap="checkAllCelebrity">查看全部></text>

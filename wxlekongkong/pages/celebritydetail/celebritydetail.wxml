@@ -6,7 +6,7 @@
         <!--发布的内容-->
         <view class="descriptionview">{{description}}</view>
         <!--如果有图片-->
-        <block wx:if="{{images&&images.length > 0}}">
+        <block wx:if="{{images}}">
             <import src="../../templates/imagesview"/>
             <template is="imagesview" data="{{images, left}}"></template>
         </block>

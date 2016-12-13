@@ -1,13 +1,12 @@
-const kPageSize = 30;
-var app = getApp();
-var config = require("../../config.js");
-var util = require("../../utils/util.js");
-var apimanager = require("../../utils/apimanager.js");
+const kPageSize = 10
+var app = getApp()
+var config = require("../../config.js")
+var util = require("../../utils/util.js")
+var apimanager = require("../../utils/apimanager.js")
 
 Page({
   data: {
     items: [],
-    vinteval: 20,
     windowHeight: 400,
     hasMore: false,//是否还有更多数据可以加载.
     loadingDataError: false,
@@ -15,7 +14,6 @@ Page({
   },
   customerData: {
     SV: 1,
-    lastId: 0,
     loadingIdx: 0,
     selectedctgindex: 0,//当前选择的index.
     isloadingMore: false,//是否正在加载跟多中...
@@ -23,20 +21,21 @@ Page({
   },
   onLoad: function(options){
     // 页面初始化 options为页面跳转所带来的参数
+    console.log('loadPagelyoutDatas')
+    this.reloadDatas()
   },
   onReady: function(){
     // 页面渲染完成
-    console.log('loadPagelyoutDatas');
-    this.loadPagelyoutDatas();
   },
   onShow: function(){
     // 页面显示
-    var that = this;
+    var that = this
     wx.getSystemInfo( {
       success: ( res ) => {
         that.setData( {
           windowHeight: res.windowHeight
-        });
+        })
+        console.log(res.windowHeight)
       }
     })
   },
@@ -48,12 +47,12 @@ Page({
   },
   scrolltolower: function(e) {
     if (!this.customerData.isloadingMore) {
-      this.loadAdDataWithType(false);
+      this.loadAdDataWithType(false)
     }
   },
-  loadPagelyoutDatas: function() {
-    this.showloadingView();
-    this.onPullDownRefresh();
+  reloadDatas: function() {
+    this.showloadingView()
+    this.onPullDownRefresh()
   },
   showloadingView: function() {
     if (this.data.firstloadingData) {
@@ -67,74 +66,79 @@ Page({
   onPullDownRefresh: function() {
     //下拉刷新
     if (this.customerData.isloadingMore) {
-      wx.stopPullDownRefresh();
-      return ;
+      wx.stopPullDownRefresh()
+      return 
     }
-    this.customerData.isloadingMore = true;
-    this.resetLoadAdDataPrams();
+    this.customerData.isloadingMore = true
+    this.resetLoadAdDataPrams()
 
     var params = {
       SV: '4',
       id: '0',
       opts: '',
       channel: 'quanbu'
-    };
-    var url = config.getHomePageLayoutUrl();
-    var that = this;
+    }
+    var url = config.getHomePageLayoutUrl()
+    var that = this
     apimanager.request({url: url, 
                         data: params,
                         method: 'GET',
                         success: function(ret) {
-                          that.loadPlageyoutDataSuccess(ret);
+                          wx.hideToast()
+                          that.loadPlageyoutDataSuccess(ret)
                         },
                         fail: function() {
-                          that.loadingDataFailed();
-                        }});
+                          that.loadingDataFailed()
+                        }})
   },
   resetLoadAdDataPrams: function() {
-    this.customerData.lastId = 0;
-    this.customerData.loadingIdx = 0;
+    this.setData({
+      loadingDataError: false
+    })
+    this.customerData.loadingIdx = 0
   },
   loadPlageyoutDataSuccess: function(ret) {
-    var results = ret['data']['result'];
-    var lastestItems;
-    var celebrityItems;
+    var results = ret['data']['result']
+    var lastestItems
+    var celebrityItems
     for(let i = 0; i < results.length; i++) {
-      let item = results[i];
+      let item = results[i]
       if (item['display']['style'] == 'HomeLatestSection') {
-        lastestItems = item;
-        continue;
+        lastestItems = item
+        continue
       } else if (item['display']['style'] == 'DiscoverySectionScrollable') {
-        celebrityItems = item;
-        continue;
+        celebrityItems = item
+        continue
       }
     }
 
     for (let i = 0; i < celebrityItems.children.length; i++) {
-      let item = celebrityItems.children[i];
-      item.display.content.statusString = item.display.content.status==1 ? "尚未开始" : (item.display.content.status==2 ? "活动进行中" : "活动已结束");
-      console.log(item); 
+      let item = celebrityItems.children[i]
+      item.display.content.statusString = item.display.content.status==1 ? "尚未开始" : (item.display.content.status==2 ? "活动进行中" : "活动已结束")
     }
 
-    var categoryItems = this.categoryItems();
-    var topicItems = this.topicItems();
-    var activityItems = this.activityItems();
-    console.log("celebrityItems");
-    console.log(celebrityItems['children']);
+    var categoryItems = this.categoryItems()
+    var topicItems = this.topicItems()
+    var activityItems = this.activityItems()
+    console.log("celebrityItems")
+    console.log(celebrityItems['children'])
     
     this.setData({
       activityItems: activityItems,
-      categoryItems: categoryItems,
+      categoryItems: categoryItems ? categoryItems : [],
       lastestItems: lastestItems['children'][0],
-      topicItems: topicItems,
-      celebrityItems: celebrityItems
-    });
+      topicItems: topicItems ? topicItems : [],
+      celebrityItems: celebrityItems ? celebrityItems : []
+    })
 
-    //加载ad列表信息
-    this.loadAdDataWithType(true);
+    var that = this
+    setTimeout(function(){
+      //加载ad列表信息
+      that.loadAdDataWithType(true)
+    }, 500)
   },
   activityItems: function() {
-    return '../../resource/images/banner_intro.jpg';
+    return '../../resource/images/banner_intro.jpg'
   },
   categoryItems: function() {
     return [
@@ -178,46 +182,44 @@ Page({
         title: "个护美妆",
         bannerimage: "banner_gehu.jpg"
       }
-    ];
+    ]
   },
   topicItems: function() { 
-    return "../../resource/images/banner_shaidan.jpg";
+    return "../../resource/images/banner_shaidan.jpg"
   },
   loadAdDataWithType: function(isRefresh) {
     var opts = {
       "from" : kPageSize * (this.customerData.loadingIdx + 1),
       "size" : kPageSize,
       "banner": false
-    };
+    }
     var params = {
       SV: this.customerData.SV,
-      id: this.customerData.lastId,
       opts: JSON.stringify(opts)
-    };
-    var that = this;
+    }
+    var that = this
     apimanager.request({
       url: config.getAdListUrl(),
       data: params,
       method: 'GET',
       success: function(res) {
         // success
-        wx.hideToast();
-        that.loadingDataSuccessed(isRefresh, res.data);
+        that.loadingDataSuccessed(isRefresh, res.data)
       },
       fail: function() {
         // fail
-        that.loadingDataFailed();
+        that.loadingDataFailed()
       },
       complete: function() {
         // complete
-        that.loadingDataComplete(isRefresh);
+        that.loadingDataComplete(isRefresh)
       }
-    });
+    })
   },
   loadingDataSuccessed(isRefresh ,res) {
     if (res.type != "data") {
-      this.loadingDataFailed();
-      return;
+      this.loadingDataFailed()
+      return
     }
 
     //处理加载数据
@@ -228,66 +230,66 @@ Page({
       if (this.data.firstloadingData) {
         this.setData({
           firstloadingData: false
-        });
+        })
       }
     }
-    this.customerData.loadingIdx += 1;
+    this.customerData.loadingIdx += 1
 
-    var results = res.result;
-    var items = this.data.items;
+    var results = res.result
+    var items = this.data.items
     for (let key in results) {
-      var result = results[key].display;
+      var result = results[key].display
       if (result.style == "ad_item") {
-        result.content.description = result.content.title + result.content.content;
-        result.content.city = result.content.region.names.join("|");
-        var date = new Date(result.content.createdAt * 1000);
-        result.content.date = util.adFormatTime(date);
-        result.content.likeCount -= 0;
-        result.content.applicationCount -= 0;
-        result.content.commentNum -= 0;
-        result.style = "adview";
-        result.content.user.avatarUrl = result.content.user.avatar.square;
-        items.push(result);
-        this.customerData.lastId = result.content.id;
+        result.content.description = result.content.title + result.content.content
+        result.content.city = result.content.region.names.join("|")
+        var date = new Date(result.content.createdAt * 1000)
+        result.content.date = util.adFormatTime(date)
+        result.content.likeCount -= 0
+        result.content.applicationCount -= 0
+        result.content.commentNum -= 0
+        result.style = "adview"
+        result.content.user.avatarUrl = result.content.user.avatar.square
+        items.push(result)
       }
     }
 
-    var hasMore = results.length >= kPageSize;
+    var hasMore = results.length >= kPageSize
     this.setData({
       items: items,
       hasMore: hasMore
-    });
+    })
   },
   loadingDataFailed() {
     //如果无数据，加载失败，显示点击重新加载，按钮.
+    this.customerData.isloadingMore = false
     wx.showToast({
       title: "加载数据失败",
       duration: 2000
-    });
+    })
     if (this.data.firstloadingData) {
       this.setData({
         loadingDataError: true
-      });
+      })
     }
   },
   loadingDataComplete(isRefresh) {
     if (isRefresh) {
-      wx.stopPullDownRefresh();
+      wx.stopPullDownRefresh()
     }
-    var that = this;
+    var that = this
     setTimeout(function() {
-        that.customerData.isloadingMore = false;
-      }, 1000);
+        that.customerData.isloadingMore = false
+      }, 1000)
   },
   clickOnBannerIntroView: function() {
 
   },
   clickOnCategoryView: function(e) {
-    var tag = this.data.categoryItems[e.currentTarget.dataset.tag];
-    var url = "../zone/zone?keyword=" + tag.title + "&bannerimage=" + tag.bannerimage;
+    var tag = this.data.categoryItems[e.currentTarget.dataset.tag]
+    var url = "../zone/zone?keyword=" + tag.title + "&bannerimage=" + tag.bannerimage
     wx.navigateTo({
       url: url
-    });
+    })
   },
   clickOnLastestView: function(e) {
     wx.navigateTo({
@@ -295,7 +297,7 @@ Page({
     })
   },
   clickOnTopicView: function(e) {
-    let url = '../topic/topic';
+    let url = '../topic/topic'
     wx.navigateTo({
       url: url
     })
@@ -308,17 +310,17 @@ Page({
   },
   clickOnAdView: function(e) {
     //点击adView
-    var idx = e.currentTarget.id - 0;
-    var adInfo = this.data.items.length > idx && this.data.items[idx];
+    var idx = e.currentTarget.dataset.index - 0
+    var adInfo = this.data.items.length > idx && this.data.items[idx]
     if (adInfo) {
-      this.gotoAdDetailView(adInfo.content);
+      this.gotoAdDetailView(adInfo.content)
     }
   },
   gotoAdDetailView: function(adInfo) {
-    app.globalData.adInfo = adInfo;
-    var url = '../addetail/addetail?id=' + adInfo.id; 
+    app.globalData.adInfo = adInfo
+    var url = '../addetail/addetail?id=' + adInfo.id 
     wx.navigateTo({
       url: url
-    });
+    })
   }
 })

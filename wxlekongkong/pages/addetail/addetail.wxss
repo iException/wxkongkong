@@ -1,6 +1,5 @@
 @import "../../templates/userview.wxss";
 @import "../../templates/tagsview.wxss";
-@import "../../templates/imagesview.wxss";
 @import "../../templates/likersview.wxss";
 @import "../../templates/winnerview.wxss";
 @import "../../templates/loadingmoreview.wxss";
@@ -55,7 +54,7 @@
     margin-top:20rpx;
     padding: 20rpx 28rpx;
     background-color:white;
-    border-width: 0 0 1rpx 0;
+    border-width: 0 0 0.5rpx 0;
     border-style: solid;
     border-color: #969696;
 }
@@ -63,6 +62,8 @@
 .container .hottitle {
     color: #10b7f5;
     font-size: 10px;
-    align-content: center;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
+    background-color: white;
 } 

@@ -2,6 +2,7 @@
     width: 100%;
     background-color: white;
     padding: 34rpx 0 28rpx 0;
+    margin-top: 20rpx
 }
 
 .celebrityview .titleview {

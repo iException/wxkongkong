@@ -13,7 +13,7 @@
         <view class="thanksview" wx:if="{{thanks&&thanks.length}}">
             <text class="titlelbl">发表感谢</text>
             <text class="reasonlbl">{{thanks}}</text>
-            <image wx:if="{{thanksImage&&thanksImage.length}}" class="thanksimage" src="{{thanksImage}}" 
+            <image wx:if="{{thanksImage}}" class="thanksimage" src="{{thanksImage}}" 
             bindload="thanksimageloaded" style="width:{{width}}rpx; height:{{height}}rpx;"></image>
         </view>
     </view>

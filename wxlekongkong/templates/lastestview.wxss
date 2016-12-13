@@ -1,10 +1,10 @@
 .lastestview {
-    width: 100%;
     background-color: white;
     display: flex; 
     flex-direction: row;
     align-items: center;
     padding: 28rpx;
+    margin-top: 20rpx;
 }
 
 .lastestview .adimage {
@@ -16,7 +16,8 @@
     display: flex;
     flex-direction: column;
     margin-left: 24rpx;
-    width: 590rpx;
+    width: 500rpx;
+    margin-right: auto;
 }
 
 .lastestview .adinfoview .userinfoview {

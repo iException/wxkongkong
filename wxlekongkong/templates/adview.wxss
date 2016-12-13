@@ -1,6 +1,7 @@
 .adview {
     padding: 28rpx 28rpx 36rpx 28rpx;
     background-color: white;
+    margin-top: 20rpx;
 }
 
 .adview .userview {

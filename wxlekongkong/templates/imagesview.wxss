@@ -1,7 +1,0 @@
-.imagesview {
-    background-color: white;
-}
-
-.imagesview .imageview {
-    margin-bottom: 14rpx;
-}
