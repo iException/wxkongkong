@@ -1,26 +1,15 @@
-var config = require("../../config.js");
-var util = require("../../utils/util.js");
-var apimanager = require("../../utils/apimanager.js");
+let addatamanager = require("../../datamanager/addatamanager.js")
+let routerfactory = require("../../utils/routerfactory.js")
+let router = require("../../utils/router.js")
 
 Page({
   data:{
+    items: []//信息列表.
   },
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
     this.showloadingView()
     this.loadLastestListing()
-  },
-  onReady:function(){
-    // 页面渲染完成
-  },
-  onShow:function(){
-    // 页面显示
-  },
-  onHide:function(){
-    // 页面隐藏
-  },
-  onUnload:function(){
-    // 页面关闭
   },
   showloadingView: function() {
     wx.showToast({
@@ -30,62 +19,40 @@ Page({
     });
   },
   loadLastestListing: function() {
-    var url = config.getLastestAdListingUrl();
-    var that = this;
-    apimanager.request({
-        url: url,
-        method: 'GET',
-        success: function(ret) {
-            that.loadLastestListingSuccess(ret);
-        },
-        fail: function() {
-            that.loadLastestListingFail();
-        },
-        complete: function(){
-            setTimeout(function() {
-              wx.hideToast();
-            }, 1000);
-        }});
-  },
-  loadLastestListingSuccess: function(ret) {
-    if (ret.data.type != "data") {
-      this.loadLastestListingFail();
-      return;
-    }
-    
-    var items = ret["data"]["result"];
-    for (let i = 0; i < items.length; i++) {
-        let item = items[i];
-        var date = new Date(item.display.content.timeStamp * 1000);
-        item.display.content.date = util.adFormatTime(date);
-    }
-    this.setData({
+    let success = function() {
+      this.setData({
         items: items
-    });
+      })
+    }
+    let fail = this.loadLastestListingFail
+    let complete = function() {
+      setTimeout(function() {
+        wx.hideToast()
+      }, 1000)
+    }
+    addatamanager.getLastestTradeAds(null, success, fail, complete)
   },
   loadLastestListingFail: function() {
     wx.showToast({
       title: "加载数据失败",
       duration: 2000
-    });
+    })
 
     this.setData({
         loadingDataError: true
-    });
+    })
   },
   loadAdDatas: function() {
     this.setData({
         loadingDataError: false
-    });
-    this.showloadingView();
+    })
+    this.showloadingView()
     this.loadLastestListing()
   },
   clickOnLastestadcell: function(e) {
-    let tag = e.currentTarget.dataset.tag;
-    let item = this.data.items[tag];
-    var url = '../addetail/addetail?id=' + item.display.content.adId; 
-    wx.navigateTo({
-      url: url
-    });
+    let tag = e.currentTarget.dataset.tag
+    let item = this.data.items[tag]
+    let url = routerfactory.adDetailRouterUrl(item.display.content.adId)
+    router.openUrl(url)
   }
 })

@@ -1,10 +1,17 @@
 <view class="container">
   <block wx:if="{{loadingDataError}}">
     <import src="../../templates/errorview.wxml"/>
-    <template is="errorview"></template>
+    <template is="errorview" data="{{windowHeight}}"></template>
   </block>
   <block wx:else>
     <scroll-view style="width:100%; height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
+      <!--搜索框-->
+      <view class="searchview">
+        <view class="containerview">
+          <image class="searchicon" src="../../resource/images/icon_search.png"></image>
+          <text>请输入您要搜索的物品或用户名</text>
+        </view>
+      </view>
       <!--顶部banner-->
       <block wx:if="{{activityItems}}">
         <view class="introbanner">
@@ -17,18 +24,18 @@
         <template is="categoryview" data="{{items: categoryItems}}"></template>
       </block>
       <!--最新交易-->
-      <block wx:if="{{lastestItems}}">
+      <block wx:if="{{lastestItem}}">
         <import src="../../templates/lastestview.wxml"/>
-        <template is="lastestview" data="{{...lastestItems}}"></template>
+        <template is="lastestview" data="{{...lastestItem}}"></template>
       </block>
       <!--晒单专区-->
       <view wx:if="{{topicItems}}" class="topicbanner" style="margin-top: 20rpx;" bindtap="clickOnTopicView">
         <image mode="aspectFill" src="{{topicItems}}"></image>
       </view>
       <!--小空送-->
-      <block wx:if="{{celebrityItems.length}}">
+      <block wx:if="{{celebrityItem}}">
         <import src="../../templates/celebritybanner.wxml"/>
-        <template is="celebritybanner" data="{{items: celebrityItems.children}}"></template>
+        <template is="celebritybanner" data="{{...celebrityItem}}"></template>
       </block>
       <!--adview-->
       <block wx:if="{{items.length}}">

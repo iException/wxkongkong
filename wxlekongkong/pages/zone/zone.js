@@ -1,17 +1,16 @@
-var app = getApp();
-const kPageSize = 30;
-var config = require("../../config.js");
-var util = require("../../utils/util.js");
-var apimanager = require("../../utils/apimanager.js");
+var app = getApp()
+const kPageSize = 30
+var addatamanager = require("../../datamanager/addatamanager.js")
 
 Page({
   data: {
+    items: [],
     hasMore: false,
-    windowHeight: 400,
+    windowHeight: 375,
     firstloadingData: true
   },
   customerData: {
-    lastId: 0,
+    tag: "",
     loadingIdx: 0,
     isInLoading: false
   },
@@ -19,12 +18,13 @@ Page({
     // 页面初始化 options为页面跳转所带来的参数
     this.customerData.tag = options['keyword']
     this.showLoadingView()
-    this.loadAdDatasWithType(true)
+    this.loadMoreAdDatasWithRefreshMode(true)
   },
   onReady: function(){
     // 页面渲染完成
+    let tagName = this.customerData.tag
     wx.setNavigationBarTitle({
-      title: this.customerData.tag
+      title: tagName
     })
   },
   onShow: function(){
@@ -34,154 +34,112 @@ Page({
       success: ( res ) => {
         that.setData( {
           windowHeight: res.windowHeight
-        });
+        })
       }
     })
   },
-  onHide: function(){
-    // 页面隐藏
-    
-  },
-  onUnload: function(){
-    // 页面关闭
-    
-  },
   onPullDownRefresh: function() {
-    this.loadAdDatasWithType(true);
+    this.loadMoreAdDatasWithRefreshMode(true)
   },
   scrolltolower: function(e) {
     if (!this.customerData.isInLoading) {
-      this.loadAdDatasWithType(false);
+      this.loadMoreAdDatasWithRefreshMode(false)
     }
   },
-  loadAdDatasWithType: function(isRefresh) {
+  loadMoreAdDatasWithRefreshMode: function(isRefresh) {
     if(this.customerData.isInLoading) {
-      return;
+      return
     }
     this.customerData.isInLoading = true;
 
     if(isRefresh) {
-      this.resetLoadAdDataPrams();
+      this.resetLoadAdDataPrams()
     }
 
-    var that = this;
-    var url = config.getTagListingUrl();
-    var data = this.getLoadAdDatasParams();
-    apimanager.request({
-      url: url,
-      data: data, 
-      method: 'GET',
-      success: function(ret) {
-        that.loadAdDatasSuccess(isRefresh, ret);
-      },
-      fail: function(){
-        that.loadAdDatasFail(isRefresh);
-      },
-      complete: function(){
-        setTimeout(function() {
-          that.hideLoadingView();
-          that.customerData.isInLoading = false;
-        }, 1000);
-      }});
+    let that = this
+    let params = this.loadAdDatasParams()
+    let success = function(items) {
+      that.loadMoreAdDatasSuccess(isRefresh, items)
+    }
+    let fail = this.loadMoreAdDatasFail
+    let complete = function() {
+      setTimeout(function() {
+        that.customerData.isInLoading = false
+      }, 1000)
+    }
+    addatamanager.getAdsByTag(params, success, fail, complete)
   },
   resetLoadAdDataPrams: function() {
-    this.customerData.lastId = 0;
     this.customerData.loadingIdx = 0;
   },
-  getLoadAdDatasParams: function() {
+  loadAdDatasParams: function() {
     var opts = {
       "from" : kPageSize * (this.customerData.loadingIdx + 1),
       "size" : kPageSize,
       "banner": false
     };
     return {
-      lastId: this.customerData.lastId,
       opts: JSON.stringify(opts),
       tags: this.customerData.tag
     };
   },
-  loadAdDatasSuccess: function(isRefresh, ret) {
-    if (ret.data.type != "data") {
-      this.loadAdDatasFail();
-      return;
-    }
+  loadMoreAdDatasSuccess: function(isRefresh, retItems) {
+    this.hideLoadingView()
 
     //处理加载数据
     if (isRefresh) {
       this.data.items = []
-      this.customerData.items = []
 
       if (this.data.firstloadingData) {
         this.setData({
           firstloadingData: false
-        });
+        })
       }
     }
-    this.customerData.loadingIdx += 1;
+    this.customerData.loadingIdx += 1
 
-    var results = ret.data.result;
-    var items = this.data.items;
-    for (let key in results) {
-      var result = results[key].display;
-      if (result.style == "HomeRegionListAd") {
-        result.content.city = result.content.region;
-        var date = new Date(result.content.createdAt * 1000);
-        result.content.date = util.adFormatTime(date);
-        result.content.likeCount -= 0;
-        result.content.applicationCount -= 0;
-        result.content.commentNum -= 0;
-        result.content.user.avatarUrl = result.content.user.avatar;
-        if(!result.content.commentNum) {
-          result.content.commentNum = 0;
-        }
-        result.style = "adview";
-        items.push(result);
-        this.customerData.lastId = result.content.id;
-      }
-    }
-
+    let items = this.data.items
+    items = items.concat(retItems)
     this.setData({
       items: items,
-      hasMore: (results.length >= kPageSize),
-    });
-    
+      hasMore: (retItems.length >= kPageSize),
+    })
   },
-  loadAdDatasFail: function(isRefresh) {
+  loadMoreAdDatasFail: function(isRefresh) {
     wx.showToast({
       title: "加载数据失败",
       duration: 2000
-    });
+    })
+
     if (this.data.firstloadingData) {
       this.setData({
         loadingDataError: true
-      });
-    }
-  },
-  showLoadingView: function() {
-    if (this.data.firstloadingData) {
-      wx.showToast({
-        title: '加载中',
-        icon: 'loading',
-        duration: 10000
       })
     }
   },
+  showLoadingView: function() {
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading',
+      duration: 10000
+    })
+  },
   hideLoadingView: function() {
-    wx.hideToast();
+    wx.hideToast()
   },
   clickOnAdView: function(e) {
     //点击adView
-    var idx = e.currentTarget.id - 0;
+    var idx = e.currentTarget.dataset.index - 0;
     var adInfo = this.data.items.length > idx && this.data.items[idx];
     if (adInfo) {
       this.gotoAdDetailView(adInfo.content);
     }
   },
   gotoAdDetailView: function(adInfo) {
-    app.globalData.adInfo = adInfo;
-    var url = '../addetail/addetail?id=' + adInfo.id;
+    app.globalData.adInfo = adInfo
+    var url = '../addetail/addetail?id=' + adInfo.id
     wx.navigateTo({
       url: url
-    });
+    })
   }
 })

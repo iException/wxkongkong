@@ -1,0 +1,17 @@
+/* loadingmoreview template style */
+@import "../../templates/loadingmoreview.wxss";
+/* adview template style */
+@import "../../templates/adview.wxss";
+/* categoryview template style*/
+@import "../../templates/categoryview.wxss";
+/*lastestview template style*/
+@import "../../templates/lastestview.wxss";
+/*celebritybanner template style*/
+@import "../../templates/celebritybanner.wxss";
+/*celebrityuserview template style*/
+@import "../../templates/celebrityuserview.wxss";
+
+
+.descriptionview {
+    padding: 0 28rpx;
+}

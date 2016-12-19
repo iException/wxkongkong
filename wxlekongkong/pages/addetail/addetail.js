@@ -5,14 +5,30 @@ var config = require("../../config.js")
 var util = require("../../utils/util.js")
 var apimanager = require("../../utils/apimanager.js")
 
+let imagehelper = require("../../utils/imagehelper.js")
+let applicant = require("../../datamanager/applicants.js")
+let addatamanager = require("../../datamanager/addatamanager.js")
+
 Page({
   data:{
-    hasMore: true,    //是否有更多数据.
-    applicantors: [],
-    loadingDataError: false
+    userInfo: undefined, //poster信息
+    images: [], //ad图片
+    tags: [], //ad的标签
+    date: "", //ad日期
+    city: "", //poster地址
+    likers: [], //点赞的用户
+    description: "", //ad描述
+    readTimes: "",  //阅读次数
+    applicationCount: 0,  //申请数量
+    winnerInfo: undefined,  //获赠者
+    norApplicantors: [],      //正常申请者
+    hotApplicantors: [],      //热门申请
+    hasMoreApplicantors: true,//是否有更多申请者
+    loadingDataError: false   //加载是否失败标签
   },
   customerData: {
     lastId: 0,
+    adInfoExist: false,
     isloadingMore: false
   },
   onLoad:function(options){
@@ -29,94 +45,64 @@ Page({
     }
 
     var info = app.globalData.adInfo
-    app.globalData.adInfo=undefined
+    app.globalData.adInfo = undefined
     //存在ad信息，直接显示页面，否则，先加载.
     if(info) {
-      this.updateAdInfo(info)
+      this.updateAdDetailInfo(info)
     } else {
       this.showLoadingAdInfoView()
     }
     this.loadAdDatas()
   },
-  onReady:function(){
-  },
   showLoadingAdInfoView: function() {
     wx.showToast({
       title: '加载中',
       icon: 'loading',
-      duration: 100000
+      duration: 1000
     })
   },
   hideLoadingAdInfoView: function() {
     wx.hideToast()
   },
   loadAdDatas: function() {
-    var url = config.getAdDetailUrl()
-    var params = this.loadAdInoParams()
-    var that = this
-    apimanager.request({
-      url: url,
-      data: params,
-      method: 'GET',
-      success: function(res) {
-        that.loadAdInfoSuccess(res)
-      }, 
-      fail: function() {
-        that.loadAdInfoFail()
-      },
-      complete: function() {
-        that.hideLoadingAdInfoView()
-      }})
+    let that = this
+    let params = this.adDetailInfoParams()
+    let success = this.loadAdDetailInfoSuccess
+    let fail = this.loadAdDetailInfoFail
+    let complete = function() {
+      that.hideLoadingAdInfoView
+    }
+    addatamanager.getAdDetailWithParams(params, success, fail, complete)
   },
-  loadAdInoParams: function() {
+  adDetailInfoParams: function() {
     return {
       adId: this.customerData.adId,
       SV: 3
     }
   },
-  loadAdInfoSuccess: function(res) {
-    if(res.data.type != 'data') {
-      this.loadAdInfoFail()
-      return;
-    }
-
+  loadAdDetailInfoSuccess: function(res) {
     var info = res.data.result.display.content
-    this.updateAdInfo(info)
+    this.updateAdDetailInfo(info)
+
     if(info.applicationCount > 0) {
-      this.loadmoreApplicantors()
+      this.loadMoreApplicants()
     } else {
       this.setData({
-        hasMore: false
+        hasMoreApplicantors: false
       })
     }
   },
-  loadAdInfoFail: function() {
-    var hasInfo = this.customerData.adInfo
-    if(!hasInfo) {
+  loadAdDetailInfoFail: function() {
+    if(!this.customerData.adInfoExist) {
       this.setData({
         loadingDataError: true
       })
     }
   },
-  updateAdInfo: function(info) {
+  updateAdDetailInfo: function(info) {
     //如果存在本地adInfo，那么执行copy操作.
-    this.customerData.adInfo = info
-    var images
-    if(!this.data.images) {
-      images = info.images
-      for (let i = 0; i < images.length; i++) {
-        let image = images[i]
-        image.top = i==0? 0 : kInteval * 0.5
-        image.isBig = (images.length % 2 == 0) ? (i < 2) : (i < 3)
-        if (images.length % 2 == 0) {
-          image.left = (i >= 2) && (i % 2 == 1) ? kInteval * 0.5 : kInteval
-        } else {
-          image.left = (i >= 3) && (i % 2 == 0) ? kInteval * 0.5 : kInteval
-        }
-      } 
-    } else {
-      images = this.data.images
-    }
+    this.customerData.adInfoExist = true
+    var images = this.data.images.length == 0 ? imagehelper.calculatedDefaultFlowImagesSize(info.images, kInteval) : this.data.images
 
     if(!info.city){
       info.city = info.region.names.join(" | ")
@@ -161,22 +147,13 @@ Page({
       winnerInfo:winnerInfo
     })
   },
-  onShow:function(){
-    // 页面显示
-  },
-  onHide:function(){
-    // 页面隐藏
-  },
-  onUnload:function(){
-    // 页面关闭
-  },
   imageLoaded: function(e) {
     if(!e) {
       return;
     }
     var idx = e.currentTarget.dataset.index - 0;
     var images = this.data.images
-    if (images.length < idx ){
+    if (images.length < idx){
       return;
     }
     //计算过的不再重新计算
@@ -184,78 +161,33 @@ Page({
     if (image.height) {
       return
     }
-    
-    var endIdx = 0
-    var startIdx = 0
 
-    if (image.isBig) {
-      if(images.length < 3) {
-        endIdx = images.length
-      } else {
-        endIdx = images.length % 2 == 0 ? 2 : 3
-      }
-    } else {
-      startIdx = images.length % 2 == 0 ? 2 : 3
-      endIdx = images.length
-    }
-
-    var viewWidth = 0
-    var viewHeight = 0
-    var inteval = image.left
-    if (image.isBig) {
-      viewWidth = this.customerData.windowWidth - inteval * 2
-      var imgWidth = e.detail.width
-      var imgHeight = e.detail.height
-      viewHeight = ( imgHeight / imgWidth ) * viewWidth
-    } else {
-      viewHeight = viewWidth = (this.customerData.windowWidth - inteval * 2.5) * 0.5;
-    }
-
-    for (var i = startIdx; i < endIdx; i++) {
-      var img = images[i]
-      img.width = viewWidth
-      img.height = viewHeight
-    }
+    images = imagehelper.calculateLoadedFlowImagesSize(images, this.customerData.windowWidth)
     this.setData({
       images: images
     })
   },
   scrolltolower: function() {
     //正在加载或者无数据，不在加载.
-    this.loadmoreApplicantors()
+    this.loadMoreApplicants()
   },
-  loadmoreApplicantors: function() {
+  loadMoreApplicants: function() {
     //已经加载，不再继续加载.
-    if (this.customerData.isloadingMore || !this.data.hasMore) {
+    if (this.customerData.isloadingMore || !this.data.hasMoreApplicantors) {
       return
     }
     this.customerData.isloadingMore = true
 
-    var params = this.loadMoreApplicantorsParams()
-    var that = this
-    apimanager.request({
-      url: config.getApplicantorListUrl(),
-      data: params,
-      method: 'GET',
-      success: function(res){
-        if(res.data.type == 'data') {
-          that.loadmoreApplicantorsSuccess(res.data.result)
-        } else {
-          that.loadmoreApplicantorsFail()
-        }
-      },
-      fail: function(){
-        that.loadmoreApplicantorsFail()
-      },
-      complete:function() {
-        that.loadingDataComplete()
-      }
-    })
+    let params = this.loadMoreAdApplicantsParams()
+    let success = this.loadMoreAdApplicantsSuccess
+    let fail = this.loadMoreAdApplicantsFail
+    let complete = this.loadingDataComplete
+    applicant.loadMoreAdApplicants(params, success, fail, complete)
   },
-  loadMoreApplicantorsParams: function() {
+  loadMoreAdApplicantsParams: function() {
     var opts = {
       "size" : kPageSize
-    };
+    }
     var params = {
       adId: this.customerData.adId,
       id: this.customerData.lastId,
@@ -263,50 +195,19 @@ Page({
     }
     return params
   },
-  loadmoreApplicantorsSuccess: function(res) {
-    this.customerData.lastId = res.lastId
+  loadMoreAdApplicantsSuccess: function(retInfo) {
+    let apiInfo = retInfo["apiInfo"]
+    this.customerData.lastId = apiInfo["lastId"]
 
-    //正常申请者.
-    var items = res.items.new
-    var applicantors = this.data.applicantors
-    if(items.length) {
-      items = this.transferApplicantTimeStampToDate(items)
-      for(let i = 0; i < items.length; i++) {
-        let item = items[i]
-        item.isBottom = (i == (items.length-1))
-        applicantors.push(items[i])
-      }
-    }
-
-    //热门申请者.
-    var hotItems = res.items.top
-    if(hotItems.length) {
-      hotItems = this.transferApplicantTimeStampToDate(hotItems)
-    }
-
+    let hotApts = retInfo["hotApplicants"]
+    let norApts = retInfo["normalApplicants"]
     this.setData({
-      applicantors: applicantors ? applicantors : [],
-      topApplicantors: hotItems ? hotItems : [],
-      hasMore: !res.endFlag,
+      norApplicants: norApts,
+      hotApplicants: hotApts,
+      hasMoreApplicantors: !apiInfo["endFlag"],
     })
   },
-  transferApplicantTimeStampToDate: function(items) {
-    var applicants = []
-    for (let i = 0; i < items.length; i++) {
-      var item = items[i]
-      var date = new Date(item.createdAt * 1000);
-      
-      var applicant = {
-        avatar: item.applicant.avatar,
-        name: item.applicant.nick,
-        date: util.adFormatTime(date),
-        reason: item.reason 
-      }
-      applicants.push(applicant)
-    }
-    return applicants
-  },
-  loadmoreApplicantorsFail: function() {
+  loadMoreAdApplicantsFail: function() {
     wx.showToast({
       title: "加载数据失败",
       duration: 2000
@@ -315,7 +216,7 @@ Page({
   loadingDataComplete(isRefresh) {
     var that = this;
     setTimeout(function() {
-        that.customerData.isloadingMore = false;
+        that.customerData.isloadingMore = false
     }, 1000)
   },
   thanksimageloaded(e) {

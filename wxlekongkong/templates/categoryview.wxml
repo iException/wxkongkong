@@ -2,7 +2,7 @@
 <view class="categoryview">
     <block wx:for="{{items}}">
         <view class="itemview" data-tag="{{index}}" bindtap="clickOnCategoryView">
-            <image src="{{item.imageurl}}"></image>
+            <image src="{{item.bannerimage}}"></image>
             <text>{{item.title}}</text>
         </view>
     </block>

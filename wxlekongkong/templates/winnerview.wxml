@@ -10,12 +10,15 @@
             <text class="titlelbl">申请理由</text>
             <text class="reasonlbl">{{reason}}</text>
         </view>
-        <view class="thanksview" wx:if="{{thanks&&thanks.length}}">
-            <text class="titlelbl">发表感谢</text>
-            <text class="reasonlbl">{{thanks}}</text>
-            <image wx:if="{{thanksImage}}" class="thanksimage" src="{{thanksImage}}" 
-            bindload="thanksimageloaded" style="width:{{width}}rpx; height:{{height}}rpx;"></image>
-        </view>
+        <block wx:if="{{thanks&&thanks.length}}">
+            <view class="speratorline"></view>
+            <view class="thanksview">
+                <text class="titlelbl">发表感谢</text>
+                <text class="reasonlbl">{{thanks}}</text>
+                <image wx:if="{{thanksImage}}" class="thanksimage" src="{{thanksImage}}" 
+                bindload="thanksimageloaded" style="width:{{width}}rpx; height:{{height}}rpx;"></image>
+            </view>
+        </block>
     </view>
 </view>
 </template>

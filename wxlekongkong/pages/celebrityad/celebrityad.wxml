@@ -1,0 +1,62 @@
+<view class="container">
+<block wx:if="{{loadingDataError}}">
+    <import src="../../templates/errorview.wxml"/>
+    <template is="errorview"></template>
+</block>
+<block wx:else>
+    <scroll-view wx:if="{{userInfo}}" style="height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
+        <!--发布者头像--> 
+        <import src="../../templates/celebrityuserview"/>
+        <template is="celebrityuserview" data="{{...adInfo.user}}"></template>
+        <!--发布的内容-->
+        <view class="contentview">
+            <view class="descriptionview">{{adInfo.content}}</view>
+        </view>
+        <!--视频-->
+        <view wx:if="{{adInfo&&adInfo.videoUrl}}">
+            <video src="{{adInfo.videoUrl}}"></video>
+        </view>
+        <!--如果有图片-->
+        <!--<block wx:if="{{adInfo&&adInfo.images&&adInfo.images.length}}">
+            <import src="../../templates/imagesview"/>
+            <template is="imagesview" data="{{adInfo.images}}"></template>
+        </block>-->
+        <!--规则-->
+        <view>
+            <view>{{title}}</view>
+            <label>{{content}}</label>
+        </view>
+        <!--选择原因-->
+        <view>
+            <view>
+                <image src="src"></image>
+                <label></label>
+                <label></label>
+            </view>
+            <label></label>
+        </view>
+        <!--如果有申请人-->
+        <block wx:if="{{adInfo&&adInfo.winner}}">
+            <import src="../../templates/winnerview"/>
+            <template is="winnerview" data="{{...adInfo.winner}}"></template>
+        </block>
+        <!--如果申请-->
+        <block wx:if="{{adInfo && adInfo.applicationCount > 0}}">
+            <view class="applicantview">申请人({{adInfo.applicationCount}})</view>
+            <block wx:if="{{adInfo.topApplicants&&adInfo.topApplicants.length}}">
+                <block wx:for="{{adInfo.topApplicants}}">
+                    <import src="../../templates/applicantorview"/>
+                    <template is="applicantorview" data="{{...item}}"></template>
+                </block>
+                <view class="hottitle"><text>以上为热门申请</text></view>
+            </block>
+            <block wx:for="{{adInfo.newApplicants}}">
+                <import src="../../templates/applicantorview"/>
+                <template is="applicantorview" data="{{...item}}"></template>
+            </block>
+        </block>
+        <import src="../../templates/loadingmoreview.wxml"/>
+        <template is="loadingmoreview" data="{{hasMore}}"></template>
+    </scroll-view>
+</block>
+</view>

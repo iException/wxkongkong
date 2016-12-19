@@ -9,7 +9,7 @@ module.exports = {
     getAdDetailUrl: function() {
         return this.host + "/api/Gift.item";
     },
-    getApplicantorListUrl: function() {
+    getAdApplicantsListUrl: function() {
         return this.host + "/api/ListingNew.getGiftApplicationsReader";
     },
     getHingTagListUrl: function() {
@@ -23,6 +23,9 @@ module.exports = {
     },
     getLastestAdListingUrl: function() {
         return this.host + "/api/News.getNewsList";
+    },
+    getCelebrityItemUrl: function() {
+        return this.host + "/api/Celebrity.getItem"
     },
     defaultHeader: {
         "Lkk-Dev-Name": "madong",

@@ -2,16 +2,16 @@
 <template name="celebritybanner">
     <view class="celebrityview">
         <view class="titleview">
-            <text class="titlelbl">小空送</text>
-            <text class="alllbl" bindtap="checkAllCelebrity">查看全部></text>
+            <text class="titlelbl">{{title}}</text>
+            <text wx:if="{{showViewAll}}" class="alllbl" bindtap="checkAllCelebrity">查看全部></text>
         </view>
         <view class="cardsview">
             <block wx:for="{{items}}">
-                <view class="cardview">
-                    <image class="adimage" src="{{item.display.content.images}}"></image>
-                    <view class="titlelbl">{{item.display.content.description}}</view>
-                    <view class="commonlbl">{{item.display.content.applicationCount + '人申请'}}</view>
-                    <view class="commonlbl">{{item.display.content.statusString}}</view>
+                <view class="cardview" bindtap="clickOnCelebrityView" data-index="{{index}}">
+                    <image class="adimage" src="{{item.images}}"></image>
+                    <view class="titlelbl">{{item.description}}</view>
+                    <view class="commonlbl">{{item.applicationCount + '人申请'}}</view>
+                    <view class="commonlbl" style="color:{{item.color}};">{{item.statusString}}</view>
                 </view>
             </block>
         </view>

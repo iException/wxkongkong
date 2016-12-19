@@ -50,20 +50,20 @@
         <!--如果申请-->
         <block wx:if="{{applicationCount > 0}}">
             <view class="applicantview">申请人({{applicationCount}})</view>
-            <block wx:if="{{topApplicantors.length}}">
-                <block wx:for="{{topApplicantors}}">
+            <block wx:if="{{hotApplicants.length}}">
+                <block wx:for="{{hotApplicants}}">
                     <import src="../../templates/applicantorview"/>
-                    <template is="applicantorview" data="{{...item}}"></template>
+                    <template is="applicantorview" data="{{...item, isBottom: hotApplicants.length==(index+1)}}"></template>
                 </block>
                 <view class="hottitle"><text>以上为热门申请</text></view>
             </block>
-            <block wx:for="{{applicantors}}">
+            <block wx:for="{{norApplicants}}">
                 <import src="../../templates/applicantorview"/>
-                <template is="applicantorview" data="{{...item}}"></template>
+                <template is="applicantorview" data="{{...item, isBottom: norApplicants.length==(index+1)}}"></template>
             </block>
         </block>
         <import src="../../templates/loadingmoreview.wxml"/>
-        <template is="loadingmoreview" data="{{hasMore}}"></template>
+        <template is="loadingmoreview" data="{{hasMore: hasMoreApplicantors}}"></template>
     </scroll-view>
 </block>
 </view>
