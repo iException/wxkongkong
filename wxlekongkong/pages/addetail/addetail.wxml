@@ -53,13 +53,13 @@
             <block wx:if="{{hotApplicants.length}}">
                 <block wx:for="{{hotApplicants}}">
                     <import src="../../templates/applicantorview"/>
-                    <template is="applicantorview" data="{{...item, isBottom: hotApplicants.length==(index+1)}}"></template>
+                    <template is="applicantorview" data="{{...item}}"></template>
                 </block>
                 <view class="hottitle"><text>以上为热门申请</text></view>
             </block>
             <block wx:for="{{norApplicants}}">
                 <import src="../../templates/applicantorview"/>
-                <template is="applicantorview" data="{{...item, isBottom: norApplicants.length==(index+1)}}"></template>
+                <template is="applicantorview" data="{{...item}}"></template>
             </block>
         </block>
         <import src="../../templates/loadingmoreview.wxml"/>

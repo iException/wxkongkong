@@ -9,7 +9,7 @@
  
  function aliseName2RealName(aliseName) {
      let info = viewMap(aliseName)
-     return info ? info["realName"] : ""
+     return info && info["realName"] ? info["realName"] : aliseName
  }
 
  function realName2AliseName(realName) {

@@ -5,7 +5,7 @@ var apiManager = require("../utils/apimanager.js")
 function loadMoreAdApplicants(params, success, fail, complete) {
     let url = config.getAdApplicantsListUrl()
     apiManager.request({url: url, data: params, method: "GET", success: function(res) {
-        if (success) {
+        if (typeof success == 'function') {
             let item = handleAdApplicants(res)
             success(item)
         }
@@ -22,8 +22,8 @@ function handleAdApplicants(ret) {
 
     return {
         apiInfo: apiInfo,
-        hotApplicants: hotApplicants,
-        normalApplicants: norApplicants
+        hotApplicants: hotApplicants ? hotApplicants : [],
+        normalApplicants: norApplicants ? norApplicants : []
     }
 }
 

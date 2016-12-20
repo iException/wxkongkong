@@ -2,34 +2,34 @@
     padding: 40rpx 28rpx;
     display: flex;
     flex-direction: row;
+    align-content: center;
+    background-color: white;
 }
 
 .celebrityuserview .avatar {
     width: 140rpx;
     height: 140rpx;
     border-radius: 70rpx;
+    background-color: yellow;
 }
 
-.celebrityuserview .userview {
-    margin-left: 18rpx;
+.celebrityuserview .infoView {
+    height: 70px; 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    font-size: 14px;
+    color: #657B86;
+    margin-left: 20rpx;
 }
 
-.celebrityuserview .userview .topview {
+.celebrityuserview .infoView .nameView {
     color: #4D4D4D;
-    font-size: 38px;
-    display: flex;
-    flex-direction: row;
+    font-size: 19px;
 }
 
-.celebrityuserview .userview .topview .markimage {
+.celebrityuserview .infoView .nameView .markimage {
     width: 36rpx;
     height: 36rpx;
-}
-
-.celebrityuserview .userview .desclbl {
-    color: #657B86;
-    font-size: 14px;
+    margin-left: 20rpx;
 }

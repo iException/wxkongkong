@@ -13,11 +13,11 @@ function calculatedDefaultFlowImagesSize(images, hInteval) {
     return images
 }
 
-function calculateLoadedFlowImagesSize(images, realWindowWidth) {
+function calculateLoadedFlowImagesSize(loadedImage, loadedImageSize, images, realWindowWidth) {
     var endIdx = 0
     var startIdx = 0
 
-    if (image.isBig) {
+    if (loadedImage.isBig) {
       if(images.length < 3) {
         endIdx = images.length
       } else {
@@ -30,11 +30,11 @@ function calculateLoadedFlowImagesSize(images, realWindowWidth) {
 
     var viewWidth = 0
     var viewHeight = 0
-    var inteval = image.left
-    if (image.isBig) {
+    var inteval = loadedImage.left
+    if (loadedImage.isBig) {
       viewWidth = realWindowWidth - inteval * 2
-      var imgWidth = e.detail.width
-      var imgHeight = e.detail.height
+      var imgWidth = loadedImageSize.width
+      var imgHeight = loadedImageSize.height
       viewHeight = ( imgHeight / imgWidth ) * viewWidth
     } else {
       viewHeight = viewWidth = (realWindowWidth - inteval * 3) * 0.5;

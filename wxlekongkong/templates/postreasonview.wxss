@@ -1,0 +1,53 @@
+.postreasonview {
+    width: 100%;
+    margin-top: 24rpx;
+    background-color: white;
+}
+
+.postreasonview .titleview {
+    color: #333333;
+    font-size: 14px;
+    border-width: 0 0 1rpx 0;
+    border-style: solid;
+    border-color: #D0D0D0;
+    padding: 30rpx 28rpx 20rpx 28rpx;
+}
+
+.postreasonview .userview {
+    font-size: 14px;
+    color: #333333;
+    padding: 28rpx 28rpx 22rpx 28rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.postreasonview .userview .avatar {
+    width: 64rpx;
+    height: 64rpx;
+    border-radius: 32rpx;
+    background-color: yellow;
+    margin-right: 18rpx;
+}
+
+.postreasonview .userview .descView {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.postreasonview .userview .descView .nameLbl {
+    color: #333333;
+    font-size: 16px;
+}
+
+.postreasonview .userview .descView .identityLbl {
+    color: #657B86;
+    font-size: 12px;
+}
+
+.postreasonview .infoview {
+    padding: 0 28rpx 0  110rpx;
+    color: #333333;
+    font-size: 14px;
+}

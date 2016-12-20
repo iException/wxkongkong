@@ -1,24 +1,26 @@
 const kInteval = 14
 const kPageSize = 30
-var celebrityDm = require("../../datamanager/celebrity.js")
-var applicantsDm = require("../../datamanager/applicants.js")
+let imagehelper = require("../../utils/imagehelper.js")
+let celebrityDm = require("../../datamanager/celebrity.js")
+let applicantsDm = require("../../datamanager/applicants.js")
 
 Page({
   data:{
     adInfo: undefined,
-    hasMore: true,
-    loadingDataError: false
+    hasMore: false,
+    loadingDataError: false,
+    windowHeight: 600,
+    norApplicants: [],
+    hotApplicants: []
   },
   customerData: {
     //视频播放控件.
     adId: "0",
-    isloadingMoreApplicants: true,
+    isloadingMore: false,
     videoContext: undefined,
     lastApplicantId: 0,
-    hasMoreApplicant: true,
     windowWidth: 375,
-    topApplicants: [],
-    newApplicants: []
+    isFirstLoading: true
   },
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
@@ -38,21 +40,14 @@ Page({
     // 页面渲染完成
     this.customerData.videoContxt = wx.createVideoContext('video')
   },
-  onShow:function(){
-    // 页面显示
-  },
-  onHide:function(){
-    // 页面隐藏
-  },
-  onUnload:function(){
-    // 页面关闭
-  },
   //加载失败，重新加载.
   reloadDatas: function() {
     this.setData({
       loadingDataError: false
     })
+    this.customerData.isLoadingMore = true
     this.showLoadingView()
+    this.loadCelebrityItem()
   },
   showLoadingView: function() {
     wx.showToast({
@@ -80,27 +75,35 @@ Page({
   },
   //成功加载大咖送.
   loadCelebrityItemSuccess: function(res) {
-    let images = res.images
-    for (let i = 0; i < images.length; i++) {
-      let image = images[i]
-      image.top = i==0 ? 0 : kInteval
-      image.isBig = (images.length % 2 == 0) ? (i < 2) : (i < 3)
-      if (images.length % 2 == 0) {
-        image.left = (i >= 2) && (i % 2 == 1) ? kInteval : kInteval
-      } else {
-        image.left = (i >= 3) && (i % 2 == 0) ? kInteval : kInteval
-      }
-    }
-    res.images = images
+    this.hideLoadingView()
+    this.customerData.isFirstLoading = false
+
+    let images = imagehelper.calculatedDefaultFlowImagesSize(res.images, kInteval)
+    let image = images[0]
+    image.top = 11
 
     this.setData({
-      adInfo: res
+      adInfo: res,
+      images: images
     })
+
+    if(res.applicationCount > 0) {
+      this.setData({
+        hasMore: true
+      })
+      this.loadMoreApplicants()
+    } else {
+      this.setData({
+        hasMore: false
+      })
+    }
   },
   loadCelebrityItemFail: function(err) {
-    this.setData({
-      loadingDataError: true
-    })
+    if (this.customerData.isFirstLoading) {
+      this.setData({
+        loadingDataError: true
+      })
+    }
     this.showLoadErrorAlert(err)
   },
   loadCelebrityItemComplete: function() {
@@ -111,15 +114,14 @@ Page({
   },
   //加载申请者.
   loadMoreApplicants: function() {
-    if (this.data.hasMore || this.customerData.isloadingMoreApplicants) {
-      return
-    }
-    this.customerData.isloadingMoreApplicants = true
     let params = this.loadMoreApplicantParams()
     let success = this.loadMoreApplicantSuccess
     let fail = this.loadMoreApplicantFailed
-    let complete = this.loadMoreApplicantComplete
-    applicantsDm.loadMoreAdApplicants({params: params, success: success, fail: fail, complete: complete})
+    let that = this
+    let complete = function() {
+      that.customerData.isLoadingMore = false
+    }
+    applicantsDm.loadMoreAdApplicants(params, success, fail, complete)
   },
   //加载申请者参数.
   loadMoreApplicantParams: function() {
@@ -134,47 +136,36 @@ Page({
     return params
   },
   //成功加载申请者.
-  loadMoreApplicantSuccess: function(applicants) {
-    let apiInfo = applicants.apiInfo
-    if (!apiInfo) {
-      apiInfo = {
-        lastApplicantId: "0",
-        endFlag: true
-      }
-    }
-    this.customerData.lastApplicantId = apiInfo.lastId 
+  loadMoreApplicantSuccess: function(retInfo) {
+    let apiInfo = retInfo["apiInfo"]
+    this.customerData.lastApplicantId = apiInfo["lastId"]
+
+    let lcalHotApts = this.data.hotApplicants
+    lcalHotApts = lcalHotApts.concat(retInfo["hotApplicants"])
+
+    let lcalNorApts = this.data.norApplicants
+    lcalNorApts = lcalNorApts.concat(retInfo["normalApplicants"])
+
     this.setData({
-      hasMore: !apiInfo.endFlag
+      norApplicants: this.needShowBottomLine(lcalNorApts),
+      hotApplicants: this.needShowBottomLine(lcalHotApts),
+      hasMore: !apiInfo["endFlag"],
     })
-
-    let topApts = applicants.topApplicants
-    if (topApts && topApts.length) {
-      let lcalApts = this.data.topApplicants
-      lcalApts = lcalApts.concat(topApts)
-      this.setData({
-        topApplicants: lcalApts
-      })
+  },
+  needShowBottomLine: function(applicants) {
+    for (let i = 0; i < applicants.length; i++) {
+      let item = applicants[i]
+      item.isBottom = (i + 1) == applicants.length;
     }
-
-    let newApts = applicants.newApplicants
-    if (newApts && newApts.length) {
-      let lcalApts = this.data.newApplicants
-      lcalApts = lcalApts.concat(newApts)
-      this.setData({
-        newApplicants: lcalApts
-      })
-    }
+    return applicants
   },
   //加载更多申请者成功.
   loadMoreApplicantFailed: function(err) {
-    this.showLoadErrorAlert(err)
-  },
-  loadMoreApplicantComplete: function(err) {
-    var that = this
-    setTimeout(function() {
-      that.customerData.isloadingMoreApplicants = false
+    let that = this
+    setTimeout(function(){
+      that.customerData.isLoadingMore = false
     }, 1000)
-  },  
+  },
   showLoadErrorAlert: function(err) {
     wx.showToast({
       title: "加载数据失败",
@@ -191,6 +182,10 @@ Page({
   },
   scrolltolower: function() {
     //正在加载或者无数据，不在加载.
+    if (!this.data.hasMore || this.customerData.isLoadingMore) {
+      return
+    }
+    this.customerData.isLoadingMore = true
     this.loadMoreApplicants()
   },
   thanksimageloaded(e) {
@@ -209,7 +204,7 @@ Page({
       return;
     }
     var idx = e.currentTarget.dataset.index - 0;
-    var images = this.data.adInfo.images
+    var images = this.data.images
     if (images.length < idx ){
       return;
     }
@@ -218,42 +213,10 @@ Page({
     if (image.height) {
       return
     }
-    
-    var endIdx = 0
-    var startIdx = 0
 
-    if (image.isBig) {
-      if(images.length < 3) {
-        endIdx = images.length
-      } else {
-        endIdx = images.length % 2 == 0 ? 2 : 3
-      }
-    } else {
-      startIdx = images.length % 2 == 0 ? 2 : 3
-      endIdx = images.length
-    }
-
-    var viewWidth = 0
-    var viewHeight = 0
-    var inteval = image.left
-    if (image.isBig) {
-      viewWidth = this.customerData.windowWidth - inteval * 2
-      var imgWidth = e.detail.width
-      var imgHeight = e.detail.height
-      viewHeight = ( imgHeight / imgWidth ) * viewWidth
-    } else {
-      viewHeight = viewWidth = (this.customerData.windowWidth - inteval * 3) * 0.5;
-    }
-
-    for (var i = startIdx; i < endIdx; i++) {
-      var img = images[i]
-      img.width = viewWidth
-      img.height = viewHeight
-    }
-
-    var that = this
+    images = imagehelper.calculateLoadedFlowImagesSize(image, e.detail, images, this.customerData.windowWidth)
     this.setData({
-      adInfo: that.data.adInfo
+      images: images
     })
   }
 })

@@ -7,18 +7,18 @@ Page({
     items: [],
     hasMore: false,
     windowHeight: 375,
-    firstloadingData: true
+    loadingDataError: false
   },
   customerData: {
-    tag: "",
+    tag: "",  //ad标签
     loadingIdx: 0,
-    isInLoading: false
+    isInLoading: false,
+    isFirstLoading: true
   },
   onLoad: function(options){
     // 页面初始化 options为页面跳转所带来的参数
     this.customerData.tag = options['keyword']
-    this.showLoadingView()
-    this.loadMoreAdDatasWithRefreshMode(true)
+    this.reloadDatas()
   },
   onReady: function(){
     // 页面渲染完成
@@ -38,20 +38,26 @@ Page({
       }
     })
   },
+  reloadDatas: function() {
+    this.setData({
+      loadingDataError: false
+    })
+    
+    this.showLoadingView()
+    this.customerData.isInLoading = true
+    this.loadMoreAdDatasWithRefreshMode(true)
+  },
   onPullDownRefresh: function() {
     this.loadMoreAdDatasWithRefreshMode(true)
   },
   scrolltolower: function(e) {
-    if (!this.customerData.isInLoading) {
-      this.loadMoreAdDatasWithRefreshMode(false)
-    }
-  },
-  loadMoreAdDatasWithRefreshMode: function(isRefresh) {
     if(this.customerData.isInLoading) {
       return
     }
-    this.customerData.isInLoading = true;
-
+    this.customerData.isInLoading = true
+    this.loadMoreAdDatasWithRefreshMode(false)
+  },
+  loadMoreAdDatasWithRefreshMode: function(isRefresh) {
     if(isRefresh) {
       this.resetLoadAdDataPrams()
     }
@@ -61,7 +67,9 @@ Page({
     let success = function(items) {
       that.loadMoreAdDatasSuccess(isRefresh, items)
     }
-    let fail = this.loadMoreAdDatasFail
+    let fail = function() {
+      that.loadMoreAdDatasFail(isRefresh)
+    }
     let complete = function() {
       setTimeout(function() {
         that.customerData.isInLoading = false
@@ -85,16 +93,11 @@ Page({
   },
   loadMoreAdDatasSuccess: function(isRefresh, retItems) {
     this.hideLoadingView()
+    this.customerData.isFirstLoading = false
 
     //处理加载数据
     if (isRefresh) {
       this.data.items = []
-
-      if (this.data.firstloadingData) {
-        this.setData({
-          firstloadingData: false
-        })
-      }
     }
     this.customerData.loadingIdx += 1
 
@@ -107,11 +110,11 @@ Page({
   },
   loadMoreAdDatasFail: function(isRefresh) {
     wx.showToast({
-      title: "加载数据失败",
+      title: "zone加载数据失败",
       duration: 2000
     })
 
-    if (this.data.firstloadingData) {
+    if (isRefresh && this.customerData.isFirstLoading) {
       this.setData({
         loadingDataError: true
       })

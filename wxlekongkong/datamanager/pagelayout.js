@@ -9,7 +9,7 @@ function getPageLayout(params, success, fail, complete) {
         data: params,
         method: 'GET',
         success: function(ret) {
-          if(success) {
+          if(typeof success == 'function') {
             let datas = loadPagelayoutSuccess(ret)
             success(datas)
           }
@@ -71,35 +71,35 @@ function getCategoryItems() {
     return [
         {
         title: "服装服饰",
-        bannerimage: "../../resource/images/banner_fushi.jpg"
+        bannerimage: "../../resource/images/icon_fushi.png"
         },
         {
         title: "鞋帽箱包",
-        bannerimage: "../../resource/images/banner_xiebao.jpg"
+        bannerimage: "../../resource/images/icon_xiebao.png"
         },
         {
         title: "配件配饰",
-        bannerimage: "../../resource/images/banner_peishi.jpg"
+        bannerimage: "../../resource/images/icon_peishi.png"
         },
         {
         title: "家居用品",
-        bannerimage: "../../resource/images/banner_jiaju.jpg"
+        bannerimage: "../../resource/images/icon_jiaju.png"
         },
         {
         title: "数码产品",
-        bannerimage: "../../resource/images/banner_shuma.jpg"
+        bannerimage: "../../resource/images/icon_shuma.png"
         },
         {
         title: "图书音像",
-        bannerimage: "../../resource/images/banner_tushu.jpg"
+        bannerimage: "../../resource/images/icon_tushu.png"
         },
         {
         title: "母婴用品",
-        bannerimage: "../../resource/images/banner_muying.jpg"
+        bannerimage: "../../resource/images/icon_muying.png"
         },
         {
         title: "个护美妆",
-        bannerimage: "../../resource/images/banner_gehu.jpg"
+        bannerimage: "../../resource/images/icon_gehu.png"
         }
     ]
 }

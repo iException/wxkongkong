@@ -2,7 +2,12 @@
   "pages": [
     "pages/index/index",
     "pages/addetail/addetail",
-    "pages/zone/zone"
+    "pages/zone/zone",
+    "pages/logs/logs",
+    "pages/lastestads/lastestads",
+    "pages/topic/topic",
+    "pages/adsearch/adsearch",
+    "pages/celebrityad/celebrityad"
   ],
   "window": {
     "backgroundTextStyle": "light",

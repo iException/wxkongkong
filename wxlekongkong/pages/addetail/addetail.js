@@ -21,9 +21,9 @@ Page({
     readTimes: "",  //阅读次数
     applicationCount: 0,  //申请数量
     winnerInfo: undefined,  //获赠者
-    norApplicantors: [],      //正常申请者
-    hotApplicantors: [],      //热门申请
-    hasMoreApplicantors: true,//是否有更多申请者
+    norApplicants: [],      //正常申请者
+    hotApplicants: [],      //热门申请
+    hasMoreApplicantors: false,//是否有更多申请者
     loadingDataError: false   //加载是否失败标签
   },
   customerData: {
@@ -33,7 +33,7 @@ Page({
   },
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
-    this.customerData.adId = options['id']
+    this.customerData.adId = options['adId']
     try{ 
       var res = wx.getSystemInfoSync()
       this.setData({
@@ -65,14 +65,11 @@ Page({
     wx.hideToast()
   },
   loadAdDatas: function() {
-    let that = this
+    this.customerData.isloadingMore = true
     let params = this.adDetailInfoParams()
     let success = this.loadAdDetailInfoSuccess
     let fail = this.loadAdDetailInfoFail
-    let complete = function() {
-      that.hideLoadingAdInfoView
-    }
-    addatamanager.getAdDetailWithParams(params, success, fail, complete)
+    addatamanager.getAdDetailWithParams(params, success, fail)
   },
   adDetailInfoParams: function() {
     return {
@@ -81,10 +78,15 @@ Page({
     }
   },
   loadAdDetailInfoSuccess: function(res) {
+    this.hideLoadingAdInfoView()
+
     var info = res.data.result.display.content
     this.updateAdDetailInfo(info)
 
     if(info.applicationCount > 0) {
+      this.setData({
+        hasMoreApplicantors: true
+      })
       this.loadMoreApplicants()
     } else {
       this.setData({
@@ -97,6 +99,7 @@ Page({
       this.setData({
         loadingDataError: true
       })
+      this.loadMoreAdApplicantsFail()
     }
   },
   updateAdDetailInfo: function(info) {
@@ -162,22 +165,21 @@ Page({
       return
     }
 
-    images = imagehelper.calculateLoadedFlowImagesSize(images, this.customerData.windowWidth)
+    images = imagehelper.calculateLoadedFlowImagesSize(image, e.detail, images, this.customerData.windowWidth)
     this.setData({
       images: images
     })
   },
   scrolltolower: function() {
     //正在加载或者无数据，不在加载.
-    this.loadMoreApplicants()
-  },
-  loadMoreApplicants: function() {
-    //已经加载，不再继续加载.
     if (this.customerData.isloadingMore || !this.data.hasMoreApplicantors) {
       return
     }
     this.customerData.isloadingMore = true
-
+    this.loadMoreApplicants()
+  },
+  loadMoreApplicants: function() {
+    //已经加载，不再继续加载.
     let params = this.loadMoreAdApplicantsParams()
     let success = this.loadMoreAdApplicantsSuccess
     let fail = this.loadMoreAdApplicantsFail
@@ -199,13 +201,23 @@ Page({
     let apiInfo = retInfo["apiInfo"]
     this.customerData.lastId = apiInfo["lastId"]
 
-    let hotApts = retInfo["hotApplicants"]
-    let norApts = retInfo["normalApplicants"]
+    let lcalHotApts = this.data.hotApplicants
+    let lcalNorApts = this.data.norApplicants
+    lcalHotApts = lcalHotApts.concat(retInfo["hotApplicants"])
+    lcalNorApts = lcalNorApts.concat(retInfo["normalApplicants"])
+
     this.setData({
-      norApplicants: norApts,
-      hotApplicants: hotApts,
+      norApplicants: this.needShowBottomLine(lcalNorApts),
+      hotApplicants: this.needShowBottomLine(lcalHotApts),
       hasMoreApplicantors: !apiInfo["endFlag"],
     })
+  },
+  needShowBottomLine: function(applicants) {
+    for (let i = 0; i < applicants.length; i++) {
+      let item = applicants[i]
+      item.isBottom = (i + 1) == applicants.length;
+    }
+    return applicants
   },
   loadMoreAdApplicantsFail: function() {
     wx.showToast({

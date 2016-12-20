@@ -45,7 +45,7 @@
         </block>
       </block>
       <!--首次加载转菊花-->
-      <block wx:if="{{!firstloadingData}}">
+      <block wx:if="{{items && items.length}}">
         <import src="../../templates/loadingmoreview.wxml"/>
         <template is="loadingmoreview" data="{{hasMore}}"></template>
       </block>

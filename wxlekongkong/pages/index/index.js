@@ -13,8 +13,7 @@ Page({
     items: [],//ad items.
     windowHeight: 400,
     hasMore: false,//是否还有更多数据可以加载.
-    loadingDataError: false,
-    firstloadingData: true
+    loadingDataError: false
   },
   customerData: {
     SV: 1,
@@ -22,7 +21,9 @@ Page({
     selectedctgindex: 0,//当前选择的index.
     isloadingMore: false,//是否正在加载跟多中...
     lastestads: [], //最新交易列表
-    lastestadIndex: 0
+    lastestadIndex: 0,
+    isFirstLoading: true,
+    isBeginedAnimteLastestAds: false
   },
   onLoad: function(options){
     // 页面初始化 options为页面跳转所带来的参数
@@ -40,7 +41,8 @@ Page({
     })
   },
   scrolltolower: function(e) {
-    if (!this.customerData.isloadingMore) {
+    if (!this.customerData.isloadingMore && this.data.hasMore) {
+      this.customerData.isloadingMore = true
       this.loadMoreAdItemsWithMode(false)
     }
   },
@@ -49,13 +51,11 @@ Page({
     this.onPullDownRefresh()
   },
   showloadingView: function() {
-    if (this.data.firstloadingData) {
-      wx.showToast({
-        title: '加载中',
-        icon: 'loading',
-        duration: 10000
-      })
-    }
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading',
+      duration: 10000
+    })
   },
   //下拉刷新
   onPullDownRefresh: function() {
@@ -68,9 +68,9 @@ Page({
     let that = this
     let params = this.pageLayoutParams()
     let success = this.loadPlageyoutDataSuccess
-    let fail = this.loadingDataFailed
+    let fail = this.loadPlageyoutDataSuccessFailed
     let complete = function() {
-      that.loadingDataComplete(true)
+      wx.stopPullDownRefresh()
     }
     pagelayout.getPageLayout(params, success, fail, complete)
   },
@@ -89,6 +89,9 @@ Page({
     this.customerData.loadingIdx = 0
   },
   loadPlageyoutDataSuccess: function(items) {
+    wx.hideToast()
+    this.customerData.isFirstLoading = false
+
     this.setData({
       activityItems: items["activityItems"],
       categoryItems: items["categoryItems"],
@@ -98,7 +101,8 @@ Page({
 
     let lastestItems = items["lastestItems"]
     this.customerData.lastestads = lastestItems
-    if (lastestItems && lastestItems.length) {
+    if (lastestItems && lastestItems.length && !this.customerData.isBeginedAnimteLastestAds) {
+      this.customerData.isBeginedAnimteLastestAds = true
       this.beginbeginExchangeLastestAdInfo()
     }
 
@@ -108,18 +112,34 @@ Page({
       that.loadMoreAdItemsWithMode(true)
     }, 500)
   },
-  //加载跟多首页ads
+  loadPlageyoutDataSuccessFailed() {
+    //如果无数据，加载失败，显示点击重新加载，按钮.
+    wx.showToast({
+      title: "首页加载数据失败",
+      duration: 2000
+    })
+
+    this.customerData.isloadingMore = false
+
+    if (this.customerData.isFirstLoading) {
+      this.setData({
+        loadingDataError: true
+      })
+    }
+  },
+  //加载更多首页ads
   loadMoreAdItemsWithMode: function(refreshMode) {
     var that = this
     let params = this.loadMoreAdItemParams()
     let success = function(items) {
       that.loadMoreAdItemsSuccess(refreshMode, items)
     }
-    let fail = this.loadingDataFailed
     let complete = function() {
-      that.loadingDataComplete(refreshMode)
+      setTimeout(function() {
+          that.customerData.isloadingMore = false
+      }, 1000)
     }
-    addatamanager.getMorePageLayoutAdItems(params, success, fail, complete)
+    addatamanager.getMorePageLayoutAdItems(params, success, null, complete)
   },
   loadMoreAdItemParams: function() {
     let opts = {
@@ -134,16 +154,9 @@ Page({
     return params;
   },
   loadMoreAdItemsSuccess(isRefresh ,retItems) {
-    wx.hideToast()
-
     //处理加载数据
     if (isRefresh) {
       this.data.items = []
-      if (this.data.firstloadingData) {
-        this.setData({
-          firstloadingData: false
-        })
-      }
     }
     this.customerData.loadingIdx += 1
 
@@ -155,28 +168,6 @@ Page({
       items: items,
       hasMore: hasMore
     })
-  },
-  loadingDataFailed() {
-    //如果无数据，加载失败，显示点击重新加载，按钮.
-    this.customerData.isloadingMore = false
-    wx.showToast({
-      title: "加载数据失败",
-      duration: 2000
-    })
-    if (this.data.firstloadingData) {
-      this.setData({
-        loadingDataError: true
-      })
-    }
-  },
-  loadingDataComplete(isRefresh) {
-    if (isRefresh) {
-      wx.stopPullDownRefresh()
-    }
-    var that = this
-    setTimeout(function() {
-        that.customerData.isloadingMore = false
-    }, 1000)
   },
   beginbeginExchangeLastestAdInfo: function() {
     this.customerData.lastestadIndex += 1
@@ -240,7 +231,7 @@ Page({
   },
   gotoAdDetailView: function(adInfo) {
     app.globalData.adInfo = adInfo
-    var url = '../addetail/addetail?id=' + adInfo.id 
+    var url = '../addetail/addetail?adId=' + adInfo.id 
     wx.navigateTo({
       url: url
     })

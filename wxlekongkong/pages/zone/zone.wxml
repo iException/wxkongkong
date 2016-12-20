@@ -5,20 +5,15 @@
     <template is="errorview"></template>
 </block>
 <block wx:else>
-    <scroll-view style="width:100%; height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
-        <!--<image class="bannerimage" mode="aspectFill" src="{{bannerImage}}"></image>-->
+    <scroll-view wx:if="{{items && items.length}}" style="width:100%; height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
         <!--adview-->
-        <block wx:if="{{items}}">
         <import src="../../templates/adview.wxml"/>
         <block wx:for="{{items}}" wx:key="adview">
             <template is="{{item.style}}" data="{{...item.content, index, vinteval:20}}"></template>
         </block>
-        </block>
         <!--首次加载转菊花-->
-        <block wx:if="{{!firstloadingData}}" wx:key="*this">
         <import src="../../templates/loadingmoreview.wxml"/>
         <template is="loadingmoreview" data="{{hasMore}}"></template>
-        </block>
     </scroll-view>
 </block>
 

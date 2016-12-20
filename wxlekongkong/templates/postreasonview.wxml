@@ -1,0 +1,13 @@
+<template name="postreasonview">
+<view class="postreasonview">
+    <view class="titleview">{{reasonTitle}}</view>
+    <view class="userview">
+        <image class="avatar" src="{{avatar}}"></image>
+        <view class="descView">
+            <text class="nameLbl">{{name}}</text>
+            <text class="identityLbl">{{identity}}</text>
+        </view>
+    </view>
+    <view class="infoview">{{reason}}</view>
+</view>
+</template>

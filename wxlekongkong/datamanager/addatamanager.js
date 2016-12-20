@@ -5,13 +5,12 @@ var apimanager = require("../utils/apimanager.js")
 //获取最新交易的商品
 function getLastestTradeAds(params, success, fail, complete) {
     var url = config.getLastestAdListingUrl()
-    var that = this;
     apimanager.request({
         url: url,
         method: 'GET',
         success: function(res) {
-            if (success) {
-                let items = that.handleLoadLastestListingSuccess(res)
+            if (typeof success == 'function') {
+                let items = handleLoadLastestListingSuccess(res)
                 success(items)
             }
         },
@@ -20,18 +19,18 @@ function getLastestTradeAds(params, success, fail, complete) {
 }
 
 function handleLoadLastestListingSuccess(res) {
-    if (ret.data.type != "data") {
+    if (!res || !res.data || res.data.type != "data") {
       return []
     }
     
-    var items = ret["data"]["result"];
+    var items = res["data"]["result"];
     for (let i = 0; i < items.length; i++) {
         let item = items[i];
         var date = new Date(item.display.content.timeStamp * 1000);
         item.display.content.date = util.adFormatTime(date);
     }
 
-    return items && items.length? itmes: []
+    return items ? items : []
 }
 
 //获取首页更多ads
@@ -42,7 +41,7 @@ function getMorePageLayoutAdItems(params, success, fail, complete) {
       method: 'GET',
       success: function(res) {
         // success
-        if (success) {
+        if (typeof success == 'function') {
             let items = resetPageLayoutAdItemsInfo(res.data)
             success(items)
         }
@@ -84,7 +83,7 @@ function getAdsByTag(params, success, fail, complete) {
         data: params, 
         method: 'GET',
         success: function(ret) {
-            if (success) {
+            if (typeof success == 'function') {
                 let items = resetTagAds(ret)
                 success(items)
             }
@@ -121,6 +120,10 @@ function resetTagAds(ret) {
     return items
 }
 
+function getAdsBySearchKeyword(keyword) {
+    
+}
+
 //获取ad详情
 function getAdDetailWithParams(params, success, fail, complete) {
     var url = config.getAdDetailUrl()
@@ -130,11 +133,8 @@ function getAdDetailWithParams(params, success, fail, complete) {
         method: 'GET',
         success: function(res) {
             //返回数据是否有效
-            let validData = res && res.data && (res.data.type == "data")
-            if (validData && success) {
+            if (typeof success == 'function') {
                 success(res)
-            } else if (fail) {
-                fail()
             }
         }, 
         fail: fail,

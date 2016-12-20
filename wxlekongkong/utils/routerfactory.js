@@ -1,5 +1,5 @@
 function adDetailRouterUrl(adId) {
-    return "lkk://addetail?" + adId ? adId : ""
+    return "lkk://addetail?" + (adId ? ("adId=" + adId) : "")
 }
 
 module.exports = {

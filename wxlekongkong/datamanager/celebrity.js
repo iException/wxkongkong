@@ -4,7 +4,7 @@ var apiManager = require("../utils/apimanager.js")
 function getCelebrityItem({params, success, fail, complete}) {
     let url = config.getCelebrityItemUrl()
     apiManager.request({url: url, data: params, method: "GET", success: function(res) {
-        if (success) {
+        if (typeof success == 'function') {
             let item = handleCelebrityItem(res)
             success(item)
         }
@@ -12,20 +12,22 @@ function getCelebrityItem({params, success, fail, complete}) {
 }
 
 function handleCelebrityItem(item) {
-    let content = item.result.display.content
+    let content = item.data.result.display.content
     let user = {
         name: content.name,
         avatar: content.avatar,
         identity: content.identity
     }
-    let posted = content.status == 2
+    let posted = content.status == 2   //0：正在进行，1：尚未开始，2：已赠送.
     let winner, reason
     if (posted) {
+        let thanksLetter = content.chosenApplication.thanksLetter
         winner = {
             name: content.chosenApplication.applicant.nick,
-            avatar: content.chosenApplication.avatar,
-            thanks: "",
-            thanksImage: ""
+            avatar: content.chosenApplication.applicant.avatar,
+            reason: content.chosenApplication.reason,
+            thanks: thanksLetter ? thanksLetter["text"] : "",
+            thanksImage: thanksLetter ? thanksLetter["image"] : ""
         }
         reason = {
             reasonTitle: content.reasonTitle,

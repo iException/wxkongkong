@@ -6,6 +6,9 @@ Page({
   data:{
     items: []//信息列表.
   },
+  customerData: {
+    isFirstLoading: true
+  },
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
     this.showloadingView()
@@ -19,8 +22,10 @@ Page({
     });
   },
   loadLastestListing: function() {
-    let success = function() {
-      this.setData({
+    let that = this
+    let success = function(items) {
+      that.customerData.isFristLoading = false
+      that.setData({
         items: items
       })
     }
@@ -38,9 +43,11 @@ Page({
       duration: 2000
     })
 
-    this.setData({
+    if (this.customerData.isFristLoading) {
+      this.setData({
         loadingDataError: true
-    })
+      })
+    }
   },
   loadAdDatas: function() {
     this.setData({

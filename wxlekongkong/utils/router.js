@@ -15,8 +15,9 @@ function openUrl(url) {
 
     let realName =  routerMap.aliseName2RealName(urls[0])
     let params = (urls.length == 2) ? urls[1] : ""
+    let toUrl = "../" + realName + "/" + realName + "?" + params
     wx.navigateTo({
-      url: "../" + realName + "/" + realName + "?" + params,
+      url: toUrl,
     })
 }
 
