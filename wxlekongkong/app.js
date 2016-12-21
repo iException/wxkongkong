@@ -29,9 +29,8 @@ App({
     }
   },
   globalData: {
-    userInfo: null,
-    adInfo: null,
-    width: 0,
-    height: 0
+    userInfo: undefined,
+    adInfo: undefined,
+    topicInfo: undefined,
   }
 })

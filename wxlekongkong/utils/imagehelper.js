@@ -1,63 +1,76 @@
 //返回格式 {left: 左边距, top: 顶边距, isBig: 是否是大图}
-function calculatedDefaultFlowImagesSize(images, hInteval) {
+function calculatedDefaultFlowImagesSize(images, hInteval, vInteval, realWindowWidth) {
     if (!images || images.length == 0) {
         return []
     }
 
     for (let i = 0; i < images.length; i++) {
-        let image = images[i]
-        image.left = hInteval
-        image.top = i==0 ? 0 : hInteval
-        image.isBig = (images.length % 2 == 0) ? (i < 2) : (i < 3)
+      let image = images[i]
+      image.top = vInteval
+
+      //偶数
+        if (images.length % 2 == 0) {
+          image.left = true ? hInteval : vInteval
+          if (i < 2) {
+            image.isBig = true
+            image.left = hInteval
+            image.height = image.width =  realWindowWidth - 2 * hInteval
+          } else {
+            image.isBig = false
+            image.left = (i % 2 == 0) ? hInteval : vInteval
+            image.height = image.width = (realWindowWidth - 2 * hInteval - vInteval) * 0.5
+          }
+        } else {
+          image.left = true ? hInteval : vInteval;
+          if (i < 3) {
+            image.isBig = true
+            image.left = hInteval
+            image.height = image.width =  realWindowWidth - 2 * hInteval
+          } else {
+            image.isBig = false
+            image.left = (i % 2 == 1) ? hInteval : vInteval
+            image.height = image.width = (realWindowWidth - 2 * hInteval - vInteval) * 0.5
+          }
+        }
     }
     return images
 }
 
-function calculateLoadedFlowImagesSize(loadedImage, loadedImageSize, images, realWindowWidth) {
-    var endIdx = 0
-    var startIdx = 0
+function calculateDefaultTopicImagesSize(images, edgeInteval, hInteval, vInteval, windowWidth) {
+  if (!images || images.length == 0) {
+    return
+  }
 
-    if (loadedImage.isBig) {
-      if(images.length < 3) {
-        endIdx = images.length
-      } else {
-        endIdx = images.length % 2 == 0 ? 2 : 3
+  let count = images.length
+  for(let i = 0; i < count; i++) {
+    let image = images[i]
+    let width = (windowWidth - 2 * edgeInteval - 2 * hInteval) / 3.0
+  
+    if (count == 1) {
+      image.hInteval = 0
+      image.vInteval = 0
+      image.height = image.width = image.height = width * 2 + hInteval
+    } else if (count == 4) {
+      image.vInteval = i < 2 ? vInteval : 0
+      image.height = image.width = image.height = width
+      image.hInteval = ((i + 1) % 2) == 0 ? (windowWidth - 2 * edgeInteval - 2 * width - hInteval) : hInteval
+    } else {
+      image.height = image.width = width
+      image.hInteval = ((i + 1) % 3) == 0 ? 0 : hInteval
+
+      if (count <= 3) {
+        image.vInteval = 0
       }
-    } else {
-      startIdx = images.length % 2 == 0 ? 2 : 3
-      endIdx = images.length
+      else if (count > 3 && count <= 6) {
+        image.vInteval = i < 3 ? vInteval : 0
+      } else {
+        image.vInteval = i < 6 ? vInteval : 0
+      }
     }
-
-    var viewWidth = 0
-    var viewHeight = 0
-    var inteval = loadedImage.left
-    if (loadedImage.isBig) {
-      viewWidth = realWindowWidth - inteval * 2
-      var imgWidth = loadedImageSize.width
-      var imgHeight = loadedImageSize.height
-      viewHeight = ( imgHeight / imgWidth ) * viewWidth
-    } else {
-      viewHeight = viewWidth = (realWindowWidth - inteval * 3) * 0.5;
-    }
-
-    for (var i = startIdx; i < endIdx; i++) {
-      var img = images[i]
-      img.width = viewWidth
-      img.height = viewHeight
-    }
-
-    return images
-}
-
-function calculateDefaultTopicImagesSize(images, hInteval) {
-
-}
-
-function calculateLoadedTopicImagesSize(images, realWindowWidth, hInteval) {
-
+  }
 }
 
 module.exports = {
-    calculateLoadedFlowImagesSize: calculateLoadedFlowImagesSize,
-    calculatedDefaultFlowImagesSize: calculatedDefaultFlowImagesSize
+    calculatedDefaultFlowImagesSize: calculatedDefaultFlowImagesSize,
+    calculateDefaultTopicImagesSize: calculateDefaultTopicImagesSize
 }

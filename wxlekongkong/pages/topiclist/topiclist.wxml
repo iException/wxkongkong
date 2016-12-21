@@ -1,0 +1,22 @@
+<view class="container">
+  <block wx:if="{{loadingDataError}}">
+    <import src="../../templates/errorview.wxml"/>
+    <template is="errorview" data="{{windowHeight}}"></template>
+  </block>
+  <block wx:else>
+    <scroll-view style="width:100%; height:{{windowHeight}}px;" scroll-y="true" bindscrolltolower="scrolltolower">
+      <!--adview-->
+      <block wx:if="{{topics.length}}">
+        <import src="../../templates/topicListView"/>
+        <block wx:for="{{topics}}">
+          <template is="topicListView" data="{{...item, index, edgeInteval}}"></template>
+        </block>
+      </block>
+      <!--首次加载转菊花-->
+      <block wx:if="{{topics && topics.length}}">
+        <import src="../../templates/loadingmoreview.wxml"/>
+        <template is="loadingmoreview" data="{{hasMore: hasMoreTopic}}"></template>
+      </block>
+    </scroll-view>
+  </block>
+</view>

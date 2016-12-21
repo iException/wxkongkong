@@ -27,6 +27,9 @@ module.exports = {
     getCelebrityItemUrl: function() {
         return this.host + "/api/Celebrity.getItem"
     },
+    getTopicListUrl: function() {
+        return this.host + "/api/Topic.getTopicNew"
+    },
     defaultHeader: {
         "Lkk-Dev-Name": "madong",
         "BAPI-APP-KEY": "api_ioslekongkong",

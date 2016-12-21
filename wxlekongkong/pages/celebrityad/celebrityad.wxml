@@ -29,7 +29,7 @@
         <!--选择原因-->
         <block wx:if="{{adInfo && adInfo.reason && adInfo.reason.reason}}">
             <import src="../../templates/postreasonview"/>
-            <template is="postreasonview" data="{{...adInfo.reason, avatar: adInfo.user.avatar, identity: adInfo.user.identity}}"></template>
+            <template is="postreasonview" data="{{...adInfo.reason, name: adInfo.user.name, avatar: adInfo.user.avatar, identity: adInfo.user.identity}}"></template>
         </block>
         <!--如果有申请人-->
         <block wx:if="{{adInfo&&adInfo.winner}}">

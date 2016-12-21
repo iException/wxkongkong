@@ -5,7 +5,8 @@
     "pages/zone/zone",
     "pages/logs/logs",
     "pages/lastestads/lastestads",
-    "pages/topic/topic",
+    "pages/topiclist/topiclist",
+    "pages/topicdetail/topicdetail",
     "pages/adsearch/adsearch",
     "pages/celebrityad/celebrityad"
   ],

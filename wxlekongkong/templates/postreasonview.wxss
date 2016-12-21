@@ -47,7 +47,7 @@
 }
 
 .postreasonview .infoview {
-    padding: 0 28rpx 0  110rpx;
+    padding: 0 28rpx 22rpx  110rpx;
     color: #333333;
     font-size: 14px;
 }

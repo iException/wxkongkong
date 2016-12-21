@@ -1,4 +1,5 @@
-const kInteval = 14
+const vInteval = 10
+const hInteval = 14
 const kPageSize = 30
 let imagehelper = require("../../utils/imagehelper.js")
 let celebrityDm = require("../../datamanager/celebrity.js")
@@ -78,7 +79,7 @@ Page({
     this.hideLoadingView()
     this.customerData.isFirstLoading = false
 
-    let images = imagehelper.calculatedDefaultFlowImagesSize(res.images, kInteval)
+    let images = imagehelper.calculatedDefaultFlowImagesSize(res.images, hInteval, vInteval, this.customerData.windowWidth)
     let image = images[0]
     image.top = 11
 
@@ -208,13 +209,13 @@ Page({
     if (images.length < idx ){
       return;
     }
-    //计算过的不再重新计算
+    //小图、计算过的不再重新计算
     var image = images[idx]
-    if (image.height) {
+    if (!image.isBig || image.height) {
       return
     }
 
-    images = imagehelper.calculateLoadedFlowImagesSize(image, e.detail, images, this.customerData.windowWidth)
+    image.height = ( e.detail.height / e.detail.width ) * image.width
     this.setData({
       images: images
     })

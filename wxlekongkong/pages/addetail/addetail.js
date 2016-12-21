@@ -1,4 +1,5 @@
-const kInteval = 14
+const vInteval = 10
+const hInteval = 14
 const kPageSize = 30
 var app = getApp()
 var config = require("../../config.js")
@@ -24,12 +25,14 @@ Page({
     norApplicants: [],      //正常申请者
     hotApplicants: [],      //热门申请
     hasMoreApplicantors: false,//是否有更多申请者
-    loadingDataError: false   //加载是否失败标签
+    loadingDataError: false,   //加载是否失败标签
+    windowHeight: 400
   },
   customerData: {
     lastId: 0,
     adInfoExist: false,
-    isloadingMore: false
+    isloadingMore: false,
+    windowWidth: 375
   },
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
@@ -105,7 +108,7 @@ Page({
   updateAdDetailInfo: function(info) {
     //如果存在本地adInfo，那么执行copy操作.
     this.customerData.adInfoExist = true
-    var images = this.data.images.length == 0 ? imagehelper.calculatedDefaultFlowImagesSize(info.images, kInteval) : this.data.images
+    var images = this.data.images.length == 0 ? imagehelper.calculatedDefaultFlowImagesSize(info.images, hInteval, vInteval, this.customerData.windowWidth) : this.data.images
 
     if(!info.city){
       info.city = info.region.names.join(" | ")
@@ -159,13 +162,13 @@ Page({
     if (images.length < idx){
       return;
     }
-    //计算过的不再重新计算
+    //小图不用计算,计算过的不再重新计算
     var image = images[idx]
-    if (image.height) {
+    if (!image.isBig || image.height) {
       return
     }
 
-    images = imagehelper.calculateLoadedFlowImagesSize(image, e.detail, images, this.customerData.windowWidth)
+    let viewHeight = ( e.detail.height / e.detail.width ) * image.width
     this.setData({
       images: images
     })

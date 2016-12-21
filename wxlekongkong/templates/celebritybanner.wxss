@@ -29,11 +29,12 @@
     justify-content: space-between;
     margin-top: 29rpx;
     padding: 0 28rpx;
+    background-color: blue;
 }
 
 .celebrityview .cardsview .cardview .adimage {
-    width: 220rpx;
-    height: 220rpx;
+    width: 200rpx;
+    height: 200rpx;
     background-color: yellow;
     display: flex;
     flex-direction: column;

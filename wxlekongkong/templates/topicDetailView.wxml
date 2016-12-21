@@ -1,0 +1,36 @@
+<!--topicListView-->
+<!--data: infos[{avatar, name, time, content, adimages}]-->
+<template name="topicDetailView">
+<view class="topicDetailView" bindtap="clickOnTopicView" style="padding: 28rpx {{edgeInteval}}px 36rpx {{edgeInteval}}px; ">
+    <view class="userview">
+        <image class="avatarview" src="{{user.avatarUrl}}"></image>
+        <view class="introview">
+            <text class="namelabel">{{user.nick}}</text>
+            <text class="introlabel">{{date}}</text>
+        </view>
+    </view>
+    <view class="contentview">
+        <text>{{description}}</text>
+    </view>
+    <scroll-view wx:if="{{images}}" scroll-x="true" class="imagesview">
+        <block wx:for="{{images}}">
+            <image class="imageview" src="{{item.square}}" 
+            style="width: {{item.width}}px; height: {{item.height}}px; margin-right: {{item.hInteval}}px;"></image>
+        </block>
+    </scroll-view>
+    <view class="extroview">
+        <view class="leftview">
+            <image src="../../resource/images/location-icon-blue.png"></image>
+            <text>{{city}}</text>
+        </view>
+        <view class="rightview">
+            <image src="../../resource/images/view-icon-blue.png"></image>
+            <text>45次查看</text>
+        </view>
+        <view class="rightview">
+            <image src="../../resource/images/time-icon-blue.png"></image>
+            <text>45分钟前</text>
+        </view>
+    </view>
+</view>
+</template>

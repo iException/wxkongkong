@@ -1,6 +1,6 @@
-var config = require("../config.js")
-var util = require("../utils/util.js")
-var apimanager = require("../utils/apimanager.js")
+let config = require("../config.js");
+let util = require("../utils/util.js");
+let apimanager = require("../utils/apimanager.js");
 
 function getPageLayout(params, success, fail, complete) {
     var url = config.getHomePageLayoutUrl()

@@ -1,0 +1,2 @@
+@import "../../templates/topicListView.wxss";
+@import "../../templates/loadingmoreview.wxss";

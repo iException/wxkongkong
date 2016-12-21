@@ -1,6 +1,5 @@
 const kPageSize = 10
 var app = getApp()
-
 var pagelayout = require("../../datamanager/pagelayout.js")
 var addatamanager = require("../../datamanager/addatamanager.js")
 
@@ -200,7 +199,7 @@ Page({
     })
   },
   clickOnTopicView: function(e) {
-    let url = '../topic/topic'
+    let url = '../topiclist/topiclist?themeId=1'
     wx.navigateTo({
       url: url
     })
