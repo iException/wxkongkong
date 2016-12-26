@@ -1,0 +1,55 @@
+.topicCommenterView {
+    background-color: white;
+    width: 100%;
+}
+
+.topicCommenterView .userview {
+    padding: 26rpx 28rpx 0 28rpx;
+    display: flex;
+    flex-direction: row;
+}
+
+.topicCommenterView .userview .avatar {
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 30rpx;
+    background-color: blue;
+}
+
+.topicCommenterView .userview .descview {
+    display: flex;
+    margin-left: 16rpx;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.topicCommenterView .userview .descview .namelbl {
+    font-size: 14px;
+    color: #333333;
+}
+
+.topicCommenterView .userview .descview .datelbl {
+    font-size: 12px;
+    color: #969696;
+}
+
+.topicCommenterView .commentView {
+    margin: 16rpx 28rpx 0 104rpx;
+    font-size: 14px;
+    color: #676767;
+}
+
+.topicCommenterView .replayView {
+    margin: 16rpx 28rpx 0 104rpx;
+    font-size: 14px;
+    color: #969696;
+    background-color: #f2f3ee;
+    padding: 10rpx;
+}
+
+.topicCommenterView .dottedline {
+    margin: 20rpx 28rpx 0 28rpx;
+    border-width: 0 0 1px 0;
+    border-style: dashed;
+    border-color: #cccccc;
+}

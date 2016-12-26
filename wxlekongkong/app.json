@@ -4,10 +4,10 @@
     "pages/addetail/addetail",
     "pages/zone/zone",
     "pages/logs/logs",
+    "pages/adsearch/adsearch",
     "pages/lastestads/lastestads",
     "pages/topiclist/topiclist",
     "pages/topicdetail/topicdetail",
-    "pages/adsearch/adsearch",
     "pages/celebrityad/celebrityad"
   ],
   "window": {

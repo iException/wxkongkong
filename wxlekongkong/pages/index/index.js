@@ -1,10 +1,15 @@
 const kPageSize = 10
+const kEdgeInteval = 14
+const vSectionInteval = 10
 var app = getApp()
+let router = require("../../utils/router.js")
+let routerfactory = require("../../utils/routerfactory.js")
 var pagelayout = require("../../datamanager/pagelayout.js")
 var addatamanager = require("../../datamanager/addatamanager.js")
 
 Page({
   data: {
+    edgeInteval: kEdgeInteval,
     activityItems: undefined,//活动
     categoryItems: [],//类别
     topicItems: [],//晒单专区
@@ -22,10 +27,13 @@ Page({
     lastestads: [], //最新交易列表
     lastestadIndex: 0,
     isFirstLoading: true,
-    isBeginedAnimteLastestAds: false
+    isBeginedAnimteLastestAds: false,
+    windowWidth: 375
   },
   onLoad: function(options){
     // 页面初始化 options为页面跳转所带来的参数
+  },
+  onReady: function() {
     this.reloadDatas()
   },
   onShow: function(){
@@ -39,7 +47,7 @@ Page({
       }
     })
   },
-  scrolltolower: function(e) {
+  scrolltolower: function() {
     if (!this.customerData.isloadingMore && this.data.hasMore) {
       this.customerData.isloadingMore = true
       this.loadMoreAdItemsWithMode(false)
@@ -53,7 +61,7 @@ Page({
     wx.showToast({
       title: '加载中',
       icon: 'loading',
-      duration: 10000
+      duration: 100000
     })
   },
   //下拉刷新
@@ -207,6 +215,11 @@ Page({
   clickCheckMoreCelebritys: function(e) {
 
   },
+  clickSearchAds: function(e) {
+    wx.navigateTo({
+      url: "../adsearch/adsearch"
+    })
+  },
   clickOnCelebrityView: function(e) {
     let index = e.currentTarget.dataset.index - 0
     let item = this.data.celebrityItem.items[index]
@@ -230,9 +243,7 @@ Page({
   },
   gotoAdDetailView: function(adInfo) {
     app.globalData.adInfo = adInfo
-    var url = '../addetail/addetail?adId=' + adInfo.id 
-    wx.navigateTo({
-      url: url
-    })
+    let url = routerfactory.adDetailRouterUrl(adInfo.id)
+    router.openUrl(url)
   }
 })

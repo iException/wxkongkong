@@ -1,7 +1,7 @@
 <!--topicListView-->
 <!--data: infos[{avatar, name, time, content, adimages}]-->
 <template name="topicDetailView">
-<view class="topicDetailView" bindtap="clickOnTopicView" style="padding: 28rpx {{edgeInteval}}px 36rpx {{edgeInteval}}px; ">
+<view class="topicDetailView" bindtap="clickOnTopicView" style="padding: 28rpx {{edgeInteval}}px 22rpx {{edgeInteval}}px; ">
     <view class="userview">
         <image class="avatarview" src="{{user.avatarUrl}}"></image>
         <view class="introview">

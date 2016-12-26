@@ -18,6 +18,7 @@ Page({
     date: "", //ad日期
     city: "", //poster地址
     likers: [], //点赞的用户
+    likeCount: 0,
     description: "", //ad描述
     readTimes: "",  //阅读次数
     applicationCount: 0,  //申请数量
@@ -147,8 +148,9 @@ Page({
       date: info.date,
       city: info.city,
       likers: info.likedUsers ? info.likedUsers: [],
+      likeCount: info.likeCount,
       description: info.description,
-      readTimes: (info.readTimes + "次浏览"),
+      readTimes: ((info.readTimes?info.readTimes : 1) + "次浏览"),
       applicationCount: info.applicationCount,
       winnerInfo:winnerInfo
     })

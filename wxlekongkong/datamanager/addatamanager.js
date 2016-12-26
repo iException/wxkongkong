@@ -1,6 +1,6 @@
-var config = require("../config.js")
-var util = require("../utils/util.js")
-var apimanager = require("../utils/apimanager.js")
+var config = require("../config.js");
+var util = require("../utils/util.js");
+var apimanager = require("../utils/apimanager.js");
 
 //获取最新交易的商品
 function getLastestTradeAds(params, success, fail, complete) {
@@ -78,19 +78,7 @@ function resetPageLayoutAdItemsInfo(res) {
 
 //通过标签获取ads
 function getAdsByTag(params, success, fail, complete) {
-    apimanager.request({
-        url: config.getTagListingUrl(),
-        data: params, 
-        method: 'GET',
-        success: function(ret) {
-            if (typeof success == 'function') {
-                let items = resetTagAds(ret)
-                success(items)
-            }
-        },
-        fail: fail,
-        complete: complete
-    })
+    getTopicsWithUrlAndParams(config.getTagListingUrl(),params, success, fail, complete)
 }
 
 function resetTagAds(ret) {
@@ -142,9 +130,30 @@ function getAdDetailWithParams(params, success, fail, complete) {
     })
 }
 
+function getTopicsWithUrlAndParams(url, params, success, fail, complete) {
+    apimanager.request({
+        url: url,
+        data: params, 
+        method: 'GET',
+        success: function(ret) {
+            if (typeof success == 'function') {
+                let items = resetTagAds(ret)
+                success(items)
+            }
+        },
+        fail: fail,
+        complete: complete
+    })
+}
+
+function SearchTopicWithParmas(params, success, fail, complete) {
+    getTopicsWithUrlAndParams(config.getSearchAdListUrl(),params, success, fail, complete)
+}
+
 module.exports = {
     getAdsByTag: getAdsByTag,                               //通过标签获取ad列表
     getLastestTradeAds: getLastestTradeAds,                 //获取最新交易列表
+    SearchTopicWithParmas: SearchTopicWithParmas,
     getAdDetailWithParams: getAdDetailWithParams,           //获取ad详情
     getMorePageLayoutAdItems: getMorePageLayoutAdItems,     //获取首页ad列表
 }

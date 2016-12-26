@@ -1,3 +1,26 @@
 @import "../../templates/topicDetailView.wxss";
 @import "../../templates/loadingmoreview.wxss";
 @import "../../templates/likersview.wxss";
+@import "../../templates/topicCommenterView.wxss";
+
+.container .commentview {
+    font-size:14px;
+    margin-top:20rpx;
+    padding: 20rpx 28rpx;
+    background-color:white;
+    border-width: 0 0 1rpx 0;
+    border-style: solid;
+    border-color: #D0D0D0;
+}
+
+.container .hottitle {
+    color: #10b7f5;
+    font-size: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: white;
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: #cccccc;
+} 

@@ -61,7 +61,7 @@
 }
 
 .topicListView .extroview {
-    margin-top: 37rpx;
+    margin-top: 22rpx;
     display: flex; 
     flex-direction: row;
     align-items: center;

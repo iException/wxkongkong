@@ -30,6 +30,13 @@ module.exports = {
     getTopicListUrl: function() {
         return this.host + "/api/Topic.getTopicNew"
     },
+    getTopicCommentListUrl: function() {
+        return this.host + "/api/Comment.getTopicCommentNew"
+    },
+    getSearchAdListUrl: function() {
+        // searchText
+        return this.host + "/api/Listing.searchListing"
+    },
     defaultHeader: {
         "Lkk-Dev-Name": "madong",
         "BAPI-APP-KEY": "api_ioslekongkong",

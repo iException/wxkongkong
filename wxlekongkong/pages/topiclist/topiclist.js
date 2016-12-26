@@ -36,6 +36,11 @@ Page({
     this.customerData.themeId = options["themeId"]
     this.reloadDatas()
   },
+  onReady: function() {
+    wx.setNavigationBarTitle({
+      title: '#晒单专区#'
+    })
+  },
   reloadDatas: function() {
     this.setData({
       hasMoreTopic: true,

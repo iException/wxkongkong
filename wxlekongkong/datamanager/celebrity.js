@@ -1,5 +1,5 @@
-var config = require("../config.js")
-var apiManager = require("../utils/apimanager.js")
+var config = require("../config.js");
+var apiManager = require("../utils/apimanager.js");
 
 function getCelebrityItem({params, success, fail, complete}) {
     let url = config.getCelebrityItemUrl()

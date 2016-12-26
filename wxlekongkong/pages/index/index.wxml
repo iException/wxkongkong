@@ -7,7 +7,7 @@
     <scroll-view style="width:100%; height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
       <!--搜索框-->
       <view class="searchview">
-        <view class="containerview">
+        <view class="containerview" bindtap="clickSearchAds">
           <image class="searchicon" src="../../resource/images/icon_search.png"></image>
           <text>请输入您要搜索的物品或用户名</text>
         </view>

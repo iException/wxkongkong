@@ -10,14 +10,33 @@
         <import src="../../templates/topicDetailView"/>
         <template is="topicDetailView" data="{{...topic, edgeInteval}}"></template>
       </block>
+      <!--喜欢的人-->
       <block wx:if="{{topic && topic.likedUsers.length}}">
           <import src="../../templates/likersview"/>
-          <template is="likersview" data="{{likers: topic.likedUsers}}"></template>
+          <template is="likersview" data="{{likers: topic.likedUsers, likeCount: topic.likeCount}}"></template>
       </block>
+
+      <!--如果申请-->
+        <block wx:if="{{topic && topic.commentNum > 0}}">
+            <view class="commentview">评论({{topic.commentNum}})</view>
+            <block wx:if="{{hotTopicComments.length}}">
+                <block wx:for="{{hotTopicComments}}">
+                    <import src="../../templates/topicCommenterView"/>
+                    <template is="topicCommenterView" data="{{...item}}"></template>
+                </block>
+                <view class="hottitle"><text>以上为热门评论</text></view>
+            </block>
+            
+            <block wx:for="{{norTopicComments}}">
+                <import src="../../templates/topicCommenterView"/>
+                <template is="topicCommenterView" data="{{...item}}"></template>
+            </block>
+        </block>
+
       <!--首次加载转菊花-->
-      <block wx:if="{{topics && topics.length}}">
+      <block wx:if="{{topic && norTopicComments.length}}">
         <import src="../../templates/loadingmoreview.wxml"/>
-        <template is="loadingmoreview" data="{{hasMore: hasMoreTopic}}"></template>
+        <template is="loadingmoreview" data="{{hasMore: hasMoreComments}}"></template>
       </block>
     </scroll-view>
   </block>

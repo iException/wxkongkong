@@ -3,15 +3,21 @@ const vInteval = 5
 const kPageSize = 30
 const kEdgeInteval = 14
 var app = getApp()
+var commentDataManager = require("../../datamanager/commentDataManager.js")
 
 Page({
   data: {
     topic: null,
     windowHeight: 600,
-    edgeInteval: kEdgeInteval
+    hasMoreComments: false,
+    edgeInteval: kEdgeInteval,
+    hotTopicComments: [],
+    norTopicComments: []
   },
   customerData: {
     topicId: "",
+    lastCommentId: "0",
+    isloadingMore: false,
     windowWidth: 375
   },
   onLoad:function(options){
@@ -21,9 +27,23 @@ Page({
     let topicInfo = app.globalData.topicInfo
     if (topicInfo) {
         this.setData({
-            topic: topicInfo
+            topic: topicInfo,
+            hasMoreComments: topicInfo.commentCount > 0
         })
     }
+
+    if (topicInfo.commentNum > 0) {
+      this.customerData.isloadingMore = true
+      this.loadMoreTopicComments()
+    }
+  },
+  scrolltolower: function() {
+    //正在加载或者无数据，不在加载.
+    if (this.customerData.isloadingMore || !this.data.hasMoreComments) {
+      return
+    }
+    this.customerData.isloadingMore = true
+    this.loadMoreTopicComments()
   },
   updateDeviceInfo: function() {
     try{ 
@@ -35,5 +55,49 @@ Page({
     } catch(e) {
         console.log('error');
     }
+  },
+  loadMoreTopicComments: function() {
+    let params = this.loadMoreTopicCommentParams()
+    let success = this.loadMoreTopicCommentsSuccess
+    let that = this
+    let complete = function() {
+      setTimeout(function() {
+        that.customerData.isloadingMore = false
+      }, 500)
+    }
+    commentDataManager.getCommentListWithParams(params, success, null, complete)
+  },
+  loadMoreTopicCommentParams: function() {
+    let opts = {
+      size: kPageSize
+    }
+    return {
+      topicId: this.customerData.topicId,
+      id: this.customerData.lastCommentId,
+      opts: JSON.stringify(opts)
+    }
+  },
+  loadMoreTopicCommentsSuccess: function(retInfo) {
+    let apiInfo = retInfo.apiInfo
+    this.customerData.lastTopicId = apiInfo.lastId
+
+    let lcalHotComments = this.data.hotTopicComments
+    let lcalNorComments = this.data.norTopicComments
+    lcalHotComments = lcalHotComments.concat(retInfo.hotComments)
+    lcalNorComments = lcalNorComments.concat(retInfo.norComments)
+    lcalHotComments = this.updateIsCommentInBottom(lcalHotComments)
+    lcalNorComments = this.updateIsCommentInBottom(lcalNorComments)
+    this.setData({
+      hotTopicComments: lcalHotComments,
+      norTopicComments: lcalNorComments,
+      hasMoreComments: !apiInfo.endFlag
+    })
+  },
+  updateIsCommentInBottom: function(comments) {
+    for (let i = 0; i < comments.length; i++) {
+      let comment = comments[i]
+      comment.isBottom = (i + 1 == comments.length)
+    }
+    return comments
   }
 })

@@ -1,5 +1,7 @@
 var app = getApp()
 const kPageSize = 30
+let router = require("../../utils/router.js")
+let routerfactory = require("../../utils/routerfactory.js")
 var addatamanager = require("../../datamanager/addatamanager.js")
 
 Page({
@@ -17,14 +19,14 @@ Page({
   },
   onLoad: function(options){
     // 页面初始化 options为页面跳转所带来的参数
-    this.customerData.tag = options['keyword']
+    this.customerData.tag = options['searchText']
     this.reloadDatas()
   },
   onReady: function(){
     // 页面渲染完成
     let tagName = this.customerData.tag
     wx.setNavigationBarTitle({
-      title: tagName
+      title: "#" + tagName + "#"
     })
   },
   onShow: function(){
@@ -140,9 +142,7 @@ Page({
   },
   gotoAdDetailView: function(adInfo) {
     app.globalData.adInfo = adInfo
-    var url = '../addetail/addetail?id=' + adInfo.id
-    wx.navigateTo({
-      url: url
-    })
+    let url = routerfactory.adDetailRouterUrl(adInfo.id)
+    router.openUrl(url)
   }
 })

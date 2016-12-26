@@ -1,6 +1,6 @@
-var config = require("../config.js")
-var util = require("../utils/util.js")
-var apiManager = require("../utils/apimanager.js")
+var config = require("../config.js");
+var util = require("../utils/util.js");
+var apiManager = require("../utils/apimanager.js");
 
 function loadMoreAdApplicants(params, success, fail, complete) {
     let url = config.getAdApplicantsListUrl()

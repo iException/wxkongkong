@@ -1,4 +1,5 @@
 .loadingmoreview {
+    margin-top: 10rpx;
     font-size: 13px;
     color: #909090;
     height: 80rpx;

@@ -14,3 +14,10 @@
     border-radius: 30rpx;
     background-color: yellow;
 }
+
+.likersview .infolbl {
+    color: #657B86;
+    font-size: 12px;
+    margin-left: auto;
+    margin-right: 28rpx;
+}

@@ -1,3 +1,26 @@
 <view class="container">
-    
+<block wx:if="showSearchView">
+    <view class="searchView">
+    <view class="searchIconView"><image class="searchIcon" src="../../resource/images/icon_search.png"></image></view>
+    <input class="inputTxt" placeholder-class="inputPlaceTxt" auto-focus bindinput="inputSearchKeyword" bindconfirm="clickSearchAds" bindfocus="beginEditText" bindblur="endEditText" placeholder="请输入您要搜索的物品或用户" style="width:{{inputTextWidth}}px"/>
+    <label class="cancenBtn" bindtap="cancelSearchAds" style="color:{{cancelColor}};">取消</label>
+    </view>
+</block>
+<block wx:if="{{loadingDataError}}">
+    <import src="../../templates/errorview.wxml"/>
+    <template is="errorview"></template>
+</block>
+<block wx:else>
+    <scroll-view wx:if="{{items && items.length}}" style="height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
+        <!--adview-->
+        <import src="../../templates/adview.wxml"/>
+        <block wx:for="{{items}}" wx:key="adview">
+            <template is="{{item.style}}" data="{{...item.content, index, vinteval:20}}"></template>
+        </block>
+        <!--首次加载转菊花-->
+        <import src="../../templates/loadingmoreview.wxml"/>
+        <template is="loadingmoreview" data="{{hasMore}}"></template>
+    </scroll-view>
+</block>
+
 </view>
