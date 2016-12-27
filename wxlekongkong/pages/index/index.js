@@ -196,7 +196,7 @@ Page({
   },
   clickOnCategoryView: function(e) {
     var tag = this.data.categoryItems[e.currentTarget.dataset.tag]
-    var url = "../zone/zone?keyword=" + tag.title + "&bannerimage=" + tag.bannerimage
+    var url = "../zone/zone?keyword=" + tag.title
     wx.navigateTo({
       url: url
     })
