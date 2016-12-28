@@ -1,0 +1,4 @@
+
+<template name="intevalView">
+<view style="background-color:#f2f3ee; width:100%; height: 24rpx;"></view>
+</template>

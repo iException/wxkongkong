@@ -1,19 +1,18 @@
 .lastestadcell {
     width: 100%;
-    background-color: white;
     display: flex; 
     flex-direction: row;
     align-items: center;
-    padding: 28rpx;
-    border-width: 0 0 1px 0;
+    padding: 20rpx;
+    background-color:white;
+    border-width: 0 0 1rpx 0;
     border-style: solid;
-    border-color: #D0D0D0; 
+    border-color: #D0D0D0;
 }
 
 .lastestadcell .adimage {
-    width: 120rpx; 
-    height: 120rpx;
-    background-color: yellow;
+    width: 100rpx; 
+    height: 100rpx;
 }
 
 .lastestadcell .adinfoview {
@@ -30,9 +29,9 @@
 }
 
 .lastestadcell .adinfoview .userinfoview .avatar {
-    width: 40rpx;
-    height: 40rpx;
-    border-radius: 20rpx;
+    width: 48rpx;
+    height: 48rpx;
+    border-radius: 24rpx;
 }
 
 .lastestadcell .adinfoview .userinfoview .name {

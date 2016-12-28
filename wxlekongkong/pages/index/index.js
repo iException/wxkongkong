@@ -28,10 +28,8 @@ Page({
     lastestadIndex: 0,
     isFirstLoading: true,
     isBeginedAnimteLastestAds: false,
-    windowWidth: 375
-  },
-  onLoad: function(options){
-    // 页面初始化 options为页面跳转所带来的参数
+    windowWidth: 375,
+    isInTrasition: false
   },
   onReady: function() {
     this.reloadDatas()
@@ -46,8 +44,9 @@ Page({
         })
       }
     })
+    this.customerData.isInTrasition = false
   },
-  scrolltolower: function() {
+  onReachBottom: function() {
     if (!this.customerData.isloadingMore && this.data.hasMore) {
       this.customerData.isloadingMore = true
       this.loadMoreAdItemsWithMode(false)
@@ -195,6 +194,11 @@ Page({
 
   },
   clickOnCategoryView: function(e) {
+    if (this.customerData.isInTrasition) {
+      return
+    }
+    this.customerData.isInTrasition = true
+
     var tag = this.data.categoryItems[e.currentTarget.dataset.tag]
     var url = "../zone/zone?keyword=" + tag.title
     wx.navigateTo({
@@ -202,11 +206,21 @@ Page({
     })
   },
   clickOnLastestView: function(e) {
+    if (this.customerData.isInTrasition) {
+      return
+    }
+    this.customerData.isInTrasition = true
+
     wx.navigateTo({
       url: '../lastestads/lastestads'
     })
   },
   clickOnTopicView: function(e) {
+    if (this.customerData.isInTrasition) {
+      return
+    }
+    this.customerData.isInTrasition = true
+
     let url = '../topiclist/topiclist?themeId=1'
     wx.navigateTo({
       url: url
@@ -216,11 +230,21 @@ Page({
 
   },
   clickSearchAds: function(e) {
+    if (this.customerData.isInTrasition) {
+      return
+    }
+    this.customerData.isInTrasition = true
+
     wx.navigateTo({
       url: "../adsearch/adsearch"
     })
   },
   clickOnCelebrityView: function(e) {
+    if (this.customerData.isInTrasition) {
+      return
+    }
+    this.customerData.isInTrasition = true
+
     let index = e.currentTarget.dataset.index - 0
     let item = this.data.celebrityItem.items[index]
     if (item.action) {
@@ -234,6 +258,11 @@ Page({
     }
   },
   clickOnAdView: function(e) {
+    if (this.customerData.isInTrasition) {
+      return
+    }
+    this.customerData.isInTrasition = true
+
     //点击adView
     var idx = e.currentTarget.dataset.index - 0
     var adInfo = this.data.items.length > idx && this.data.items[idx]

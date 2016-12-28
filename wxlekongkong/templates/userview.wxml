@@ -2,7 +2,9 @@
 <!--{item : {avatar: "", name: "", intro: }}-->
 <template name="userview">
     <view class="userview">
-        <image class="avatarview" mode="aspectFill" bindload="avatarLoaded" src="{{avatar}}"></image>
+        <view style="width:80rpx; height:80rpx; background-repeat:no-repeat; background-size: 80rpx 80rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/avatar_placehold.png');">
+            <image class="avatarview" mode="aspectFill" bindload="avatarLoaded" src="{{avatar}}"></image>
+        </view>
         <view class="introview">
             <text class="nameview">{{name}}</text>
             <view class="descview">

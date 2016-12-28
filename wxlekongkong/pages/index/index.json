@@ -1,3 +1,4 @@
 {
-    "navigationBarTitleText": "首页"
+    "navigationBarTitleText": "乐空空",
+    "enablePullDownRefresh": true
 }

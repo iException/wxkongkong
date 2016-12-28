@@ -61,7 +61,7 @@ function resetPageLayoutAdItemsInfo(res) {
     for (let key in results) {
       var result = results[key].display
       if (result.style == "ad_item") {
-        result.content.description = result.content.title + result.content.content
+        result.content.description = result.content.title + "  xxxxxx  " + result.content.content
         result.content.city = result.content.region.names.join("|")
         var date = new Date(result.content.createdAt * 1000)
         result.content.date = util.adFormatTime(date)

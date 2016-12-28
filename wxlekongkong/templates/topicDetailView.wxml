@@ -3,7 +3,9 @@
 <template name="topicDetailView">
 <view class="topicDetailView" bindtap="clickOnTopicView" style="padding: 28rpx {{edgeInteval}}px 22rpx {{edgeInteval}}px; ">
     <view class="userview">
-        <image class="avatarview" src="{{user.avatarUrl}}"></image>
+        <view style="width:80rpx; height:80rpx; background-repeat:no-repeat; background-size: 80rpx 80rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/avatar_placehold.png');">
+            <image class="avatarview" src="{{user.avatarUrl}}"></image>
+        </view>
         <view class="introview">
             <text class="namelabel">{{user.nick}}</text>
             <text class="introlabel">{{date}}</text>
@@ -14,8 +16,10 @@
     </view>
     <scroll-view wx:if="{{images}}" scroll-x="true" class="imagesview">
         <block wx:for="{{images}}">
-            <image class="imageview" src="{{item.square}}" 
-            style="width: {{item.width}}px; height: {{item.height}}px; margin-right: {{item.hInteval}}px;"></image>
+            <view style="display: inline-block; margin-right: {{item.hInteval}}px;width:{{item.width}}px; height:{{item.height}}px; background-repeat:no-repeat; background-size: {{item.width}}px height:{{item.height}}px;background-blend-mode: color-dodge;background-image: url('../../resource/images/detail_placehold.png');">
+                <image class="imageview" src="{{item.wide}}" 
+                style="width: 100%; height: 100%;"></image>
+            </view>
         </block>
     </scroll-view>
     <view class="extroview">
@@ -25,11 +29,11 @@
         </view>
         <view class="rightview">
             <image src="../../resource/images/view-icon-blue.png"></image>
-            <text>45次查看</text>
+            <text>{{readTimes}}</text>
         </view>
         <view class="rightview">
             <image src="../../resource/images/time-icon-blue.png"></image>
-            <text>45分钟前</text>
+            <text>{{date}}</text>
         </view>
     </view>
 </view>

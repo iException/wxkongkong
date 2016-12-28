@@ -4,7 +4,8 @@
     <template is="errorview"></template>
 </block>
 <block wx:else>
-    <scroll-view wx:if="{{userInfo}}" style="height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
+    <scroll-view wx:if="{{userInfo}}" style="width:100%; height:{{windowHeight}}px; background-color:white" scroll-y="true" bindscrolltolower="scrolltolower">
+        <import src="../../templates/intevalView.wxml"/>
         <!--发布者头像--> 
         <import src="../../templates/userview"/>
         <template is="userview" data="{{...userInfo}}"></template>
@@ -39,16 +40,19 @@
         </block>
         <!--点赞用户-->
         <block wx:if="{{likers.length}}">
+            <template is="intevalView"></template>
             <import src="../../templates/likersview"/>
-            <template is="likersview" data="{{likers}}"></template>
+            <template is="likersview" data="{{likers, likeCount}}"></template>
         </block>
-        <!--如果有申请人-->
+        <!--如果有获赠者-->
         <block wx:if="{{winnerInfo}}">
+            <template is="intevalView"></template>
             <import src="../../templates/winnerview"/>
             <template is="winnerview" data="{{...winnerInfo}}"></template>
         </block>
         <!--如果申请-->
         <block wx:if="{{applicationCount > 0}}">
+            <template is="intevalView"></template>
             <view class="applicantview">申请人({{applicationCount}})</view>
             <block wx:if="{{hotApplicants.length}}">
                 <block wx:for="{{hotApplicants}}">

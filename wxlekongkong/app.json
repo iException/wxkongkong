@@ -16,7 +16,7 @@
     "navigationBarTitleText": "乐空空",
     "navigationBarTextStyle": "#fff",
     "enablePullDownRefresh": true,
-    "backgroundColor": "#453F3F"
+    "backgroundColor": "#f2f3ee"
   },
   "networkTimeout": {
     "request": 10000

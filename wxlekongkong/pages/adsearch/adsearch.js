@@ -7,20 +7,36 @@ var addatamanager = require("../../datamanager/addatamanager.js")
 Page({
   data: {
     items: [],
+    showSearchView: true,
     hasMore: false,
     windowHeight: 375,
     loadingDataError: false,
     inputTextWidth: 100,
-    cancelColor: "#969696"
+    cancelColor: "#969696",
+    categories:["服饰鞋包","家居日用","配件配饰","图书音像","个护美妆","数码产品"],
+    categorybuttonwidth: 100,
+    searchkeywords:[]
   },
   customerData: {
     searchText: "",  //ad标签
+    categoryName:"",
     loadingIdx: 0,
     isInLoading: false,
-    isFirstLoading: true
+    isFirstLoading: true,
+    isInTrasition: false,
+    loadingAdsMode: 0    //0: 关键字搜索，1：热门搜索
   },
-  onLoad: function(options){
-    // 页面初始化 options为页面跳转所带来的参数
+  onLoad: function() {
+    let that = this
+    wx.getStorage({
+      key: 'searchkeywords',
+      success: function(res){
+        // success
+        that.setData({
+          searchkeywords: res.data
+        })
+      }
+    })
   },
   onShow: function(){
     // 页面显示
@@ -28,11 +44,14 @@ Page({
     wx.getSystemInfo( {
       success: ( res ) => {
         that.setData( {
-          windowHeight: (res.windowHeight - 40),
-          inputTextWidth: res.windowWidth - 70
+          windowHeight: (res.windowHeight - 50),
+          inputTextWidth: res.windowWidth - 70,
+          categorybuttonwidth: ((res.windowWidth - 28 - 20 * 2) / 3.0)
         })
       }
     })
+
+    this.customerData.isInTrasition = false
   },
   reloadDatas: function() {
     this.setData({
@@ -41,18 +60,53 @@ Page({
     
     this.showLoadingView()
     this.customerData.isInLoading = true
-    this.loadMoreAdDatasWithRefreshMode(true)
+
+    //0：关键字搜索，1：类别搜索
+    if(this.customerData.loadingAdsMode == 0) {
+      this.loadMoreAdDatasWithRefreshMode(true)
+    } else {
+      this.loadMoreCategoryAdsWithRefreshMode(true)
+    }
   },
   onPullDownRefresh: function() {
     this.loadMoreAdDatasWithRefreshMode(true)
   },
-  scrolltolower: function(e) {
+  onReachBottom: function(e) {
     if(this.customerData.isInLoading) {
       return
     }
     this.customerData.isInLoading = true
-    this.loadMoreAdDatasWithRefreshMode(false)
+
+    //0：关键字搜索，1：类别搜索
+    if(this.customerData.loadingAdsMode == 0) {
+      this.loadMoreAdDatasWithRefreshMode(false)
+    } else {
+      this.loadMoreCategoryAdsWithRefreshMode(false)
+    }
   },
+  //类别搜索
+  loadMoreCategoryAdsWithRefreshMode: function(isRefresh) {
+    if(isRefresh) {
+      this.resetLoadAdDataPrams()
+    }
+
+    let that = this
+    let params = this.loadCategoryAdDatasParams()
+    let success = function(items) {
+      that.loadMoreAdDatasSuccess(isRefresh, items)
+    }
+    let fail = function() {
+      that.loadMoreAdDatasFail(isRefresh)
+    }
+    let complete = function() {
+      setTimeout(function() {
+        that.customerData.isInLoading = false
+        wx.hideToast()
+      }, 1000)
+    }
+    addatamanager.getAdsByTag(params, success, fail, complete)
+  },
+  //关键字搜索
   loadMoreAdDatasWithRefreshMode: function(isRefresh) {
     if(isRefresh) {
       this.resetLoadAdDataPrams()
@@ -76,6 +130,17 @@ Page({
   resetLoadAdDataPrams: function() {
     this.customerData.loadingIdx = 0;
   },
+  loadCategoryAdDatasParams: function() {
+    var opts = {
+      "from" : kPageSize * this.customerData.loadingIdx,
+      "size" : kPageSize,
+      "banner": false
+    };
+    return {
+      opts: JSON.stringify(opts),
+      tag: this.customerData.categoryName
+    };
+  },
   loadAdDatasParams: function() {
     var opts = {
       "from" : kPageSize * this.customerData.loadingIdx,
@@ -90,11 +155,6 @@ Page({
   loadMoreAdDatasSuccess: function(isRefresh, retItems) {
     this.hideLoadingView()
     this.customerData.isFirstLoading = false
-
-    //处理加载数据
-    if (isRefresh) {
-      this.data.items = []
-    }
     this.customerData.loadingIdx += 1
 
     let items = this.data.items
@@ -106,7 +166,7 @@ Page({
   },
   loadMoreAdDatasFail: function(isRefresh) {
     wx.showToast({
-      title: "zone加载数据失败",
+      title: "加载数据失败",
       duration: 2000
     })
 
@@ -127,11 +187,16 @@ Page({
     wx.hideToast()
   },
   clickOnAdView: function(e) {
+    if (this.customerData.isInTrasition) {
+      return
+    }
+
     //点击adView
-    var idx = e.currentTarget.dataset.index - 0;
-    var adInfo = this.data.items.length > idx && this.data.items[idx];
+    var idx = e.currentTarget.dataset.index - 0
+    var adInfo = this.data.items.length > idx && this.data.items[idx]
     if (adInfo) {
-      this.gotoAdDetailView(adInfo.content);
+      this.customerData.isInTrasition = true
+      this.gotoAdDetailView(adInfo.content)
     }
   },
   gotoAdDetailView: function(adInfo) {
@@ -142,26 +207,87 @@ Page({
   clickSearchAds: function(e) {
     wx.hideKeyboard()
     
-    this.customerData.isFirstLoading = true
-    this.reloadDatas()
+    if (this.customerData.searchText && this.customerData.searchText.length > 0) {
+      this.saveSearchKeywords() 
+      this.reloadDatas()
+    }
+  },
+  saveSearchKeywords: function() {
+    let searchkeywords = this.data.searchkeywords
+    for (let i = 0; i < searchkeywords.length; i++) {
+      let keyword = searchkeywords[i]
+      if (keyword == this.customerData.searchText) {
+        searchkeywords.splice(i, 1)
+        break;
+      }
+    }
+    searchkeywords.unshift(this.customerData.searchText)
+    this.setData({
+      searchkeywords: searchkeywords
+    })
+    wx.setStorage({
+      key: 'searchkeywords',
+      data: searchkeywords,
+    })
   },
   beginEditText: function(e) {
     this.setData({
       cancelColor: "#10B7F5"
     })
+    this.setData({
+      items: [],
+      showSearchView: true
+    })
+    this.customerData.searchText = ""
   },
   endEditText: function(e) {
     this.setData({
       cancelColor: "#969696"
     })
-  },
-  cancelSearchAds: function(e) {
-    wx.hideKeyboard()
     this.setData({
-      cancelColor: "#969696"
+      showSearchView: !(this.customerData.searchText && this.customerData.searchText.length > 0)
     })
+  },
+  searchAds: function(e) {
+    this.clickSearchAds()
   },
   inputSearchKeyword: function(e) {
     this.customerData.searchText = e.detail.value
+  },
+  clickOnCategoryButton: function(e) {
+    let idx = e.currentTarget.dataset.index
+    let categories = this.data.categories
+    if (idx > categories.length) {
+      return
+    }
+    //类别搜索模式
+    this.customerData.loadingAdsMode = 1
+    this.customerData.categoryName = categories[idx] 
+    this.reloadDatas()
+    this.setData({
+      showSearchView: false
+    })
+  },
+  clickOnKeywordCell: function(e) {
+    let idx = e.currentTarget.dataset.index
+    let searchkeywords = this.data.searchkeywords
+    if (idx > searchkeywords.length) {
+      return
+    }
+    //关键字搜索模式
+    this.customerData.loadingAdsMode = 0
+    this.customerData.searchText = searchkeywords[idx]
+    this.reloadDatas()
+    this.setData({
+      showSearchView: false
+    })
+  },
+  clearSearchKeyword: function(e) {
+    this.setData({
+      searchkeywords: []
+    })
+    wx.clearStorage({
+      key: 'searchkeywords'
+    })
   }
 })

@@ -1,0 +1,29 @@
+.hotcategoryview {
+    background-color: #f2f3ee;
+    padding: 0 28rpx;
+}
+
+.hotcategoryview .titleview {
+    color: #969696;
+    font-size: 14px;
+}
+
+.hotcategoryview .categoryview {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.hotcategoryview .categoryview .hotcategorybtn {
+    color: #333333;
+    font-size: 14px;
+    height: 70rpx;
+    margin-top: 22rpx;
+    border-radius: 35rpx;
+    display: flex;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+}

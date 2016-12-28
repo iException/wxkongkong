@@ -1,5 +1,5 @@
 <template name="errorview">
-<view class="errorview" style="display: flex;flex-direction: column;align-items: center;background-color: red;justify-content: center; width: 100%; height: {{windowHeight}}px;">
-    <button bindtap="reloadDatas">reload</button>
+<view class="errorview" style="display: flex;flex-direction: column;align-items: center;background-color: white;justify-content: center; width: 100%; height: {{windowHeight}}px;">
+    <button bindtap="reloadDatas">加载出错，点击重新加载</button>
 </view>
 </template>

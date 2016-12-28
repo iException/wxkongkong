@@ -3,7 +3,7 @@
 
 <template name="loadingmoreview">
 <view class="loadingmoreview">
-<text wx:if="{{hasMore}}">加载更多...</text>
-<text wx:else="{{hasMore}}">无更多数据...</text>
+<text wx:if="{{hasMore}}">加载更多数据中...</text>
+<text wx:else="{{hasMore}}"> (｡･ω･)ﾉﾞ到底了哦~</text>
 </view>
 </template>

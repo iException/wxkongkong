@@ -1,0 +1,39 @@
+.searchkeywordview{
+    background-color: #f2f3ee;
+}
+
+.searchkeywordview .titleview {
+    color: #969696;
+    font-size: 14px;
+    padding: 0 28rpx 28rpx 28rpx;
+}
+
+.searchkeywordview .keywordview {
+    padding: 28rpx;
+    font-size: 14px;
+    color: #333333;
+    background-color:white;
+    border-width: 0 0 1rpx 0;
+    border-style: solid;
+    border-color: #D0D0D0;
+}
+
+.searchkeywordview .operateview {
+    width: 100%;
+    display: flex;
+    padding-top: 36rpx;
+    align-items: center;
+    flex-direction: column;
+}
+
+.searchkeywordview .operateview .clearbtn {
+    font-size: 14px;
+    color: #10B7F5;
+    background-color:white;
+    height: 70rpx;
+    width: 200rpx;
+    border-radius: 8rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

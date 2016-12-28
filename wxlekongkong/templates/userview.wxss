@@ -10,7 +10,6 @@
     width: 80rpx;
     height: 80rpx;
     border-radius: 40rpx;
-    background-color: red;
 }
 
 .userview .introview {

@@ -2,10 +2,14 @@
 <!--adimage:物品图像地址，-->
 <template name="lastestadcell">
 <view class="lastestadcell" bindtap="clickOnLastestadcell" data-tag="{{tag}}">
+    <view style="width:100rpx; height:100rpx; background-repeat:no-repeat; background-size: 100rpx 100rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/list_placehold.png');">
     <image class="adimage" src="{{image}}"></image>
+    </view>
     <view class="adinfoview">
         <view class="userinfoview">
-            <image class="avatar" src="{{user.avatar.square}}"></image>
+            <view style="width:48rpx; height:48rpx; background-repeat:no-repeat; background-size: 48rpx 48rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/avatar_placehold.png');">
+                <image class="avatar" src="{{user.avatar.square}}"></image>
+            </view>
             <text class="name">{{user.nick}}</text>
             <text class="extro">{{title}}</text>
             <text class="date">{{date}}</text>

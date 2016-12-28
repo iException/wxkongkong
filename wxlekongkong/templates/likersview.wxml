@@ -1,7 +1,9 @@
 <template name="likersview">
 <view class="likersview">
     <block wx:for="{{likers}}">
-        <image class="likerview" wx:if="{{index < 5}}" src="{{item.avatar.square}}"></image>
+        <view style="margin-right: 12rpx; width:60rpx; height:60rpx; background-repeat:no-repeat; background-size: 60rpx 60rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/avatar_placehold.png');">
+            <image class="likerview" wx:if="{{index < 5}}" src="{{item.avatar.square}}"></image>
+        </view>
     </block>
     <view class="infolbl">{{likeCount}}人喜欢</view>
 </view>

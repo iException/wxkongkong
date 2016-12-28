@@ -7,4 +7,5 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background-color: #f2f3ee;
 }

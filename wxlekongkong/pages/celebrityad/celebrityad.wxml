@@ -5,6 +5,7 @@
 </block>
 <block wx:else>
     <scroll-view wx:if="{{adInfo}}" style="height:{{windowHeight}}px;" scroll-y="true" bindscrolltolower="scrolltolower">
+        <import src="../../templates/intevalView.wxml"/>
         <!--发布者头像--> 
         <import src="../../templates/celebrityuserview"/>
         <template is="celebrityuserview" data="{{...adInfo.user}}"></template>
@@ -22,22 +23,26 @@
             <template is="imagesview" data="{{images}}"></template>
         </block>
         <!--规则-->
+        <template is="intevalView"></template>
         <view class="ruleView">
             <view class="titleView">{{adInfo.rule.ruleTitle}}</view>
             <view class="contentView">{{adInfo.rule.rule}}</view>
         </view>
         <!--选择原因-->
         <block wx:if="{{adInfo && adInfo.reason && adInfo.reason.reason}}">
+            <template is="intevalView"></template>
             <import src="../../templates/postreasonview"/>
             <template is="postreasonview" data="{{...adInfo.reason, name: adInfo.user.name, avatar: adInfo.user.avatar, identity: adInfo.user.identity}}"></template>
         </block>
-        <!--如果有申请人-->
+        <!--如果有获赠者-->
         <block wx:if="{{adInfo&&adInfo.winner}}">
+            <template is="intevalView"></template>
             <import src="../../templates/winnerview"/>
             <template is="winnerview" data="{{...adInfo.winner}}"></template>
         </block>
         <!--如果申请-->
         <block wx:if="{{adInfo && adInfo.applicationCount > 0}}">
+            <template is="intevalView"></template>
             <view class="applicantview">申请人({{adInfo.applicationCount}})</view>
             <block wx:if="{{hotApplicants.length}}">
                 <block wx:for="{{hotApplicants}}">

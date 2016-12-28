@@ -1,12 +1,14 @@
+<view class="container">
 <block wx:if="{{loadingDataError}}">
 <import src="../../templates/errorview.wxml"/>
 <template is="errorview"></template>
 </block>
 <block wx:else>
-<scroll-view scroll-y="true" bindscrolltolower="scrolltolower" style="background-color: white">
+<scroll-view scroll-y="true" bindscrolltolower="scrolltolower" style="width:100%; height:100%;background-color: white">
     <import src="../../templates/lastestadcell"/>
     <block wx:for="{{items}}">
         <template is="lastestadcell" data="{{...item.display.content, tag:index}}"></template>
     </block>
 </scroll-view>
 </block>
+</view>

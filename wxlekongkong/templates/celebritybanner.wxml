@@ -8,7 +8,7 @@
         <view class="cardsview">
             <block wx:for="{{items}}">
                 <view class="cardview" bindtap="clickOnCelebrityView" data-index="{{index}}">
-                    <image class="adimage" src="{{item.images}}"></image>
+                    <view style="background-repeat:no-repeat; background-size: 200rpx 200rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/list_placehold.png')"><image class="adimage" src="{{item.images}}"></image></view>
                     <view class="titlelbl">{{item.description}}</view>
                     <view class="commonlbl">{{item.applicationCount + '人申请'}}</view>
                     <view class="commonlbl" style="color:{{item.color}};">{{item.statusString}}</view>

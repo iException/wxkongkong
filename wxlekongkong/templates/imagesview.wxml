@@ -1,9 +1,10 @@
 <template name="imagesview">
     <view class="imagesview" style="padding-bottom: 8rpx; background-color: white; display: flex; flex-direction: row; flex-wrap: wrap;">
         <block wx:for="{{images}}">
-            <image class="imageview" data-index="{{index}}" src="{{item.square}}" mode="scaleToFill" bindload="imageLoaded" 
-             style="margin-bottom: {{item.top}}px; width: {{item.width}}px; height:{{item.height}}px; margin-left:{{item.left}}px; background-color: red;"></image>
+            <view style="margin-bottom: {{item.top}}px; margin-left:{{item.left}}px; width:{{item.width}}px; height: {{item.height}}px; background-repeat:no-repeat; background-size: {{item.width}}px {{item.height}}px;background-blend-mode: color-dodge;background-image: url('../../resource/images/detail_placehold.png')">
+                <image class="imageview" data-index="{{index}}" mode="aspectFill" bindload="imageLoaded" 
+                style="width: {{item.width}}px; height:{{item.height}}px;" src="{{item.big}}"></image>
+             </view>
         </block>
-        <view class="bottomview"></view>
     </view>
 </template>

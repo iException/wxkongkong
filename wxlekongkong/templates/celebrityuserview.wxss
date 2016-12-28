@@ -10,7 +10,6 @@
     width: 140rpx;
     height: 140rpx;
     border-radius: 70rpx;
-    background-color: yellow;
 }
 
 .celebrityuserview .infoView {

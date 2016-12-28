@@ -2,7 +2,9 @@
 <view class="postreasonview">
     <view class="titleview">{{reasonTitle}}</view>
     <view class="userview">
-        <image class="avatar" src="{{avatar}}"></image>
+        <view style="width:64rpx; height:64rpx; background-repeat:no-repeat; background-size: 64rpx 64rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/avatar_placehold.png');">
+            <image class="avatar" src="{{avatar}}"></image>
+        </view>
         <view class="descView">
             <text class="nameLbl">{{name}}</text>
             <text class="identityLbl">{{identity}}</text>

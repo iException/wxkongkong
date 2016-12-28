@@ -11,7 +11,6 @@
     width: 80rpx; 
     height: 80rpx;
     border-radius: 40rpx;
-    background-color: yellow;
 }
 
 .topicDetailView .userview .introview {
@@ -49,7 +48,6 @@
 
 .topicDetailView .imagesview .imageview {
     margin-right: 10rpx;
-    background-color: red;
     clear: both;
 }
 
@@ -62,9 +60,15 @@
     width: 100%;
 }
 
+.topicDetailView .extroview view {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+
 .topicDetailView .extroview view image {
-    width: 20rpx; 
-    height: 22rpx;
+    width: 30rpx; 
+    height: 30rpx;
 }
 
 .topicDetailView .extroview view text {

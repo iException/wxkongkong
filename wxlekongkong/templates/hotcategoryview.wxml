@@ -1,0 +1,13 @@
+<template name="hotcategoryview">
+    <view class="hotcategoryview">
+        <view class="titleview">热门搜索</view>
+        <view class="categoryview">
+            <block wx:for="{{categories}}">
+                 <view bindtap="clickOnCategoryButton" data-index="{{index}}" class = "hotcategorybtn"
+                 style="margin-right:{{hinteval}}px; width: {{btnwidth}}px;">
+                    {{item}}
+                 </view>
+            </block>
+        </view>
+    </view>
+</template>

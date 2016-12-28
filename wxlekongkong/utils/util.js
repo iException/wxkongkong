@@ -15,17 +15,17 @@ function adFormatTime(date) {
   var timeStamp = crtDate.valueOf() / 1000;
   var adTimeStamp = date.valueOf() / 1000;
   if (timeStamp - adTimeStamp < 60) {
-    return "刚刚";
+    return "刚刚发布";
   } else {
-    var inteval = Math.ceil((timeStamp - adTimeStamp) / 60);
+    var inteval = Math.floor((timeStamp - adTimeStamp) / 60);
     if (inteval <= 60) {
-      return inteval + "分钟前";
+      return inteval + "分钟前发布";
     } else {
-      inteval = Math.ceil(inteval / 60);
+      inteval = Math.floor(inteval / 60);
       if (inteval < 24) {
-        return inteval + "小时前";
+        return inteval + "小时前发布";
       } else {
-        return Math.ceil(inteval / 24) + "天前";
+        return Math.floor(inteval / 24) + "天前发布";
       }
     }
   }

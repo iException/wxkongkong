@@ -47,7 +47,6 @@
 
 .container .applicantview {
     font-size:14px;
-    margin-top:20rpx;
     padding: 20rpx 28rpx;
     background-color:white;
     border-width: 0 0 1rpx 0;
@@ -62,7 +61,4 @@
     flex-direction: row;
     justify-content: center;
     background-color: white;
-    border-width: 0 0 1px 0;
-    border-style: solid;
-    border-color: #cccccc;
 } 

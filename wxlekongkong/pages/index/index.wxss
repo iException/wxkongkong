@@ -38,19 +38,19 @@
 
 .container .containerview
 {
-    margin: 0 20rpx;
+    margin: 0 28rpx;
     height: 60rpx;
     display: flex;
     flex-direction: row;
     align-items: center;
     font-size: 12px;
-    color: white;
+    color: #969696;
     border-radius: 8rpx;
-    background-color: lightgrey;
+    background-color: #ECECEC;
 }
 
 .container .searchview .containerview .searchicon {
-    width: 40rpx;
-    height: 40rpx;
-    margin: 0 10rpx;
+    width: 34rpx;
+    height: 32rpx;
+    margin: 0 15rpx 0 28rpx;
 }

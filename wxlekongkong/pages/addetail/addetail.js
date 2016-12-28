@@ -35,6 +35,16 @@ Page({
     isloadingMore: false,
     windowWidth: 375
   },
+  onShow: function() {
+    var info = app.globalData.adInfo
+    if (!info && !this.data.userInfo) {
+      let that = this
+      setTimeout(function(){
+        that.showLoadingAdInfoView()
+      }, 500)
+    }
+    app.globalData.adInfo = undefined
+  },
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
     this.customerData.adId = options['adId']
@@ -49,14 +59,18 @@ Page({
     }
 
     var info = app.globalData.adInfo
-    app.globalData.adInfo = undefined
     //存在ad信息，直接显示页面，否则，先加载.
     if(info) {
       this.updateAdDetailInfo(info)
-    } else {
-      this.showLoadingAdInfoView()
     }
     this.loadAdDatas()
+  },
+  onUnload: function() {
+    this.setData({
+      userInfo: null,
+      images: [],
+      tags: []
+    })
   },
   showLoadingAdInfoView: function() {
     wx.showToast({
@@ -166,11 +180,11 @@ Page({
     }
     //小图不用计算,计算过的不再重新计算
     var image = images[idx]
-    if (!image.isBig || image.height) {
+    if (!image.isBig) {
       return
     }
 
-    let viewHeight = ( e.detail.height / e.detail.width ) * image.width
+    image.height = ( e.detail.height / e.detail.width ) * image.width
     this.setData({
       images: images
     })

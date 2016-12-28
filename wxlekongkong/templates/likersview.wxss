@@ -3,16 +3,13 @@
     align-items: center;
     flex-direction: row;
     background-color: white;
-    padding: 26rpx 28rpx;
-    margin-top:24rpx;
+    padding: 20rpx 28rpx;
 }
 
 .likersview .likerview {
     width: 60rpx;
     height: 60rpx;
-    margin-right: 24rpx;
     border-radius: 30rpx;
-    background-color: yellow;
 }
 
 .likersview .infolbl {

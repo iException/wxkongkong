@@ -4,11 +4,13 @@
     <template is="errorview" data="{{windowHeight}}"></template>
   </block>
   <block wx:else>
-    <scroll-view style="width:100%; height:{{windowHeight}}px;" scroll-y="true" bindscrolltolower="scrolltolower">
+    <view style="width:100%; height:{{windowHeight}}px; background-color:white;">
       <!--adview-->
       <block wx:if="{{topics.length}}">
+        <import src="../../templates/intevalView.wxml"/>
         <import src="../../templates/topicListView"/>
         <block wx:for="{{topics}}">
+          <template is="intevalView"></template>
           <template is="topicListView" data="{{...item, index, edgeInteval}}"></template>
         </block>
       </block>
@@ -17,6 +19,6 @@
         <import src="../../templates/loadingmoreview.wxml"/>
         <template is="loadingmoreview" data="{{hasMore: hasMoreTopic}}"></template>
       </block>
-    </scroll-view>
+    </view>
   </block>
 </view>

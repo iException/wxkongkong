@@ -2,10 +2,14 @@
 <!--adimage:物品图像地址，-->
 <template name="lastestview">
 <view class="lastestview" bindtap="clickOnLastestView">
-    <image class="adimage" src="{{display.content.image}}"></image>
+    <view style="width:80rpx; height:80rpx; background-repeat:no-repeat; background-size: 80rpx 80rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/list_placehold.png');">
+        <image class="adimage" src="{{display.content.image}}"></image>
+    </view>
     <view class="adinfoview">
         <view class="userinfoview">
-            <image class="avatar" src="{{display.content.user.avatar.square}}"></image>
+            <view style="width:40rpx; height:40rpx; background-repeat:no-repeat; background-size: 40rpx 40rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/avatar_placehold.png');">
+                <image class="avatar" src="{{display.content.user.avatar.square}}"></image>
+            </view>
             <text class="name">{{display.content.user.nick}}</text>
             <text class="extro">{{display.content.title}}</text>
         </view>

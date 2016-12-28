@@ -24,6 +24,16 @@ function handleTopicItems(ret) {
     let items = []
     for (let i = 0; i < result.items.length; i++) {
         let item = result.items[i].display.content
+
+        let images = []
+        if (item.images) {
+            for (let i = 0; i < item.images.length; i++) {
+                let image = item.images[i]
+                image.imageUrl = item.images.length > 1 ? image.square : image.wide
+                images.push(image)
+            }
+        }
+
         var date = new Date(item.createdAt * 1000)
         let nItem = {
             user: {
@@ -35,9 +45,10 @@ function handleTopicItems(ret) {
             date: util.adFormatTime(date),
             likeCount: item.likeCount,
             likedUsers: item.likedUsers,
-            images: item.images,
+            images: images,
             city: item.region.names.join("|"),
-            id: item.id
+            id: item.id,
+            readTimes: item.readTimes + "次浏览"
         }
         items.push(nItem)
     }

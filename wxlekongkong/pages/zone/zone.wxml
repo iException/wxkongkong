@@ -8,7 +8,9 @@
     <scroll-view wx:if="{{items && items.length}}" style="width:100%; height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
         <!--adview-->
         <import src="../../templates/adview.wxml"/>
+        <import src="../../templates/intevalView.wxml"/>
         <block wx:for="{{items}}" wx:key="adview">
+            <template is="intevalView"></template>
             <template is="{{item.style}}" data="{{...item.content, index, vinteval:20}}"></template>
         </block>
         <!--首次加载转菊花-->

@@ -1,0 +1,11 @@
+<template name="searchkeywordview">
+    <view class="searchkeywordview">
+        <view class="titleview">历史搜索</view>
+        <block wx:for="{{searchkeywords}}">
+            <view bindtap="clickOnKeywordCell" data-index="{{index}}" class="keywordview">{{item}}</view>
+        </block>
+        <view class="operateview">
+            <view class="clearbtn" bindtap="clearSearchKeyword">清除搜索历史</view>
+        </view>
+    </view>
+</template>

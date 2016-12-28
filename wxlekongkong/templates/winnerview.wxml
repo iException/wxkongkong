@@ -2,7 +2,9 @@
 <view class="winnerview">
     <view class="titleview">获得赠送的朋友</view>
     <view class="userview">
-        <image class="avatar" src="{{avatar}}"></image>
+        <view style="width:64rpx; height:64rpx; background-repeat:no-repeat; background-size: 64rpx 64rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/avatar_placehold.png');">
+            <image class="avatar" src="{{avatar}}"></image>
+        </view>    
         <text>{{name}}</text>
     </view>
     <view class="infoview">
@@ -15,8 +17,10 @@
             <view class="thanksview">
                 <text class="titlelbl">发表感谢</text>
                 <text class="reasonlbl">{{thanks}}</text>
-                <image wx:if="{{thanksImage}}" class="thanksimage" src="{{thanksImage}}" 
-                bindload="thanksimageloaded" style="width:{{width}}rpx; height:{{height}}rpx;"></image>
+                <view style="width:{{width}}rpx; height:{{height}}rpx; background-repeat:no-repeat; background-size: {{width}}rpx {{height}}rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/detail_placehold.png');">
+                    <image wx:if="{{thanksImage}}" class="thanksimage" src="{{thanksImage}}" 
+                    bindload="thanksimageloaded" style="width:100%; height:100%;"></image>
+                </view>    
             </view>
         </block>
     </view>

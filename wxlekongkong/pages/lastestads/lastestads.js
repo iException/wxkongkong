@@ -7,12 +7,31 @@ Page({
     items: []//信息列表.
   },
   customerData: {
-    isFirstLoading: true
+    isFirstLoading: true,
+    needshowLoadingView: true,
+    isInTrasition: false
+  },
+  onShow: function() {
+    if (this.customerData.needshowLoadingView && this.data.items.length == 0) {
+      let that = this
+      setTimeout(function() {
+        that.showloadingView()
+      }, 500)
+    }
+    this.customerData.needshowLoadingView = true
+    this.customerData.isInTrasition = false
+  },
+  onHide: function() {
+    wx.hideToast()
   },
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
-    this.showloadingView()
     this.loadLastestListing()
+  },
+  onUnload: function() {
+    this.setData({
+      items: []
+    })
   },
   showloadingView: function() {
     wx.showToast({
@@ -33,7 +52,7 @@ Page({
     let complete = function() {
       setTimeout(function() {
         wx.hideToast()
-      }, 1000)
+      }, 2000)
     }
     addatamanager.getLastestTradeAds(null, success, fail, complete)
   },
@@ -57,9 +76,15 @@ Page({
     this.loadLastestListing()
   },
   clickOnLastestadcell: function(e) {
+    if (this.customerData.isInTrasition) {
+      return
+    }
+    this.customerData.isInTrasition = true
+
     let tag = e.currentTarget.dataset.tag
     let item = this.data.items[tag]
     let url = routerfactory.adDetailRouterUrl(item.display.content.adId)
     router.openUrl(url)
+    this.needshowLoadingView = true
   }
 })

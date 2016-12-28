@@ -3,7 +3,9 @@
 <template name="adview">
 <view class="adview" bindtap="clickOnAdView" data-index="{{index}}">
     <view class="userview">
-        <image class="avatarview" src="{{user.avatarUrl}}"></image>
+        <view style="background-repeat:no-repeat; background-size: 80rpx 80rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/avatar_placehold.png')">
+            <image class="avatarview" src="{{user.avatarUrl}}"></image>
+        </view>
         <view class="introview">
             <text class="namelabel">{{user.nick}}</text>
             <text class="introlabel">{{date}}</text>
@@ -12,9 +14,11 @@
     <view class="contentview">
         <text>{{description}}</text>
     </view>
-    <scroll-view wx:if="{{images}}" scroll-x="true" class="imagesview">
+    <scroll-view wx:if="{{images&&images.length}}" scroll-x="true" class="imagesview">
         <block wx:for="{{images}}" wx:key="imageshey">
-            <image class="imageview" src="{{item.square}}"></image>
+            <view style="display: inline-block;width:240rpx; height:240rpx; background-repeat:no-repeat; background-size: 240rpx 240rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/list_placehold.png');margin-right: 10rpx;">
+                <image class="imageview" src="{{item.wide}}"></image>
+            </view>
         </block>
     </scroll-view>
     <view class="extroview">
@@ -25,10 +29,6 @@
         <view class="rightview">
             <image src="../../resource/images/icon-applicant.png"></image>
             <text>{{applicationCount}}</text>
-        </view>
-        <view class="rightview">
-            <image src="../../resource/images/icon-comment.png"></image>
-            <text>{{commentNum}}</text>
         </view>
         <view class="rightview">
             <image src="../../resource/images/icon-heart.png"></image>

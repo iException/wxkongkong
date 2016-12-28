@@ -1,8 +1,8 @@
 .celebrityview {
     width: 100%;
     background-color: white;
-    padding: 34rpx 0 28rpx 0;
-    margin-top: 20rpx;
+    padding-bottom: 24rpx;
+    padding-top: 24rpx;
 }
 
 .celebrityview .titleview {
@@ -14,6 +14,7 @@
 .celebrityview .titleview .titlelbl {
     color: #333333;
     font-size: 14px;
+    font-weight: 700;
     margin-right: auto;
 }
 
@@ -27,7 +28,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 29rpx 28rpx 0 28rpx;
+    margin: 24rpx 28rpx 0 28rpx;
 }
 
 .celebrityview .cardsview .cardview {
@@ -39,7 +40,6 @@
     height: 200rpx;
     display: flex;
     flex-direction: column;
-    background-color: red;
 }
 
 .celebrityview .cardsview .cardview .titlelbl {

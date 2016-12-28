@@ -1,53 +1,59 @@
 @import "../../templates/adview.wxss";
 @import "../../templates/loadingmoreview.wxss";
+@import "../../templates/hotcategoryview.wxss";
+@import "../../templates/searchkeywordview.wxss";
 
 .container .searchView {
     width: 100%;
-    padding: 5px;
+    padding: 10px 0;
     display: flex;
     flex-direction: row;
     align-items: center;
+    background-color: white;
 }
 
 .container .searchView .searchIconView {
-    background-color: lightgray;
+    background-color: #ECECEC;
     height: 30px;
-    width: 20px;
+    width: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-left: 20px;
-    border-top-left-radius: 4rpx;
-    border-bottom-left-radius: 4rpx;
+    margin-left: 14px;
+    border-top-left-radius: 8rpx;
+    border-bottom-left-radius: 8rpx;
 }
 
 .container .searchView .searchIconView .searchIcon {
-    width: 30rpx;
-    height: 30rpx;
+    width: 34rpx;
+    height: 32rpx;
 }
 
 .container .searchView .inputPlaceTxt {
     font-size: 12px;
-    background-color: lightgray;
-    border-top-right-radius: 4rpx;
-    border-bottom-right-radius: 4rpx;
+    background-color: #ECECEC;
+    border-top-right-radius: 8rpx;
+    border-bottom-right-radius: 8rpx;
+    color: #969696;
 }
 
 .container .searchView .inputTxt {
     width: 230px;
-    font-size: 12px;
+    font-size: 14px;
     color: #10B7F5;
     height: 30px;
-    background-color: lightgray;
+    background-color: #ECECEC;
+    border-top-right-radius: 8rpx;
+    border-bottom-right-radius: 8rpx;
 }
 
 .container .searchView .cancenBtn {
     color: #10B7F5;
-    font-size: 12px;
+    font-size: 14px;
     margin-left: auto;
-    margin-right: 0px;
-    width: 40px;
+    margin-right: 0;
+    width: 64px;
     display: flex;
     flex-direction: row;
     justify-content: center;

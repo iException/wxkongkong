@@ -12,7 +12,6 @@
     width: 60rpx;
     height: 60rpx;
     border-radius: 30rpx;
-    background-color: blue;
 }
 
 .applicantorview .userview .descview {
@@ -33,13 +32,13 @@
 }
 
 .applicantorview .reasonview {
-    margin: 16rpx 28rpx 0 104rpx;
+    margin: 16rpx 28rpx 20rpx 104rpx;
     font-size: 14px;
     color: #333333;
 }
 
 .applicantorview .dottedline {
-    margin: 20rpx 28rpx 0 28rpx;
+    margin: 0 28rpx 0 28rpx;
     border-width: 0 0 1px 0;
     border-style: dashed;
     border-color: #cccccc;

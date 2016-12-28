@@ -15,12 +15,18 @@ Page({
     tag: "",  //ad标签
     loadingIdx: 0,
     isInLoading: false,
-    isFirstLoading: true
+    isFirstLoading: true,
+    needshowLoadingView: true,
+    isInTrasition: false
   },
   onLoad: function(options){
     // 页面初始化 options为页面跳转所带来的参数
     this.customerData.tag = options['keyword']
-    this.reloadDatas()
+  },
+  onUnload: function() {
+    this.setData({
+      items: []
+    })
   },
   onReady: function(){
     // 页面渲染完成
@@ -28,6 +34,7 @@ Page({
     wx.setNavigationBarTitle({
       title: "#" + tagName + "#"
     })
+    this.reloadDatas()
   },
   onShow: function(){
     // 页面显示
@@ -39,6 +46,17 @@ Page({
         })
       }
     })
+
+    if (this.customerData.needshowLoadingView && this.data.items.length == 0) {
+      setTimeout(function() {
+        that.showLoadingView()
+      }, 500)
+    }
+    this.customerData.needshowLoadingView = true
+    this.customerData.isInTrasition = false
+  },
+  onHide: function() {
+    wx.hideToast()
   },
   reloadDatas: function() {
     this.setData({
@@ -75,6 +93,7 @@ Page({
     let complete = function() {
       setTimeout(function() {
         that.customerData.isInLoading = false
+        wx.hideToast()
       }, 1000)
     }
     addatamanager.getAdsByTag(params, success, fail, complete)
@@ -94,7 +113,6 @@ Page({
     };
   },
   loadMoreAdDatasSuccess: function(isRefresh, retItems) {
-    this.hideLoadingView()
     this.customerData.isFirstLoading = false
 
     //处理加载数据
@@ -133,6 +151,10 @@ Page({
     wx.hideToast()
   },
   clickOnAdView: function(e) {
+    if (this.customerData.isInTrasition) {
+      return
+    }
+    this.customerData.isInTrasition = true
     //点击adView
     var idx = e.currentTarget.dataset.index - 0;
     var adInfo = this.data.items.length > idx && this.data.items[idx];
@@ -144,5 +166,6 @@ Page({
     app.globalData.adInfo = adInfo
     let url = routerfactory.adDetailRouterUrl(adInfo.id)
     router.openUrl(url)
+    this.customerData.needshowLoadingView = false
   }
 })

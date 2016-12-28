@@ -1,6 +1,8 @@
 <template name="celebrityuserview">
 <view class="celebrityuserview">
-    <image class="avatar" src="{{avatar}}"></image>
+    <view style="width:140rpx; height: 140rpx; background-repeat:no-repeat; background-size: 140rpx 140rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/avatar_placehold.png')">
+        <image class="avatar" src="{{avatar}}"></image>
+    </view>
     <view class="infoView">
         <view class="nameView">
             <text class="namelbl">{{name}}</text>

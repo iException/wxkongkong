@@ -1,7 +1,6 @@
 .adview {
-    padding: 28rpx 28rpx 36rpx 28rpx;
+    padding: 28rpx 28rpx;
     background-color: white;
-    margin-top: 20rpx;
 }
 
 .adview .userview {
@@ -49,19 +48,18 @@
 
 .adview .imagesview {
     margin-top: 28rpx; 
-    white-space: nowrap;
     height: 240rpx;
+    width:100%;
+    white-space: nowrap;
 }
 
 .adview .imagesview .imageview {
-    width: 240rpx;
+    width: 100%;
     height: 100%;
-    margin-right: 10rpx;
-    background-color: red;
 }
 
 .adview .extroview {
-    margin-top: 37rpx;
+    margin-top: 20rpx;
     display: flex; 
     flex-direction: row;
     align-items: center;
@@ -77,8 +75,8 @@
 }
 
 .adview .extroview view image {
-    width: 20rpx; 
-    height: 22rpx;
+    width: 24rpx; 
+    height: 24rpx;
 }
 
 .adview .extroview view text {

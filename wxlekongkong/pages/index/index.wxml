@@ -4,7 +4,8 @@
     <template is="errorview" data="{{windowHeight}}"></template>
   </block>
   <block wx:else>
-    <scroll-view style="width:100%; height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
+  <view style="width:100%; height:{{windowHeight}}px; background-color: #f2f3ee;">
+      <import src="../../templates/intevalView.wxml"/>
       <!--搜索框-->
       <view class="searchview">
         <view class="containerview" bindtap="clickSearchAds">
@@ -25,30 +26,34 @@
       </block>
       <!--最新交易-->
       <block wx:if="{{lastestItem}}">
+        <template is="intevalView"></template>
         <import src="../../templates/lastestview.wxml"/>
         <template is="lastestview" data="{{...lastestItem}}"></template>
       </block>
       <!--晒单专区-->
-      <view wx:if="{{topicItems}}" class="topicbanner" style="margin-top: 20rpx;" bindtap="clickOnTopicView">
+      <template is="intevalView"></template>
+      <view wx:if="{{topicItems}}" class="topicbanner" bindtap="clickOnTopicView">
         <image mode="aspectFill" src="{{topicItems}}"></image>
       </view>
       <!--小空送-->
       <block wx:if="{{celebrityItem}}">
+        <template is="intevalView"></template>
         <import src="../../templates/celebritybanner.wxml"/>
         <template is="celebritybanner" data="{{...celebrityItem}}"></template>
       </block>
       <!--adview-->
-      <block wx:if="{{items.length}}">
+      <view wx:if="{{items.length}}">
         <import src="../../templates/adview.wxml"/>
         <block wx:for="{{items}}" wx:key="adview">
+          <template is="intevalView"></template>
           <template is="{{item.style}}" data="{{...item.content, index}}"></template>
         </block>
-      </block>
+      </view>
       <!--首次加载转菊花-->
       <block wx:if="{{items && items.length}}">
         <import src="../../templates/loadingmoreview.wxml"/>
         <template is="loadingmoreview" data="{{hasMore}}"></template>
       </block>
-    </scroll-view>
+    </view>
   </block>
 </view>
