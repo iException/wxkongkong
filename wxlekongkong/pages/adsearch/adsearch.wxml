@@ -23,7 +23,7 @@
 <scroll-view bindscrolltolower="onReachBottom" scroll-y="true" style="width:100%; height:{{showSearchView?0:windowHeight}}px; overflow: hidden;">
     <block wx:if="{{loadingDataError}}">
         <import src="../../templates/errorview.wxml"/>
-        <template is="errorview"></template>
+        <template is="errorview" data="{{windowHeight}}"></template>
     </block>
     <block wx:if="{{items&&items.length>0}}">
         <!--adview-->

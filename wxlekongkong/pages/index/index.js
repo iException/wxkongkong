@@ -149,7 +149,7 @@ Page({
   },
   loadMoreAdItemParams: function() {
     let opts = {
-      "from" : kPageSize * (this.customerData.loadingIdx + 1),
+      "from" : kPageSize * this.customerData.loadingIdx,
       "size" : kPageSize,
       "banner": false
     }

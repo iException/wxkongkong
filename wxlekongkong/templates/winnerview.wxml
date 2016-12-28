@@ -2,7 +2,7 @@
 <view class="winnerview">
     <view class="titleview">获得赠送的朋友</view>
     <view class="userview">
-        <view style="width:64rpx; height:64rpx; background-repeat:no-repeat; background-size: 64rpx 64rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/avatar_placehold.png');">
+        <view  style="margin-right:10rpx; width:64rpx; height:64rpx; background-repeat:no-repeat; background-size: 64rpx 64rpx;background-blend-mode: color-dodge;background-image: url('../../resource/images/avatar_placehold.png');">
             <image class="avatar" src="{{avatar}}"></image>
         </view>    
         <text>{{name}}</text>

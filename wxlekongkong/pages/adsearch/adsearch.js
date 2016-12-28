@@ -128,7 +128,7 @@ Page({
     addatamanager.SearchTopicWithParmas(params, success, fail, complete)
   },
   resetLoadAdDataPrams: function() {
-    this.customerData.loadingIdx = 0;
+    this.customerData.loadingIdx = 0
   },
   loadCategoryAdDatasParams: function() {
     var opts = {
@@ -138,7 +138,7 @@ Page({
     };
     return {
       opts: JSON.stringify(opts),
-      tag: this.customerData.categoryName
+      tags: this.customerData.categoryName
     };
   },
   loadAdDatasParams: function() {
@@ -238,7 +238,6 @@ Page({
       items: [],
       showSearchView: true
     })
-    this.customerData.searchText = ""
   },
   endEditText: function(e) {
     this.setData({

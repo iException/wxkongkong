@@ -103,7 +103,7 @@ Page({
   },
   loadAdDatasParams: function() {
     var opts = {
-      "from" : kPageSize * (this.customerData.loadingIdx + 1),
+      "from" : kPageSize * this.customerData.loadingIdx,
       "size" : kPageSize,
       "banner": false
     };
