@@ -185,7 +185,7 @@ Page({
     return {
       title: config.shareTitle, // 分享标题
       desc: config.shareDesc, // 分享描述
-      path: '/pages/topiclist/topiclist' // 分享路径
+      path: '/pages/topiclist/topiclist?themeId=' +  this.customerData.themeId// 分享路径
     }
   }
 })
