@@ -69,6 +69,5 @@
         <import src="../../templates/loadingmoreview.wxml"/>
         <template is="loadingmoreview" data="{{hasMore: hasMoreApplicantors}}"></template>
     </scroll-view>
-    <view style="">点击申请</view>
 </block>
 </view>
