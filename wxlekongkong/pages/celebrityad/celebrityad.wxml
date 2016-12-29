@@ -4,7 +4,7 @@
     <template is="errorview" data="{{windowHeight}}"></template>
 </block>
 <block wx:else>
-    <scroll-view wx:if="{{adInfo}}" style="height:{{windowHeight}}px;" scroll-y="true" bindscrolltolower="scrolltolower">
+    <scroll-view wx:if="{{adInfo}}" style="height:{{windowHeight}}px; background-color: #f2f3ee;" scroll-y="true" bindscrolltolower="scrolltolower">
         <import src="../../templates/intevalView.wxml"/>
         <!--发布者头像--> 
         <import src="../../templates/celebrityuserview"/>
@@ -24,9 +24,11 @@
         </block>
         <!--规则-->
         <template is="intevalView"></template>
-        <view class="ruleView">
+        <view class="ruleView" wx:if="{{adInfo.rule.rules && adInfo.rule.rules.length>0}}">
             <view class="titleView">{{adInfo.rule.ruleTitle}}</view>
-            <view class="contentView">{{adInfo.rule.rule}}</view>
+            <block wx:for="{{adInfo.rule.rules}}">
+                <view class="contentView">{{item}}</view>
+            </block>
         </view>
         <!--选择原因-->
         <block wx:if="{{adInfo && adInfo.reason && adInfo.reason.reason}}">

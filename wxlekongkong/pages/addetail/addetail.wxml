@@ -4,7 +4,7 @@
     <template is="errorview"></template>
 </block>
 <block wx:else>
-    <scroll-view wx:if="{{userInfo}}" style="width:100%; height:{{windowHeight}}px; background-color:white" scroll-y="true" bindscrolltolower="scrolltolower">
+    <scroll-view wx:if="{{userInfo}}" style="width:100%; height:{{windowHeight}}px; background-color: #f2f3ee;" scroll-y="true" bindscrolltolower="scrolltolower">
         <import src="../../templates/intevalView.wxml"/>
         <!--发布者头像--> 
         <import src="../../templates/userview"/>
@@ -69,5 +69,6 @@
         <import src="../../templates/loadingmoreview.wxml"/>
         <template is="loadingmoreview" data="{{hasMore: hasMoreApplicantors}}"></template>
     </scroll-view>
+    <view style="">点击申请</view>
 </block>
 </view>

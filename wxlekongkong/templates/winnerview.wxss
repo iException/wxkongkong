@@ -13,7 +13,7 @@
 }
 
 .winnerview .userview {
-    font-size: 14px;
+    font-size: 16px;
     color: #333333;
     padding: 28rpx 28rpx 22rpx 28rpx;
     display: flex;

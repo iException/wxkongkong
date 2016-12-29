@@ -1,12 +1,15 @@
-var app = getApp()
+let app = getApp()
 const kPageSize = 30
+let config = require("../../config.js")
 let router = require("../../utils/router.js")
 let routerfactory = require("../../utils/routerfactory.js")
-var addatamanager = require("../../datamanager/addatamanager.js")
+let addatamanager = require("../../datamanager/addatamanager.js")
 
 Page({
   data: {
     items: [],
+    focus: true,
+    showNoDatas: true,
     showSearchView: true,
     hasMore: false,
     windowHeight: 375,
@@ -15,7 +18,8 @@ Page({
     cancelColor: "#969696",
     categories:["服饰鞋包","家居日用","配件配饰","图书音像","个护美妆","数码产品"],
     categorybuttonwidth: 100,
-    searchkeywords:[]
+    searchkeywords:[],
+    inputValue: ""
   },
   customerData: {
     searchText: "",  //ad标签
@@ -45,7 +49,7 @@ Page({
       success: ( res ) => {
         that.setData( {
           windowHeight: (res.windowHeight - 50),
-          inputTextWidth: res.windowWidth - 70,
+          inputTextWidth: res.windowWidth - 158,
           categorybuttonwidth: ((res.windowWidth - 28 - 20 * 2) / 3.0)
         })
       }
@@ -102,7 +106,7 @@ Page({
       setTimeout(function() {
         that.customerData.isInLoading = false
         wx.hideToast()
-      }, 1000)
+      }, 2000)
     }
     addatamanager.getAdsByTag(params, success, fail, complete)
   },
@@ -123,9 +127,9 @@ Page({
     let complete = function() {
       setTimeout(function() {
         that.customerData.isInLoading = false
-      }, 1000)
+      }, 2000)
     }
-    addatamanager.SearchTopicWithParmas(params, success, fail, complete)
+    addatamanager.searchAdWithParmas(params, success, fail, complete)
   },
   resetLoadAdDataPrams: function() {
     this.customerData.loadingIdx = 0
@@ -153,15 +157,15 @@ Page({
     };
   },
   loadMoreAdDatasSuccess: function(isRefresh, retItems) {
-    this.hideLoadingView()
     this.customerData.isFirstLoading = false
     this.customerData.loadingIdx += 1
 
     let items = this.data.items
     items = items.concat(retItems)
-    this.setData({
+    this.setData({ 
       items: items,
       hasMore: (retItems.length >= kPageSize),
+      showNoDatas: (!items || items.length ==0 )
     })
   },
   loadMoreAdDatasFail: function(isRefresh) {
@@ -183,9 +187,6 @@ Page({
       duration: 10000
     })
   },
-  hideLoadingView: function() {
-    wx.hideToast()
-  },
   clickOnAdView: function(e) {
     if (this.customerData.isInTrasition) {
       return
@@ -203,6 +204,12 @@ Page({
     app.globalData.adInfo = adInfo
     let url = routerfactory.adDetailRouterUrl(adInfo.id)
     router.openUrl(url)
+  },
+  clearKeyword: function() {
+    this.setData({
+      inputValue: "",
+      focus: true
+    })
   },
   clickSearchAds: function(e) {
     wx.hideKeyboard()
@@ -243,8 +250,11 @@ Page({
     this.setData({
       cancelColor: "#969696"
     })
+    
+    let canShow = !(this.customerData.searchText && this.customerData.searchText.length > 0) || 
+                  !(this.customerData.tag && this.customerData.tag.length > 0)
     this.setData({
-      showSearchView: !(this.customerData.searchText && this.customerData.searchText.length > 0)
+      showSearchView: canShow
     })
   },
   searchAds: function(e) {
@@ -252,6 +262,10 @@ Page({
   },
   inputSearchKeyword: function(e) {
     this.customerData.searchText = e.detail.value
+    this.customerData.searchText = this.customerData.searchText.replace(" ", "")
+    this.setData({
+      inputValue: this.customerData.searchText
+    })
   },
   clickOnCategoryButton: function(e) {
     let idx = e.currentTarget.dataset.index
@@ -264,7 +278,9 @@ Page({
     this.customerData.categoryName = categories[idx] 
     this.reloadDatas()
     this.setData({
-      showSearchView: false
+      showSearchView: false,
+      inputValue: "",
+      focus: false
     })
   },
   clickOnKeywordCell: function(e) {
@@ -278,7 +294,9 @@ Page({
     this.customerData.searchText = searchkeywords[idx]
     this.reloadDatas()
     this.setData({
-      showSearchView: false
+      showSearchView: false,
+      inputValue: this.customerData.searchText,
+      focus: false
     })
   },
   clearSearchKeyword: function(e) {
@@ -288,5 +306,13 @@ Page({
     wx.clearStorage({
       key: 'searchkeywords'
     })
+  },
+  onShareAppMessage: function() {
+    // 用户点击右上角分享
+    return {
+      title: config.shareTitle, // 分享标题
+      desc: config.shareDesc, // 分享描述
+      path: config.sharePath // 分享路径
+    }
   }
 })

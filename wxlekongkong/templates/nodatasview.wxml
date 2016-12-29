@@ -1,0 +1,5 @@
+<template name="nodatasview">
+    <view style="width: 100%; height: {{windowHeight}}px; font-size: 13px;color: #909090; display: flex; justify-content: center; align-items: center; background-color: #f2f3ee;">
+        (｡･ω･)ﾉﾞ暂无数据，看看其他的吧~
+    </view>
+</template>

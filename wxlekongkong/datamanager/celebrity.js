@@ -34,9 +34,21 @@ function handleCelebrityItem(item) {
             reason: content.reason
         }
     }
+
+    let rules = []
+    if (content.rule && content.rule.length) {
+        let rulesplit = content.rule.split("\n")
+        for (let i = 0; i < rulesplit.length; i++) {
+            let rule = rulesplit[i]
+            if (rule.length > 1) {
+                rules.push(rule)
+            }
+        }
+    }
     let rule = {
         ruleTitle: content.ruleTitle,
-        rule: content.rule
+        rule: content.rule,
+        rules: rules
     } 
     let adInfo = {
         applicationCount: content.applicationCount,

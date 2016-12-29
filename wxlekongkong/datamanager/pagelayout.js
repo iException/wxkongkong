@@ -82,7 +82,7 @@ function getCategoryItems() {
         bannerimage: "../../resource/images/icon_peishi.png"
         },
         {
-        title: "家居用品",
+        title: "家居日用",
         bannerimage: "../../resource/images/icon_jiaju.png"
         },
         {

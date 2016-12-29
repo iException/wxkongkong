@@ -1,6 +1,7 @@
 const vInteval = 10
 const hInteval = 14
 const kPageSize = 30
+let config = require("../../config.js")
 let imagehelper = require("../../utils/imagehelper.js")
 let celebrityDm = require("../../datamanager/celebrity.js")
 let applicantsDm = require("../../datamanager/applicants.js")
@@ -219,5 +220,13 @@ Page({
     this.setData({
       images: images
     })
+  },
+  onShareAppMessage: function() {
+    // 用户点击右上角分享
+    return {
+      title: config.shareTitle, // 分享标题
+      desc: config.shareDesc, // 分享描述
+      path: config.sharePath // 分享路径
+    }
   }
 })

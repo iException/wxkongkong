@@ -2,7 +2,10 @@
 
 <view class="searchView">
     <view class="searchIconView"><image class="searchIcon" src="../../resource/images/icon_search.png"></image></view>
-    <input class="inputTxt" placeholder-class="inputPlaceTxt" auto-focus bindinput="inputSearchKeyword" bindconfirm="clickSearchAds" bindfocus="beginEditText" bindblur="endEditText" placeholder="请输入您要搜索的物品或用户" style="width:{{inputTextWidth}}px"/>
+    <input class="inputTxt" focus="{{focus}}" value="{{inputValue}}" placeholder-class="inputPlaceTxt" auto-focus bindinput="inputSearchKeyword" bindconfirm="clickSearchAds" bindfocus="beginEditText" bindblur="endEditText" placeholder="请输入您要搜索的物品或用户" style="width:{{inputTextWidth}}px"/>
+    <view class="clearView" bindtap="clearKeyword">
+        <image wx:if="{{showSearchView}}" class="clearIcon" src="../../resource/images/icon_clear.png"></image>
+    </view>
     <label class="cancenBtn" bindtap="searchAds" style="color:{{cancelColor}};">搜索</label>
 </view>
 
@@ -25,17 +28,23 @@
         <import src="../../templates/errorview.wxml"/>
         <template is="errorview" data="{{windowHeight}}"></template>
     </block>
-    <block wx:if="{{items&&items.length>0}}">
-        <!--adview-->
-        <import src="../../templates/intevalView.wxml"/>
-        <import src="../../templates/adview.wxml"/>
-        <block wx:for="{{items}}">
-            <template is="intevalView"></template>
-            <template is="{{item.style}}" data="{{...item.content, index}}"></template>
+    <block wx:else>
+        <block wx:if="{{items&&items.length>0}}">
+            <!--adview-->
+            <import src="../../templates/intevalView.wxml"/>
+            <import src="../../templates/adview.wxml"/>
+            <block wx:for="{{items}}">
+                <template is="intevalView"></template>
+                <template is="{{item.style}}" data="{{...item.content, index}}"></template>
+            </block>
+            <!--首次加载转菊花-->
+            <import src="../../templates/loadingmoreview.wxml"/>
+            <template is="loadingmoreview" data="{{hasMore}}"></template>
         </block>
-        <!--首次加载转菊花-->
-        <import src="../../templates/loadingmoreview.wxml"/>
-        <template is="loadingmoreview" data="{{hasMore}}"></template>
+        <block wx:if="{{showNoDatas}}">
+            <import src="../../templates/nodatasview.wxml"/>
+            <template is="nodatasview" data="{{windowHeight}}"></template>
+        </block>
     </block>
 </scroll-view>
 

@@ -5,7 +5,6 @@ var app = getApp()
 var config = require("../../config.js")
 var util = require("../../utils/util.js")
 var apimanager = require("../../utils/apimanager.js")
-
 let imagehelper = require("../../utils/imagehelper.js")
 let applicant = require("../../datamanager/applicants.js")
 let addatamanager = require("../../datamanager/addatamanager.js")
@@ -259,6 +258,14 @@ Page({
       this.setData({
         winnerInfo: winnerInfo
       })
+    }
+  },
+  onShareAppMessage: function() {
+    // 用户点击右上角分享
+    return {
+      title: config.shareTitle, // 分享标题
+      desc: config.shareDesc, // 分享描述
+      path: config.sharePath // 分享路径
     }
   }
 })

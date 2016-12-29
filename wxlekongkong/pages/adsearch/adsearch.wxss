@@ -30,11 +30,26 @@
     height: 32rpx;
 }
 
+.container .searchView .clearView {
+    background-color: #ECECEC;
+    height: 30px;
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 8rpx;
+    border-bottom-right-radius: 8rpx;
+}
+
+.container .searchView .clearIcon {
+    width: 16px;
+    height: 16px;
+}
+
 .container .searchView .inputPlaceTxt {
     font-size: 12px;
     background-color: #ECECEC;
-    border-top-right-radius: 8rpx;
-    border-bottom-right-radius: 8rpx;
     color: #969696;
 }
 
@@ -44,8 +59,6 @@
     color: #10B7F5;
     height: 30px;
     background-color: #ECECEC;
-    border-top-right-radius: 8rpx;
-    border-bottom-right-radius: 8rpx;
 }
 
 .container .searchView .cancenBtn {

@@ -4,7 +4,7 @@
     <template is="errorview" data="{{windowHeight}}"></template>
   </block>
   <block wx:else>
-  <view style="width:100%; height:{{windowHeight}}px; background-color: #f2f3ee;">
+  <view style="width:100%; height:{{windowHeight}}px; background-color: white;">
       <import src="../../templates/intevalView.wxml"/>
       <!--搜索框-->
       <view class="searchview">
@@ -15,7 +15,7 @@
       </view>
       <!--顶部banner-->
       <block wx:if="{{activityItems}}">
-        <view class="introbanner">
+        <view class="introbanner" bindtap="clickOnIntroBanner">
           <image bindtap="clickOnBannerIntroView" mode="aspectFill" src="{{activityItems}}"></image>
         </view>
       </block>

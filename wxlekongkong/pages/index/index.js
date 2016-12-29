@@ -2,6 +2,7 @@ const kPageSize = 10
 const kEdgeInteval = 14
 const vSectionInteval = 10
 var app = getApp()
+let config = require("../../config.js")
 let router = require("../../utils/router.js")
 let routerfactory = require("../../utils/routerfactory.js")
 var pagelayout = require("../../datamanager/pagelayout.js")
@@ -121,7 +122,7 @@ Page({
   loadPlageyoutDataSuccessFailed() {
     //如果无数据，加载失败，显示点击重新加载，按钮.
     wx.showToast({
-      title: "首页加载数据失败",
+      title: "加载数据失败...",
       duration: 2000
     })
 
@@ -274,5 +275,19 @@ Page({
     app.globalData.adInfo = adInfo
     let url = routerfactory.adDetailRouterUrl(adInfo.id)
     router.openUrl(url)
+  },
+  onShareAppMessage: function() {
+    // 用户点击右上角分享
+    return {
+      title: config.shareTitle, // 分享标题
+      desc: config.shareDesc, // 分享描述
+      path: config.sharePath // 分享路径
+    }
+  },
+  clickOnIntroBanner: function() {
+    wx.showModal({
+      title: '温馨提示',
+      content: '应用市场搜索并下载"乐空空"APP，即可加入这场断舍离运动！',
+    })
   }
 })

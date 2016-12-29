@@ -45,5 +45,8 @@ module.exports = {
         "APP_VERSION": "1.1.2",
         "BAPI-HASH": "wozhishixiang@@shishi..zhengde_!!"
     },
-    appVersion: "1.6.6"
+    appVersion: "1.6.6",
+    shareTitle: "乐空空闲置赠送平台",
+    shareDesc: "乐赠闲置，悦己利他",
+    sharePath: "./pages/index/index"
 }

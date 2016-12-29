@@ -1,6 +1,7 @@
 let addatamanager = require("../../datamanager/addatamanager.js")
 let routerfactory = require("../../utils/routerfactory.js")
 let router = require("../../utils/router.js")
+let config = require("../../config.js")
 
 Page({
   data:{
@@ -86,5 +87,13 @@ Page({
     let url = routerfactory.adDetailRouterUrl(item.display.content.adId)
     router.openUrl(url)
     this.needshowLoadingView = true
+  },
+  onShareAppMessage: function() {
+    // 用户点击右上角分享
+    return {
+      title: config.shareTitle, // 分享标题
+      desc: config.shareDesc, // 分享描述
+      path: config.sharePath // 分享路径
+    }
   }
 })

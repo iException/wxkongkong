@@ -5,17 +5,23 @@
     <template is="errorview"></template>
 </block>
 <block wx:else>
-    <scroll-view wx:if="{{items && items.length}}" style="width:100%; height:{{windowHeight}}px" scroll-y="true" bindscrolltolower="scrolltolower">
-        <!--adview-->
-        <import src="../../templates/adview.wxml"/>
-        <import src="../../templates/intevalView.wxml"/>
-        <block wx:for="{{items}}" wx:key="adview">
-            <template is="intevalView"></template>
-            <template is="{{item.style}}" data="{{...item.content, index, vinteval:20}}"></template>
+    <scroll-view style="overflow:hidden; width:100%; height:{{windowHeight}}px; background-color: white;" scroll-y="true" bindscrolltolower="scrolltolower">
+        <block wx:if="{{items && items.length > 0}}">
+            <!--adview-->
+            <import src="../../templates/adview.wxml"/>
+            <import src="../../templates/intevalView.wxml"/>
+            <block wx:for="{{items}}" wx:key="adview">
+                <template is="intevalView"></template>
+                <template is="{{item.style}}" data="{{...item.content, index, vinteval:20}}"></template>
+            </block>
+            <!--首次加载转菊花-->
+            <import src="../../templates/loadingmoreview.wxml"/>
+            <template is="loadingmoreview" data="{{hasMore}}"></template>
         </block>
-        <!--首次加载转菊花-->
-        <import src="../../templates/loadingmoreview.wxml"/>
-        <template is="loadingmoreview" data="{{hasMore}}"></template>
+        <block wx:if="{{showNoDatas}}">
+            <import src="../../templates/nodatasview.wxml"/>
+            <template is="nodatasview" data="{{windowHeight}}"></template>
+        </block>
     </scroll-view>
 </block>
 

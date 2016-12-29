@@ -3,6 +3,7 @@ const vInteval = 5
 const kPageSize = 30
 const kEdgeInteval = 14
 var app = getApp()
+let config = require("../../config.js")
 var commentDataManager = require("../../datamanager/commentDataManager.js")
 
 Page({
@@ -99,5 +100,13 @@ Page({
       comment.isBottom = (i + 1 == comments.length)
     }
     return comments
+  },
+  onShareAppMessage: function() {
+    // 用户点击右上角分享
+    return {
+      title: config.shareTitle, // 分享标题
+      desc: config.shareDesc, // 分享描述
+      path: config.sharePath // 分享路径
+    }
   }
 })

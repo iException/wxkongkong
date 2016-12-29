@@ -4,7 +4,7 @@
     <template is="errorview" data="{{windowHeight}}"></template>
   </block>
   <block wx:else>
-    <scroll-view style="width:100%; height:{{windowHeight}}px;" scroll-y="true" bindscrolltolower="scrolltolower">
+    <scroll-view style="width:100%; height:{{windowHeight}}px; background-color: #f2f3ee;" scroll-y="true" bindscrolltolower="scrolltolower">
       <!--adview-->
       <block wx:if="{{topic}}">
         <import src="../../templates/topicDetailView"/>

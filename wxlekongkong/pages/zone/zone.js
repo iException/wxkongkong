@@ -1,5 +1,6 @@
 var app = getApp()
 const kPageSize = 30
+let config = require("../../config.js")
 let router = require("../../utils/router.js")
 let routerfactory = require("../../utils/routerfactory.js")
 var addatamanager = require("../../datamanager/addatamanager.js")
@@ -9,6 +10,7 @@ Page({
     items: [],
     hasMore: false,
     windowHeight: 375,
+    showNoDatas: false,
     loadingDataError: false
   },
   customerData: {
@@ -94,7 +96,7 @@ Page({
       setTimeout(function() {
         that.customerData.isInLoading = false
         wx.hideToast()
-      }, 1000)
+      }, 2000)
     }
     addatamanager.getAdsByTag(params, success, fail, complete)
   },
@@ -126,6 +128,7 @@ Page({
     this.setData({
       items: items,
       hasMore: (retItems.length >= kPageSize),
+      showNoDatas: (!items || items.length==0),
     })
   },
   loadMoreAdDatasFail: function(isRefresh) {
@@ -147,9 +150,6 @@ Page({
       duration: 10000
     })
   },
-  hideLoadingView: function() {
-    wx.hideToast()
-  },
   clickOnAdView: function(e) {
     if (this.customerData.isInTrasition) {
       return
@@ -167,5 +167,13 @@ Page({
     let url = routerfactory.adDetailRouterUrl(adInfo.id)
     router.openUrl(url)
     this.customerData.needshowLoadingView = false
+  },
+  onShareAppMessage: function() {
+    // 用户点击右上角分享
+    return {
+      title: config.shareTitle, // 分享标题
+      desc: config.shareDesc, // 分享描述
+      path: config.sharePath // 分享路径
+    }
   }
 })

@@ -40,10 +40,10 @@ function resetAdApplicants(applicants) {
 
 function filterAdApplicantInfo(item) {
     var date = new Date(item.createdAt * 1000)
-    date: util.adFormatTime(date)
+    date = util.adFormatTime(date)
     return {
         name: item.applicant.nick,
-        data: date,
+        date: date,
         avatar: item.applicant.avatar,
         reason: item.reason
     }

@@ -3,12 +3,14 @@ const vInteval = 5
 const kPageSize = 30
 const kEdgeInteval = 14
 var app = getApp()
+let config = require("../../config.js")
 let imageHelper = require("../../utils/imagehelper.js")
 let topicDataManager = require("../../datamanager/topicdatamanager.js")
 
 Page({
   data:{
     topics: [],
+    showNoDatas: false,
     hasMoreTopic: false,
     loadingDataError: false,
     windowHeight: 600,
@@ -165,7 +167,8 @@ Page({
 
     this.setData({
       topics: lcalTopic,
-      hasMoreTopic: !apiInfo.endFlag
+      hasMoreTopic: !apiInfo.endFlag,
+      showNoDatas: (!lcalTopic || lcalTopic.length==0)
     })
   },
   loadMoreTopicsFailed: function(isRefresh) {
@@ -175,6 +178,14 @@ Page({
           loadingDataError: true
         })
       }
+    }
+  },
+  onShareAppMessage: function() {
+    // 用户点击右上角分享
+    return {
+      title: config.shareTitle, // 分享标题
+      desc: config.shareDesc, // 分享描述
+      path: config.sharePath // 分享路径
     }
   }
 })

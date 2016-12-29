@@ -108,10 +108,6 @@ function resetTagAds(ret) {
     return items
 }
 
-function getAdsBySearchKeyword(keyword) {
-    
-}
-
 //获取ad详情
 function getAdDetailWithParams(params, success, fail, complete) {
     var url = config.getAdDetailUrl()
@@ -146,14 +142,14 @@ function getTopicsWithUrlAndParams(url, params, success, fail, complete) {
     })
 }
 
-function SearchTopicWithParmas(params, success, fail, complete) {
+function searchAdWithParmas(params, success, fail, complete) {
     getTopicsWithUrlAndParams(config.getSearchAdListUrl(),params, success, fail, complete)
 }
 
 module.exports = {
     getAdsByTag: getAdsByTag,                               //通过标签获取ad列表
     getLastestTradeAds: getLastestTradeAds,                 //获取最新交易列表
-    SearchTopicWithParmas: SearchTopicWithParmas,
+    searchAdWithParmas: searchAdWithParmas,                 //搜索adsads
     getAdDetailWithParams: getAdDetailWithParams,           //获取ad详情
     getMorePageLayoutAdItems: getMorePageLayoutAdItems,     //获取首页ad列表
 }
