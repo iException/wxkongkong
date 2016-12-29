@@ -48,8 +48,9 @@ Page({
       this.customerData.windowWidth = res.windowWidth
     } catch(e) {
     }
-
+    
     this.customerData.themeId = options["themeId"]
+    this.reloadDatas()
   },
   onUnload: function() {
     this.setData({
@@ -60,7 +61,6 @@ Page({
     wx.setNavigationBarTitle({
       title: '#晒单专区#'
     })
-    this.reloadDatas()
   },
   reloadDatas: function() {
     this.setData({
@@ -185,7 +185,7 @@ Page({
     return {
       title: config.shareTitle, // 分享标题
       desc: config.shareDesc, // 分享描述
-      path: config.sharePath // 分享路径
+      path: '/pages/topiclist/topiclist' // 分享路径
     }
   }
 })

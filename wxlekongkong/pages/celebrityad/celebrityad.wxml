@@ -3,8 +3,8 @@
     <import src="../../templates/errorview.wxml"/>
     <template is="errorview" data="{{windowHeight}}"></template>
 </block>
-<block wx:else>
-    <scroll-view wx:if="{{adInfo}}" style="height:{{windowHeight-50}}px; background-color: #f2f3ee;" scroll-y="true" bindscrolltolower="scrolltolower">
+<block wx:if="{{adInfo}}">
+    <scroll-view style="height:{{windowHeight-50}}px; background-color: #f2f3ee;" scroll-y="true" bindscrolltolower="scrolltolower">
         <import src="../../templates/intevalView.wxml"/>
         <!--发布者头像--> 
         <import src="../../templates/celebrityuserview"/>

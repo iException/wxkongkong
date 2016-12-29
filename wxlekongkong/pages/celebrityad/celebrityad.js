@@ -38,12 +38,22 @@ Page({
     }
     this.reloadDatas()
   },
+  onShow: function() {
+    let that = this
+    setTimeout(function(){
+      that.showLoadingView()
+    },500);
+  },
   onReady:function(){
     // 页面渲染完成
     this.customerData.videoContxt = wx.createVideoContext('video')
   },
   //加载失败，重新加载.
   reloadDatas: function() {
+    if(this.customerData.isLoadingMore) {
+      return
+    }
+
     this.setData({
       loadingDataError: false
     })
@@ -77,7 +87,6 @@ Page({
   },
   //成功加载大咖送.
   loadCelebrityItemSuccess: function(res) {
-    this.hideLoadingView()
     this.customerData.isFirstLoading = false
 
     let images = imagehelper.calculatedDefaultFlowImagesSize(res.images, hInteval, vInteval, this.customerData.windowWidth)
@@ -105,6 +114,7 @@ Page({
       this.setData({
         loadingDataError: true
       })
+      this.customerData.isloadingMore = false
     }
     this.showLoadErrorAlert(err)
   },
@@ -112,7 +122,7 @@ Page({
     let that = this
     setTimeout(function() {
       that.hideLoadingView()
-    }, 1000)
+    }, 2000)
   },
   //加载申请者.
   loadMoreApplicants: function() {
@@ -226,7 +236,7 @@ Page({
     return {
       title: config.shareTitle, // 分享标题
       desc: config.shareDesc, // 分享描述
-      path: config.sharePath // 分享路径
+      path: '/pages/celebrityad/celebrityad?adId=' + this.customerData.adId // 分享路径
     }
   },
   clickToLikeAd: function() {

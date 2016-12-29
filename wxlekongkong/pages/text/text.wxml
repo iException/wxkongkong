@@ -1,7 +1,0 @@
-<!--样式二，横向滑动-->
-<import src="../../templates/topicbottomview.wxml"/>
-<template is="topicbottomview"></template>
-
-
-<!--<import src="../../templates/adbottomview.wxml"/>
-<template is="adbottomview"></template>-->

@@ -37,6 +37,9 @@ module.exports = {
         // searchText
         return this.host + "/api/Listing.searchListing"
     },
+    getTopicDetailUrl: function() {
+        return this.host + "/api/Topic.getItem"
+    },
     defaultHeader: {
         "Lkk-Dev-Name": "madong",
         "BAPI-APP-KEY": "api_ioslekongkong",
@@ -48,7 +51,6 @@ module.exports = {
     appVersion: "1.6.6",
     shareTitle: "乐空空闲置赠送平台",
     shareDesc: "乐赠闲置，悦己利他",
-    sharePath: "",
     downloadTitle:"温馨提示",
     downloadContent: '应用市场搜索并下载"乐空空"APP，即可加入这场断舍离运动！'
 }

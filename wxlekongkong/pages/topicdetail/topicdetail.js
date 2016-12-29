@@ -4,7 +4,9 @@ const kPageSize = 30
 const kEdgeInteval = 14
 var app = getApp()
 let config = require("../../config.js")
-var commentDataManager = require("../../datamanager/commentDataManager.js")
+let imageHelper = require("../../utils/imagehelper.js")
+let topicDataManager = require("../../datamanager/topicdatamanager.js")
+let commentDataManager = require("../../datamanager/commentDataManager.js")
 
 Page({
   data: {
@@ -13,13 +15,24 @@ Page({
     hasMoreComments: false,
     edgeInteval: kEdgeInteval,
     hotTopicComments: [],
-    norTopicComments: []
+    norTopicComments: [],
+    loadingDataError: false
   },
   customerData: {
-    topicId: "",
+    topicId: "0",
     lastCommentId: "0",
     isloadingMore: false,
     windowWidth: 375
+  },
+  onShow: function() {
+    var info = app.globalData.topicInfo
+    if (!info && !this.data.topic) {
+      let that = this
+      setTimeout(function(){
+        that.showLoadingAdInfoView()
+      }, 500)
+    }
+    app.globalData.topicInfo = null
   },
   onLoad:function(options){
     // 生命周期函数--监听页面加载
@@ -27,16 +40,62 @@ Page({
     this.customerData.topicId = options["id"]
     let topicInfo = app.globalData.topicInfo
     if (topicInfo) {
-        this.setData({
-            topic: topicInfo,
-            hasMoreComments: topicInfo.commentCount > 0
-        })
+      this.updateTopicInfo(topicInfo)
+    } else {
+      this.loadTopicDetailInfo()
+    }
+  },
+  onHide: function() {
+    wx.hideToast()
+  },
+  reloadDatas: function() {
+    if (this.customerData.isloadingMore) {
+      return
+    }
+    this.showLoadingAdInfoView()
+    this.loadTopicDetailInfo()
+  },
+  updateTopicInfo: function(topicInfo) {
+    if (topicInfo) {
+      this.setData({
+        topic: topicInfo,
+        hasMoreComments: topicInfo.commentCount > 0
+      })
     }
 
     if (topicInfo.commentNum > 0) {
       this.customerData.isloadingMore = true
       this.loadMoreTopicComments()
     }
+  },
+  loadTopicDetailInfo: function() {
+    let that = this
+    let params = this.loadTopicDetailInfoParams()
+    let success = function(topicInfo) {
+      imageHelper.calculateDefaultTopicImagesSize(topicInfo.images, kEdgeInteval, hInteval, vInteval, that.customerData.windowWidth)
+      that.updateTopicInfo(topicInfo)
+    }
+    let fail = function() {
+      that.setData({
+        loadingDataError: true
+      })
+      wx.showToast({
+        title: "加载数据失败",
+        duration: 2000
+      })
+      that.customerData.isloadingMore = false
+    }
+    topicDataManager.getTopicDetailWithParams(params, success, fail, null)
+  },
+  showLoadingAdInfoView: function() {
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading',
+      duration: 1000
+    })
+  },
+  loadTopicDetailInfoParams: function() {
+    return { "topicId" : this.customerData.topicId ? this.customerData.topicId : ""}
   },
   scrolltolower: function() {
     //正在加载或者无数据，不在加载.
@@ -106,7 +165,7 @@ Page({
     return {
       title: config.shareTitle, // 分享标题
       desc: config.shareDesc, // 分享描述
-      path: config.sharePath // 分享路径
+      path: '/pages/topicdetail/topicdetail?id=' + this.customerData.topicId // 分享路径
     }
   },
   clickToLikeTopic: function() {

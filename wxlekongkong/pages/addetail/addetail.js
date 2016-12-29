@@ -42,7 +42,7 @@ Page({
         that.showLoadingAdInfoView()
       }, 500)
     }
-    app.globalData.adInfo = undefined
+    app.globalData.adInfo = null
   },
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
@@ -71,6 +71,13 @@ Page({
       tags: []
     })
   },
+  reloadDatas: function() {
+    if (this.customerData.isloadingMore) {
+      return
+    }
+    this.showLoadingAdInfoView()
+    this.loadAdDatas()
+  },
   showLoadingAdInfoView: function() {
     wx.showToast({
       title: '加载中',
@@ -86,7 +93,7 @@ Page({
     let params = this.adDetailInfoParams()
     let success = this.loadAdDetailInfoSuccess
     let fail = this.loadAdDetailInfoFail
-    addatamanager.getAdDetailWithParams(params, success, fail)
+    addatamanager.getAdDetailWithParams(params, success, fail, null)
   },
   adDetailInfoParams: function() {
     return {
@@ -116,6 +123,7 @@ Page({
       this.setData({
         loadingDataError: true
       })
+      this.customerData.isloadingMore = false
       this.loadMoreAdApplicantsFail()
     }
   },
@@ -201,8 +209,8 @@ Page({
     let params = this.loadMoreAdApplicantsParams()
     let success = this.loadMoreAdApplicantsSuccess
     let fail = this.loadMoreAdApplicantsFail
-    let complete = this.loadingDataComplete
-    applicant.loadMoreAdApplicants(params, success, fail, complete)
+    // let complete = this.loadingDataComplete
+    applicant.loadMoreAdApplicants(params, success, fail, null)
   },
   loadMoreAdApplicantsParams: function() {
     var opts = {
@@ -265,7 +273,7 @@ Page({
     return {
       title: config.shareTitle, // 分享标题
       desc: config.shareDesc, // 分享描述
-      path: config.sharePath // 分享路径
+      path: '/pages/addetail/addetail?adId=' + this.customerData.adId // 分享路径
     }
   },
   clickToLikeAd: function() {

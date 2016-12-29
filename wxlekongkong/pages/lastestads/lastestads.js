@@ -93,7 +93,7 @@ Page({
     return {
       title: config.shareTitle, // 分享标题
       desc: config.shareDesc, // 分享描述
-      path: config.sharePath // 分享路径
+      path: '/pages/lastestads/lastestads' // 分享路径
     }
   }
 })
