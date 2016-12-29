@@ -127,6 +127,7 @@ Page({
     let complete = function() {
       setTimeout(function() {
         that.customerData.isInLoading = false
+        wx.hideToast()
       }, 2000)
     }
     addatamanager.searchAdWithParmas(params, success, fail, complete)
@@ -213,10 +214,18 @@ Page({
   },
   clickSearchAds: function(e) {
     wx.hideKeyboard()
-    
+    this.customerData.loadingAdsMode = 0
     if (this.customerData.searchText && this.customerData.searchText.length > 0) {
       this.saveSearchKeywords() 
       this.reloadDatas()
+    } else {
+      this.setData({
+        inputValue: this.customerData.searchText
+      })
+      wx.showToast({
+        title: '搜索关键字不得为空!',
+        duration: 10000
+      })
     }
   },
   saveSearchKeywords: function() {
@@ -254,7 +263,7 @@ Page({
     let canShow = !(this.customerData.searchText && this.customerData.searchText.length > 0) || 
                   !(this.customerData.tag && this.customerData.tag.length > 0)
     this.setData({
-      showSearchView: canShow
+      showSearchView: false
     })
   },
   searchAds: function(e) {
@@ -262,10 +271,7 @@ Page({
   },
   inputSearchKeyword: function(e) {
     this.customerData.searchText = e.detail.value
-    this.customerData.searchText = this.customerData.searchText.replace(" ", "")
-    this.setData({
-      inputValue: this.customerData.searchText
-    })
+    this.customerData.searchText = this.customerData.searchText.replace(/\s+/g, "")
   },
   clickOnCategoryButton: function(e) {
     let idx = e.currentTarget.dataset.index
