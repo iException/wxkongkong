@@ -1,0 +1,51 @@
+.topicbottomview {
+    width: 100%;
+    height: 50px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    border-width: 1rpx 0 0 0;
+    border-style: solid;
+    border-color: #D0D0D0;
+}
+
+.topicbottomview .button {
+    width: 15%;
+    height:100%;
+    color: #969696; 
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.imageSize {
+    width: 30rpx;
+    height: 30rpx;
+}
+
+.topicbottomview .inputcontainerview {
+    width: 85%;
+    height: 100%;
+    display: flex;
+    padding-right: 20rpx;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.topicbottomview .inputcontainerview .inputview {
+    width: 100%;
+    height: 38px;
+    color: #969696; 
+    font-size: 12px;
+    background-color: #ECECEC;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 8rpx;
+}
+
+.topicbottomview .inputcontainerview .inputview image {
+    margin: 0 20rpx;
+}

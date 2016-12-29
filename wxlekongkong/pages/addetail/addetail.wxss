@@ -4,6 +4,7 @@
 @import "../../templates/winnerview.wxss";
 @import "../../templates/loadingmoreview.wxss";
 @import "../../templates/applicantorview.wxss";
+@import "../../templates/adbottomview.wxss";
 
 .container .contentview
 {

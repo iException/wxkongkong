@@ -1,0 +1,14 @@
+<template name="topicbottomview">
+    <view class="topicbottomview">
+        <view class="button" bindtap="clickToLikeTopic">
+            <image class="imageSize" src="../../resource/images/icon_like.png"></image>
+            <text>赞</text>
+        </view>
+        <view class="inputcontainerview">
+            <view class="inputview" bindtap="clickToCommentTopic">
+                <image class="imageSize" src="../../resource/images/icon_edit.png"></image>
+                <text>点击发表评论</text>
+            </view>
+        </view>
+    </view>
+</template>

@@ -2,10 +2,10 @@
 @import "../../templates/loadingmoreview.wxss";
 @import "../../templates/likersview.wxss";
 @import "../../templates/topicCommenterView.wxss";
+@import "../../templates/topicbottomview.wxss";
 
 .container .commentview {
     font-size:14px;
-    margin-top:20rpx;
     padding: 20rpx 28rpx;
     background-color:white;
     border-width: 0 0 1rpx 0;

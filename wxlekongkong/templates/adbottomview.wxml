@@ -1,5 +1,13 @@
 <template name="adbottomview">
-    <view class="adbottomview" style="width:100%; height:50px; background-color:white;">
-        
+    <view class="adbottomview">
+        <view class="button lineView" bindtap="clickToLikeAd">
+            <image class="imageSize" src="../../resource/images/icon_like.png"></image>
+            <text>赞</text>
+        </view>
+        <view class="button" bindtap="clickToCommentAd">
+            <image class="imageSize" src="../../resource/images/icon_comment.png"></image>
+            <text>评论</text>
+        </view>
+        <view class="applyview" bindtap="clickToApplyAd">诚恳申请</view>
     </view>
 </template>

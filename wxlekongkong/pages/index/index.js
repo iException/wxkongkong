@@ -286,8 +286,8 @@ Page({
   },
   clickOnIntroBanner: function() {
     wx.showModal({
-      title: '温馨提示',
-      content: '应用市场搜索并下载"乐空空"APP，即可加入这场断舍离运动！',
+      title: config.downloadTitle,
+      content: config.downloadContent,
     })
   }
 })

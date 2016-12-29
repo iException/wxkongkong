@@ -4,7 +4,8 @@
     <template is="errorview" data="{{windowHeight}}"></template>
   </block>
   <block wx:else>
-    <scroll-view style="width:100%; height:{{windowHeight}}px; background-color: #f2f3ee;" scroll-y="true" bindscrolltolower="scrolltolower">
+    <scroll-view style="width:100%; height:{{windowHeight-50}}px; background-color: #f2f3ee;" scroll-y="true" bindscrolltolower="scrolltolower">
+      <import src="../../templates/intevalView.wxml"/>
       <!--adview-->
       <block wx:if="{{topic}}">
         <import src="../../templates/topicDetailView"/>
@@ -12,12 +13,14 @@
       </block>
       <!--喜欢的人-->
       <block wx:if="{{topic && topic.likedUsers.length}}">
+          <template is="intevalView"></template>
           <import src="../../templates/likersview"/>
           <template is="likersview" data="{{likers: topic.likedUsers, likeCount: topic.likeCount}}"></template>
       </block>
 
       <!--如果申请-->
       <block wx:if="{{topic && topic.commentNum > 0}}">
+          <template is="intevalView"></template>
           <view class="commentview">评论({{topic.commentNum}})</view>
           <block wx:if="{{hotTopicComments.length}}">
               <block wx:for="{{hotTopicComments}}">
@@ -33,11 +36,11 @@
           </block>
       </block>
       <!--首次加载转菊花-->
-      <block wx:if="{{topic && norTopicComments.length}}">
-        
-      </block>
       <import src="../../templates/loadingmoreview.wxml"/>
       <template is="loadingmoreview" data="{{hasMore: hasMoreComments}}"></template>
     </scroll-view>
+    <!--评论view-->
+    <import src="../../templates/topicbottomview.wxml"/>
+    <template is="topicbottomview"></template>
   </block>
 </view>

@@ -228,5 +228,20 @@ Page({
       desc: config.shareDesc, // 分享描述
       path: config.sharePath // 分享路径
     }
+  },
+  clickToLikeAd: function() {
+    this.showDownloadAlert()
+  },
+  clickToCommentAd: function() {
+    this.showDownloadAlert()
+  },
+  clickToApplyAd: function() {
+    this.showDownloadAlert()
+  },
+  showDownloadAlert: function() {
+    wx.showModal({
+      title: config.downloadTitle,
+      content: config.downloadContent,
+    })
   }
 })
