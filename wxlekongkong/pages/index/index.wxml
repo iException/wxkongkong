@@ -8,7 +8,7 @@
       <import src="../../templates/intevalView.wxml"/>
       <!--搜索框-->
       <view class="searchview">
-        <view class="containerview" bindtap="clickSearchAds">
+        <view class="containerview">
           <image class="searchicon" src="../../resource/images/icon_search.png"></image>
           <text>请输入您要搜索的物品或用户名</text>
         </view>
