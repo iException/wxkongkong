@@ -285,9 +285,5 @@ Page({
     }
   },
   clickOnIntroBanner: function() {
-    wx.showModal({
-      title: config.downloadTitle,
-      content: config.downloadContent,
-    })
   }
 })
