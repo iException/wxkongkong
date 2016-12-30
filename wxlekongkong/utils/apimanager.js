@@ -1,6 +1,6 @@
-const kQQKAPIClientKey = "api_ioslekongkong";
-const kQQKAPIClientSecret = "7c5f4aa961a44dc248d12692ca2add09";
-const kQQKAPIHost = "api_ioslekongkong";
+const kQQKAPIClientKey = "api_wxapplekongkong";
+const kQQKAPIClientSecret = "ed6a36bd83f58b68a62a40ebb1f6a210";
+const kQQKAPIHost = "api_wxapplekongkong";
 const kUDID = "d33d2fce6c1748beb102dd7abb7f8cef";
 const kUSERTOKEN = "";
 
