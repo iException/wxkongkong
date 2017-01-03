@@ -249,9 +249,13 @@ Page({
     this.showDownloadAlert()
   },
   showDownloadAlert: function() {
-    wx.showModal({
-      title: config.downloadTitle,
-      content: config.downloadContent,
+    if (!this.data.adInfo.canApply) {
+      //已经结束
+      return
+    }
+
+    wx.navigateTo({
+      url: "../adapply/adapply?adId=" + this.customerData.adId
     })
   }
 })

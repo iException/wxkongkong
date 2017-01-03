@@ -8,7 +8,8 @@
     "pages/lastestads/lastestads",
     "pages/topiclist/topiclist",
     "pages/topicdetail/topicdetail",
-    "pages/celebrityad/celebrityad"
+    "pages/celebrityad/celebrityad",
+    "pages/adapply/adapply"
   ],
   "window": {
     "backgroundTextStyle": "light",

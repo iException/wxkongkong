@@ -51,6 +51,8 @@ function handleCelebrityItem(item) {
         rules: rules
     } 
     let adInfo = {
+        operation: content.status == "0" ? "立即申请" : "已结束", 
+        canApply: content.status == "0",
         applicationCount: content.applicationCount,
         content: content.content,
         video: content.videoUrl,

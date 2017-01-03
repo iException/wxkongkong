@@ -146,8 +146,33 @@ function searchAdWithParmas(params, success, fail, complete) {
     getTopicsWithUrlAndParams(config.getSearchAdListUrl(),params, success, fail, complete)
 }
 
+function applyAdWithParams(params, success, fail, complete) {
+    let url = config.applyAdUrl()
+    apimanager.request({
+        url: url,
+        data: params, 
+        method: 'GET',
+        success: function(ret) {
+            if (ret.data && ret.statusCode == "200") {
+                let alert = ret.data.result
+                if (success) {
+                    success(alert)
+                }
+            } else {
+                if (fail) {
+                    fail()
+                }
+            }
+        },
+        fail: fail,
+        complete: complete
+    })
+}
+
 module.exports = {
+    
     getAdsByTag: getAdsByTag,                               //通过标签获取ad列表
+    applyAdWithParams: applyAdWithParams,                   //申请物品
     getLastestTradeAds: getLastestTradeAds,                 //获取最新交易列表
     searchAdWithParmas: searchAdWithParmas,                 //搜索adsads
     getAdDetailWithParams: getAdDetailWithParams,           //获取ad详情

@@ -40,6 +40,9 @@ module.exports = {
     getTopicDetailUrl: function() {
         return this.host + "/api/Topic.getItem"
     },
+    applyAdUrl: function() {
+        return this.host + "/api/Gift.applyByWXApp"
+    },
     defaultHeader: {
         "Lkk-Dev-Name": "madong",
         "BAPI-APP-KEY": "api_ioslekongkong",

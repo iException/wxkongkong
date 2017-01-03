@@ -26,9 +26,12 @@ Page({
     hotApplicants: [],      //热门申请
     hasMoreApplicantors: false,//是否有更多申请者
     loadingDataError: false,   //加载是否失败标签
-    windowHeight: 400
+    windowHeight: 400,
+    canApply: false,
+    operation: "立即申请"
   },
   customerData: {
+    adId: "",
     lastId: 0,
     adInfoExist: false,
     isloadingMore: false,
@@ -164,6 +167,8 @@ Page({
         giveCount: info.user.giveCount,
         appreciatedCount: info.user.appreciatedCount,
       },
+      canApply: info["status"] == "0",
+      operation: info["status"] == "0" ? "立即申请" : "已送出",
       images: images ? images: [],
       tags: info.tags ? info.tags : [],
       date: info.date,
@@ -285,10 +290,14 @@ Page({
   clickToApplyAd: function() {
     this.showDownloadAlert()
   },
-  showDownloadAlert: function() {
-    wx.showModal({
-      title: config.downloadTitle,
-      content: config.downloadContent,
+  showDownloadAlert: function() { 
+    if (!this.data.canApply) {
+      //已经结束
+      return
+    }
+
+    wx.navigateTo({
+      url: "../adapply/adapply?adId=" + this.customerData.adId
     })
   }
 })

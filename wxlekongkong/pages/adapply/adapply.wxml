@@ -1,0 +1,17 @@
+<view class="container" style="height:{{700}}px">
+    <view class="alertview">*请提交您的收件信息，申请成功将以手机短信形式通知您.</view>
+    <view class="inputview">
+        <view class="inputtitle">收件人姓名</view>
+        <input bindinput="onNameChanged" class="input" placeholder-class="inputPlacehold" placeholder="请输入姓名"/>
+    </view>
+    <view class="inputview">
+        <view class="inputtitle">联系电话</view>
+        <input bindinput="onMobileChanged" class="input" placeholder-class="inputPlacehold"  placeholder="请输入电话号码"/>
+    </view>
+    <view class="inputview">
+        <view class="inputtitle">收件地址</view>
+        <input bindinput="onAddressChanged" class="input" placeholder-class="inputPlacehold"  placeholder="请输入详细地址"/>
+    </view>
+
+    <view class="submitview" bindtap="handleApplyAdRequest">提交申请</view>
+</view>
